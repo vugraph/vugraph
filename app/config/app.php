@@ -26,6 +26,7 @@ return array(
 	|
 	*/
 
+	'sitename' => 'My Site',
 	'url' => 'http://vugraph.net',
 
 	/*

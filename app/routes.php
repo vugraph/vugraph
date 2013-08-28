@@ -11,7 +11,15 @@
 |
 */
 
-Route::get('/', function()
-{
-	return View::make('home');
-});
+//Route::resource('players', 'PlayersController');
+
+Route::get('kullanici', 'UserController@getIndex');
+
+/* Authorization functions like Login, Logout, Register, Activate, Forgot password, etc */
+Route::get('giris', 'AuthController@getLogin');
+Route::post('giris', 'AuthController@postLogin');
+Route::get('cikis', 'AuthController@getLogout');
+Route::get('kayit', 'AuthController@getRegistration');
+Route::post('kayit', 'AuthController@postRegistration');
+
+Route::controller('/', 'HomeController');

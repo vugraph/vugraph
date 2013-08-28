@@ -1,63 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Bootstrap, from Twitter</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <link href="/css/bootstrap.css" rel="stylesheet">
-    <style>
-      body {
-        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-      }
-    </style>
-    <link href="/css/bootstrap-responsive.css" rel="stylesheet">
-
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="/js/html5shiv.js"></script>
-    <![endif]-->
-
-    <!-- Fav and touch icons -->
-                                   <link rel="shortcut icon" href="/favicon.ico">
-  </head>
-
-  <body>
-
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="brand" href="#">Project name</a>
-          <div class="nav-collapse collapse">
-            <ul class="nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div>
-      </div>
-    </div>
-
-    <div class="container">
-
-      <h1>Bootstrap starter template</h1>
-      <p>Use this document as a way to quick start any new project.<br> All you get is this message and a barebones HTML document.</p>
-
-    </div> <!-- /container -->
-
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="/js/jquery-1.10.2.js"></script>
-    <script src="/js/bootstrap.js"></script>
-
-  </body>
-</html>
+<h1>Heading 1</h1>
+<h2>Heading 2</h2>
+<h3>Heading 3</h3>
+<h4>Heading 4</h4>
+<h5>Heading 5</h5>
+<h6>Heading 6</h6>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras fringilla nulla ac tellus lobortis elementum. Donec ligula mauris, auctor elementum justo id, malesuada aliquam purus. Nulla posuere odio quis risus lobortis ornare. Nullam libero magna, luctus non rhoncus eget, aliquam a nisi. Donec porta nulla a nulla fermentum, sit amet pellentesque justo suscipit. Etiam ut mattis mauris, vel pellentesque leo. Vestibulum pulvinar volutpat aliquam. Mauris at arcu vehicula, tristique dui quis, sodales massa. Cras porttitor ullamcorper velit eget eleifend. Vivamus tempus hendrerit sollicitudin. Duis hendrerit rutrum tempor. Integer non tellus vitae est consectetur gravida id ac lacus. Vivamus sed nisi aliquet, porttitor nisi sed, interdum nunc. Morbi mollis lacus vitae tortor molestie, sit amet gravida magna ultrices. Morbi eleifend risus eu enim auctor commodo. Donec posuere sapien tortor, eu pharetra purus congue at.</p>
+<p>Suspendisse convallis nulla at felis interdum, vitae dapibus tortor accumsan. Praesent in nisi accumsan, pulvinar mi nec, suscipit leo. Aliquam sed ligula semper, malesuada mi nec, mattis dui. Phasellus ultrices ligula et ligula tempor, ut ullamcorper turpis viverra. Duis id nibh eu augue feugiat mollis. Nunc eros leo, facilisis eget vehicula ac, dapibus at urna. Nullam congue mi eu fermentum volutpat. Donec molestie tortor tellus, non auctor turpis molestie eget.</p>
+<p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc luctus lobortis metus, consequat pulvinar metus imperdiet sit amet. Nam egestas quam a erat condimentum, sit amet semper libero porttitor. Duis vitae viverra dolor. Donec ac dictum nunc. Pellentesque sed neque purus. Curabitur id massa pharetra, rutrum libero in, elementum leo. Mauris dignissim, neque nec porttitor ultrices, lectus nisi aliquet est, ac cursus risus felis vel elit. Nulla at tellus enim. Duis eleifend tortor quis dui imperdiet consequat. Aenean vitae bibendum felis, et auctor nunc. Mauris eu nisl quis ipsum auctor iaculis. Maecenas vehicula tortor sit amet vulputate pretium.</p>
+<p>Mauris nec enim eget est iaculis suscipit vitae eu lorem. Phasellus risus est, lacinia mattis purus ac, pulvinar pretium quam. Phasellus semper elit neque, et venenatis arcu porttitor id. Quisque pretium est vitae elit convallis aliquam. Nulla facilisi. Nam quis interdum erat. Vestibulum in imperdiet eros.</p>
+<p>In scelerisque venenatis risus. Maecenas ullamcorper placerat odio. Aenean a enim pellentesque metus pellentesque gravida ut ac metus. Sed dictum elementum nibh in iaculis. Suspendisse quam ligula, blandit ut urna eget, dapibus fringilla risus. Vivamus rutrum enim quis elit egestas elementum. Integer pellentesque orci vitae nunc faucibus, vel aliquam felis imperdiet. Nullam elementum odio lacinia, sagittis sapien nec, tincidunt ligula. Vestibulum et iaculis nisl.</p>
+<ul>
+	<li>List 1</li>
+	<li>List 2</li>
+	<li>List 3</li>
+</ul>
