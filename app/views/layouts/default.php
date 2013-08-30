@@ -10,7 +10,7 @@
 <title><?= $title ?></title>
 <?php endif; ?>
 <?= HTML::style('css/bootstrap.css') ?>
-<?= HTML::style('css/bootstrap-responsive.css') ?>
+<?php //HTML::style('css/bootstrap-responsive.css') ?>
 <?= HTML::style('css/style.css') ?>
 <?php if (isset($style)): ?>
 <style>
@@ -26,24 +26,27 @@
 <div id="container" class="container">
 <?= isset($navbar) ? $navbar."\n" : '' ?>
 <?= isset($breadcrumb) ? $breadcrumb."\n" : '' ?>
-<div id="sidebar" class="span2">
-<?php if (isset($sidebar)): ?>
 <div id="middle" class="row">
-<p><a href="<?= url() ?>" title="<?= Config::get('app.sitename') ?>"><?= HTML::image('img/blank.gif', 'Logo', array('class' => 'img-circle img-polaroid', 'width' => '140', 'height' => '140')) ?></a></p>
+<?php if (isset($sidebar)): ?>
+<div id="sidebar" class="span2">
+<p><a href="<?= url() ?>" title="<?= trans('common.brand') ?>"><?= HTML::image('img/blank.gif', 'Logo', array('class' => 'img-circle img-polaroid', 'width' => '140', 'height' => '140')) ?></a></p>
 <?= $sidebar."\n" ?>
 </div>
-<div id="content" class="span10">
-<?= $content."\n" ?>
+<?php endif; ?>
+<div class="span<?= isset($sidebar) ? '10' : '12' ?>">
+<?php if (isset($heading)): ?>
+<div id="heading" class="page-header text-center">
+<h1><small><?= $heading ?></small></h1>
 </div>
-</div>
-<?php else: ?>
+<?php endif; ?>
 <div id="content">
 <?= $content."\n" ?>
 </div>
-<?php endif; ?>
+</div>
+</div>
 <div id="footer" class="text-center">
 <hr>
-&copy; <?= link_to('/', Config::get('app.sitename')) ?>, 2013<?= date('Y') > 2013 ? '-'.date('Y') : '' ?>. Design by <?= link_to('http://www.odeva.com', 'Odeva') ?>.
+&copy; <?= link_to('/', trans('common.brand')) ?>, 2013<?= date('Y') > 2013 ? '-'.date('Y') : '' ?>. Design by <?= link_to('http://www.odeva.com', 'Odeva') ?>.
 <p>&nbsp;</p>
 </div>
 <p>&nbsp;</p>

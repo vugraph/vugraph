@@ -13,7 +13,7 @@
 			<?= link_to('kayit', 'Kaydol')."\n" ?>
 		</p>
 		<p>
-			<?= ''//link_to_route('auth.reset-password', 'Şifremi unuttum!')."\n" ?>
+			<?= link_to('sifre-sifirla', 'Şifremi unuttum!')."\n" ?>
 		</p>
 	</fieldset>
 <?= Form::close()."\n" ?>

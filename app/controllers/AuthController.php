@@ -11,16 +11,18 @@ class AuthController extends BaseController {
 	 * Login page
 	 * @return View
 	 */
-	public function getLogin()
+	public function getGiris()
 	{
-		return 'Kullanıcı giriş';
+		$this->title = $this->heading = 'Kullanıcı Girişi';
+		$this->sidebar = null;
+		$this->showPage('auth.login-form');
 	}
 	
 	/**
 	 * Login
 	 * @return Response
 	 */
-	public function postLogin()
+	public function postGiris()
 	{
 		return 'Kullanıcı giriş-post';
 	}
@@ -29,7 +31,7 @@ class AuthController extends BaseController {
 	 * Logout page
 	 * @return Response
 	 */
-	public function getLogout()
+	public function getCikis()
 	{
 		return 'Kullanıcı çıkış';
 	}
@@ -38,17 +40,23 @@ class AuthController extends BaseController {
 	 * Registration page
 	 * @return View
 	 */
-	public function getRegistration()
+	public function getKayit()
 	{
-		return 'Kullanıcı kayıt';
+		$this->title = $this->heading = 'Kayıt';
+		$this->showPage('auth.registration-form');
 	}
 	
 	/**
 	 * Registration
 	 * @return Response
 	 */
-	public function postRegistration()
+	public function postKayit()
 	{
 		return 'Kullanıcı kayıt-post';
+	}
+	
+	public function getSifreSifirla()
+	{
+		return 'Şifre sıfırlama';
 	}
 }

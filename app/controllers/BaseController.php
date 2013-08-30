@@ -5,6 +5,8 @@ class BaseController extends Controller {
 	protected $layout = 'layouts.default';
 	
 	protected $navbar = 'layouts._partial.navbar.topmenu';
+	
+	protected $breadcrumb = 'layouts._partial.navbar.breadcrumb';
 
 	/**
 	 * Simple sidebar example
@@ -14,11 +16,13 @@ class BaseController extends Controller {
 	 * protected $sidebar = array( 'guest' => '...', 'auth' => '...' );
 	 */
 	protected $sidebar = array(
-		'guest' => 'layouts._partial.sidebar.login-form',
+		'guest' => 'layouts._partial.sidebar.small-login-form',
 		'auth' => 'layouts._partial.sidebar.usermenu'
 	);
 	
 	protected $title;
+	
+	protected $heading;
 	
 	protected $topmenu;
 	
@@ -45,6 +49,7 @@ class BaseController extends Controller {
 		if (is_null($this->navbar)) return;
 		if (is_null($this->topmenu)) $this->populateTopMenu();
 		$this->layout->nest('navbar', $this->navbar, array('topmenu' => $this->topmenu));
+		if (!is_null($this->breadcrumb)) $this->layout->nest('breadcrumb', $this->breadcrumb);
 	}
 
 	protected function setupSidebar()
@@ -65,15 +70,17 @@ class BaseController extends Controller {
 	}
 	
 	protected function populateTopMenu() {
-		$this->topmenu = Config::get('menu.topmenu');
+		$this->topmenu = Config::get('topmenu');
 	}
 	
 	protected function populateUserMenu() {
+		$this->usermenu = Config::get('usermenu');
 	}
 	
 	protected function showPage($view, $data = array())
 	{
 		if (!is_null($this->title)) $this->layout->title = $this->title;
+		if (!is_null($this->heading)) $this->layout->heading = $this->heading;
 		if (!empty($this->navbar)) $this->setupNavbar();
 		if (!empty($this->sidebar)) $this->setupSidebar();
 		$this->layout->content = View::make($view, array_merge($this->viewdata, $data));

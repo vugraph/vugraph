@@ -6,23 +6,23 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</a>
-			<?= link_to('/', Config::get('app.sitename'), array('class' => 'brand'))."\n" ?>
+			<a href="<?= url('/') ?>" class="brand"><i class="icon-home" style="vertical-align: baseline"></i> <?= trans('common.sitename') ?></a>
 			<ul class="nav">
-<?php		foreach ($topmenu as $link => $item): ?>
-<?php			if (is_array($item)): ?>
-				<li class="dropdown<?= Request::path() == $link || is_array($item['items']) && array_key_exists(Request::path(), $item['items']) ? ' active' : '' ?>">
-					<a href="<?= url($link) ?>" class="dropdown-toggle" data-toggle="dropdown"><?= $item['title'] ?><b class="caret"></b></a>
+<?php		foreach ($topmenu as $path => $submenu): ?>
+<?php			if (empty($submenu)): ?>
+				<li<?= Request::path() == $path ? ' class="active"' : '' ?>>
+					<?= link_to($path, trans("menu.$path"))."\n" ?>
+				</li>
+<?php			else: ?>
+				<li class="dropdown<?= Request::path() == $path || array_key_exists(Request::path(), $submenu)  ? ' active' : '' ?>">
+					<a href="<?= url($path) ?>" class="dropdown-toggle" data-toggle="dropdown"><?= trans("menu.$path") ?><b class="caret"></b></a>
 					<ul class="dropdown-menu">
-<?php					foreach ($item['items'] as $link2 => $item2): ?>
-						<li<?= $link2 == Request::path() ? ' class="active"' : '' ?>>
-							<?= link_to($link2, $item2)."\n" ?>
+<?php					foreach ($submenu as $path2 => $value2): ?>
+						<li<?= Request::path() == $path2 ? ' class="active"' : '' ?>>
+							<?= link_to($path2, trans("menu.$path2"))."\n" ?>
 						</li>
 <?php					endforeach; ?>
 					</ul>
-				</li>
-<?php			else: ?>
-				<li<?= $link == Request::path() ? ' class="active"' : '' ?>>
-					<?= link_to($link, $item)."\n" ?>
 				</li>
 <?php			endif; ?>
 <?php			endforeach; ?>

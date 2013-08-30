@@ -4,24 +4,12 @@ class HomeController extends BaseController {
 
 	public function getIndex()
 	{
-		$this->showPage('home', array('test' => 'testt'));
-	}
-	
-	public function getTest()
-	{
-		$this->title = 'Test';
-		return 'test method is functioning';
-	}
-	
-	public function getGiris()
-	{
-		$this->title = 'Giriş';
-		return 'Giriş';
+		$this->showPage('site.home');
 	}
 	
 	public function missingMethod($parameters)
 	{
-		$this->showPage('home');
+		$this->showPage('blank', array('message' => 'Missing Method at '.__METHOD__.'<br>Parameters:'.print_r($parameters, true)));
 	}
-
+	
 }
