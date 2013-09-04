@@ -22,12 +22,4 @@
  */
 class User extends Cartalyst\Sentry\Users\Eloquent\User {
 
-	public static $rules = array(
-		'first_name'		=> 'required|between:2,30',
-		'last_name'			=> 'required|between:2,30',
-		'email'				=> 'required|email',
-		'password'			=> 'required|alpha_num|between:6,30|confirmed',
-		'password_confirm'	=> 'required|alpha_num|between:6,30'
-	);
-
 }

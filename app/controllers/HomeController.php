@@ -2,6 +2,11 @@
 
 class HomeController extends BaseController {
 
+	public function __construct() {
+		parent::__construct();
+		$this->navbar = 'layouts._partial.navbar.homemenu';
+//		$this->breadcrumb = 'layouts._partial.navbar.breadcrumb';
+	}
 	public function getIndex()
 	{
 		$this->showPage('site.home');
@@ -9,7 +14,7 @@ class HomeController extends BaseController {
 	
 	public function missingMethod($parameters)
 	{
-		$this->showPage('blank', array('message' => 'Missing Method at '.__METHOD__.'<br>Parameters:'.print_r($parameters, true)));
+		$this->showPage('result', array('message' => 'Missing Method at '.__METHOD__.'<br>Parameters:'.print_r($parameters, true)));
 	}
 	
 }

@@ -3,7 +3,7 @@
 return array(
 	
 	/* Home */
-	'/' => 'Ana Sayfa',
+	'home' => 'Ana Sayfa',
 	'menu1' => 'Menu 1',
 	'menu2' => 'Menu 2',
 	'menu2a' => 'Menu 2-a',
@@ -35,9 +35,10 @@ return array(
 	 */
 	
 	/* Auth */
-	'giris' => 'Giriş',
-	'cikis' => 'Çıkış',
-	'kayit' => 'Kayıt',
+	'auth.login' => 'Giriş',
+	'auth.logout' => 'Çıkış',
+	'auth.register' => 'Kaydol',
+
 	
 	/* User */
 	'kullanici' => 'Kullanıcı İşlemleri',

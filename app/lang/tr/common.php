@@ -2,7 +2,13 @@
 
 return array(
 
-	'brand' => 'Site Owner Name',
-	'sitename' => 'My Site'
+	'sitename' => 'My Site',
+	'brandname' => 'Site Owner Name',
+	'email' => 'E-posta',
+	'password' => 'Şifre',
+	'error' => 'Hata',
+	'cancel' => 'İptal',
+	'ok' => 'Tamam',
+	'submit' => 'Gönder'
 
 );

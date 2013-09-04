@@ -37,7 +37,7 @@ Route::filter('auth', function()
 {
 	if (Auth::guest()) {
 		Session::put('loginRedirect', Request::url());
-		return Redirect::to('giris');
+		return Redirect::route('auth.login');
     }
 
 });

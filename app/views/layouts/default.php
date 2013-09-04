@@ -29,13 +29,13 @@
 <div id="middle" class="row">
 <?php if (isset($sidebar)): ?>
 <div id="sidebar" class="span2">
-<p><a href="<?= url() ?>" title="<?= trans('common.brand') ?>"><?= HTML::image('img/blank.gif', 'Logo', array('class' => 'img-circle img-polaroid', 'width' => '140', 'height' => '140')) ?></a></p>
+<p><a href="<?= route('home') ?>" title="<?= trans('common.brandname') ?>"><?= HTML::image('img/blank.gif', 'Logo', array('class' => 'img-circle img-polaroid', 'width' => '140', 'height' => '140')) ?></a></p>
 <?= $sidebar."\n" ?>
 </div>
 <?php endif; ?>
 <div class="span<?= isset($sidebar) ? '10' : '12' ?>">
 <?php if (isset($heading)): ?>
-<div id="heading" class="page-header text-center">
+<div id="heading" class="page-header">
 <h1><small><?= $heading ?></small></h1>
 </div>
 <?php endif; ?>
@@ -46,7 +46,7 @@
 </div>
 <div id="footer" class="text-center">
 <hr>
-&copy; <?= link_to('/', trans('common.brand')) ?>, 2013<?= date('Y') > 2013 ? '-'.date('Y') : '' ?>. Design by <?= link_to('http://www.odeva.com', 'Odeva') ?>.
+&copy; <?= link_to(Config::get('app.brandurl'), trans('common.brandname')) ?>, 2013<?= date('Y') > 2013 ? '-'.date('Y') : '' ?>. Design by <?= link_to('http://www.odeva.com', 'Odeva') ?>.
 <p>&nbsp;</p>
 </div>
 <p>&nbsp;</p>

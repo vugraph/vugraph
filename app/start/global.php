@@ -81,3 +81,7 @@ App::down(function()
 */
 
 require app_path().'/filters.php';
+
+require app_path().'/helpers/macros.php';
+
+View::composer('layouts._partial.navbar.homemenu', 'MenuComposer');

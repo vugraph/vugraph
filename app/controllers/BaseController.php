@@ -4,36 +4,20 @@ class BaseController extends Controller {
 
 	protected $layout = 'layouts.default';
 	
-	protected $navbar = 'layouts._partial.navbar.topmenu';
+	protected $navbar;
 	
-	protected $breadcrumb = 'layouts._partial.navbar.breadcrumb';
-
-	/**
-	 * Simple sidebar example
-	 * protected $sidebar = 'layouts._partial.sidebar';
-	 * 
-	 * For sidebars which behaves different according to logged in or not, use:
-	 * protected $sidebar = array( 'guest' => '...', 'auth' => '...' );
-	 */
-	protected $sidebar = array(
-		'guest' => 'layouts._partial.sidebar.small-login-form',
-		'auth' => 'layouts._partial.sidebar.usermenu'
-	);
+	protected $breadcrumb;
 	
 	protected $title;
 	
 	protected $heading;
-	
-	protected $topmenu;
-	
-	protected $usermenu;
 	
 	protected $viewdata = array();
 	
 	public function __construct()
 	{
 		$this->beforeFilter('csrf', array('on' => 'post'));
-		$this->title = Config::get('app.sitename');
+		$this->title = trans('common.sitename');
 	}
 
 	protected function setupLayout()
@@ -46,12 +30,13 @@ class BaseController extends Controller {
 
 	protected function setupNavbar()
 	{
-		if (is_null($this->navbar)) return;
-		if (is_null($this->topmenu)) $this->populateTopMenu();
-		$this->layout->nest('navbar', $this->navbar, array('topmenu' => $this->topmenu));
-		if (!is_null($this->breadcrumb)) $this->layout->nest('breadcrumb', $this->breadcrumb);
+//		if (is_null($this->navbar)) return;
+//		if (is_null($this->topmenu)) $this->populateTopMenu();
+		if (isset($this->navbar)) $this->layout->nest('navbar', $this->navbar); //, array('topmenu' => $this->topmenu));
+		if (isset($this->breadcrumb)) $this->layout->nest('breadcrumb', $this->breadcrumb);
 	}
 
+/*
 	protected function setupSidebar()
 	{
 		if (is_null($this->sidebar)) return;
@@ -68,7 +53,7 @@ class BaseController extends Controller {
 		if (is_null($this->usermenu)) $this->layout->nest('sidebar', $sidebar);
 		else $this->layout->nest('sidebar', $sidebar, compact($this->usermenu));
 	}
-	
+
 	protected function populateTopMenu() {
 		$this->topmenu = Config::get('topmenu');
 	}
@@ -76,13 +61,14 @@ class BaseController extends Controller {
 	protected function populateUserMenu() {
 		$this->usermenu = Config::get('usermenu');
 	}
+*/
 	
 	protected function showPage($view, $data = array())
 	{
-		if (!is_null($this->title)) $this->layout->title = $this->title;
-		if (!is_null($this->heading)) $this->layout->heading = $this->heading;
-		if (!empty($this->navbar)) $this->setupNavbar();
-		if (!empty($this->sidebar)) $this->setupSidebar();
+		if (isset($this->title)) $this->layout->title = $this->title;
+		if (isset($this->heading)) $this->layout->heading = $this->heading;
+		if (isset($this->navbar)) $this->setupNavbar();
+//		if (!empty($this->sidebar)) $this->setupSidebar();
 		$this->layout->content = View::make($view, array_merge($this->viewdata, $data));
 	}
 

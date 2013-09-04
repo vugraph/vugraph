@@ -1,1 +1,0 @@
-<?= isset($message) ? $message."\n" : '' ?>
