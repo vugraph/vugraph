@@ -71,5 +71,30 @@ class BaseController extends Controller {
 //		if (!empty($this->sidebar)) $this->setupSidebar();
 		$this->layout->content = View::make($view, array_merge($this->viewdata, $data));
 	}
+	
+	private function instantMessage($type, $msg)
+	{
+		Session::put('message-'.$type, $msg);
+		Session::push('flash.old', 'message-'.$type);
+	}
+	
+	protected function withError($msg)
+	{
+		$this->instantMessage('error', $msg);
+	}
+	
+	protected function withWarning($msg)
+	{
+		$this->instantMessage('warning', $msg);
+	}
 
+	protected function withInfo($msg)
+	{
+		$this->instantMessage('info', $msg);
+	}
+	
+	protected function withSuccess($msg)
+	{
+		$this->instantMessage('success', $msg);
+	}
 }

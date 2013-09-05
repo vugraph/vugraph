@@ -20,14 +20,22 @@ Route::get('logout', array('as' => 'auth.logout', 'uses' => 'AuthController@getL
 Route::get('register', array('as' => 'auth.register', 'uses' => 'AuthController@getRegister'));
 Route::post('register', 'AuthController@postRegister');
 Route::get('register/success', array('as' => 'auth.register.success', 'uses' => 'AuthController@getRegisterSuccess'));
-Route::get('register/activate/{code}', array('as' => 'auth.register.activate', 'uses' => 'AuthController@getActivate'));
-Route::get('reset-password', 'HomeController@getResetPassword');
+Route::get('register/activate/{code}', array('as' => 'auth.register.activate', 'uses' => 'AuthController@getActivate'))
+	->where('code', '[A-Za-z0-9]+');
+Route::get('reset-password', array('as' => 'auth.login.reset-password', 'uses' => 'AuthController@getResetPassword'));
+Route::post('reset-password', 'AuthController@postResetPassword');
+Route::get('reset-password/success', array('as' => 'auth.login.reset-password.success', 'uses' => 'AuthController@getResetPasswordSuccess'));
+Route::get('reset-password/change/{code}', array('as' => 'auth.login.reset-password.change', 'uses' => 'AuthController@getResetPasswordChange'))
+	->where('code', '[A-Za-z0-9]+');
+Route::post('reset-password/change/{code}', 'AuthController@postResetPasswordChange')
+	->where('code', '[A-Za-z0-9]+');
+Route::get('reset-password/change/success', array('as' => 'auth.login.reset-password.change.success', 'uses' => 'AuthController@getResetPasswordChangeSuccess'));
 
 /* User */
-Route::group(array('prefix' => 'kullanici'), function() {
-	Route::get('/', 'UserController@getIndex');
-	Route::get('hesap-bilgileri', 'UserController@getHesapBilgileri');
-	Route::get('sifre-degistir', 'UserController@getSifreDegistir');
+Route::group(array('prefix' => 'user'), function() {
+	Route::get('/', array('as' => 'user.home', 'uses' => 'UserController@getIndex'));
+	Route::get('accout-information', array('as' => 'user.account', 'uses' => 'UserController@getAccountInformation'));
+	Route::get('change-password', array('as' => 'user.password', 'uses' => 'UserController@getChangePassword'));
 });
 
 /* Player */

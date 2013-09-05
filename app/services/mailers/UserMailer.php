@@ -18,9 +18,9 @@ class UserMailer extends MyMailer {
 	}
 	
 	public function resetPassword($code) {
-		$this->subject = 'Şifre Sıfırlama';
+		$this->subject = trans('auth/reset-password.mail_subject');
 		$this->view = 'emails.auth.reset-password';
-		$this->data['link'] = route('auth.reset-password-change', array('id' => $this->user->id, 'code' => $code));
+		$this->data['link'] = route('auth.login.reset-password.change', array('code' => $code));
 		return $this;
 	}
 }

@@ -1,8 +1,7 @@
-@extends('layouts.email')
+@extends('emails/default')
 @section('content')
 <p>Sayın <?= $name ?>,
-<p>Türkiye Briç Federasyonu Masterpoint Sitesi'nde unutumuş olduğunuz şifrenizi değiştirebilmek için sıfırlama kodunuz: <strong> <?= $reset_password_code ?> </strong></p>
-<p>Dilerseniz aşağıdaki bağlantıyı da kullanabilirsiniz:<br>
-<a href="<?= $reset_password_link ?>"><?= $reset_password_link ?></a></p>
+<p><?= $sitename ?> web sitesi şifrenizi değiştirmek için aşağıdaki bağlantıyı kullanabilirsiniz:<br>
+<a href="<?= $link ?>"><?= $link ?></a></p>
 <p>Sıfırlama isteğini siz yapmadıysanız lütfen bu mesajı kaale almayın.</p>
 @stop
