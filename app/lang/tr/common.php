@@ -9,6 +9,7 @@ return array(
 	'error' => 'Hata',
 	'cancel' => 'İptal',
 	'ok' => 'Tamam',
-	'submit' => 'Gönder'
+	'submit' => 'Gönder',
+	'update' => 'Güncelle'
 
 );

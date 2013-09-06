@@ -28,12 +28,12 @@
 <?= isset($breadcrumb) ? $breadcrumb."\n" : '' ?>
 <div id="middle" class="row">
 <?php if (isset($sidebar)): ?>
-<div id="sidebar" class="span2">
-<p><a href="<?= route('home') ?>" title="<?= trans('common.brandname') ?>"><?= HTML::image('img/blank.gif', 'Logo', array('class' => 'img-circle img-polaroid', 'width' => '140', 'height' => '140')) ?></a></p>
+<div id="sidebar" class="span3">
+<!--p><a href="<?= route('home') ?>" title="<?= trans('common.brandname') ?>"><?= HTML::image('img/blank.gif', 'Logo', array('class' => 'img-circle img-polaroid', 'width' => '140', 'height' => '140')) ?></a></p-->
 <?= $sidebar."\n" ?>
 </div>
 <?php endif; ?>
-<div class="span<?= isset($sidebar) ? '10' : '12' ?>">
+<div class="span<?= isset($sidebar) ? '9' : '12' ?>">
 <?php if (isset($heading)): ?>
 <div id="heading" class="page-header">
 <h1><small><?= $heading ?></small></h1>

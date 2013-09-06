@@ -1,19 +1,5 @@
 <?php
 
-class MenuItem {
-	public $route;
-	public $icon;
-	public $items;
-	public $selected;
-	public function __construct($route, $icon = null, $items = array(), $selected = false)
-	{
-		$this->route = $route;
-		$this->icon = $icon;
-		$this->items = $items;
-		$this->selected = $selected;
-	}
-}
-
 class MenuComposer {
 	protected $menu = array();
 	protected $menuRight = array();
@@ -35,6 +21,7 @@ class MenuComposer {
 		);
 		if (Sentry::check()) {
 			$this->menu['right'] = array(
+				new MenuItem('user', 'icon-user'),
 				new MenuItem('auth.logout', 'icon-off')
 			);
 		} else {

@@ -3,6 +3,10 @@ Form::macro('_open', function(array $options = array()) {
 	if (!isset($options['class'])) $options['class'] = 'form-horizontal well';
 	return Form::open($options)."\n";
 });
+Form::macro('_model', function($model, array $options = array()) {
+	if (!isset($options['class'])) $options['class'] = 'form-horizontal well';
+	return Form::model($model, $options);
+});
 Form::macro('_focus', function($field) {
 	View::share('autofocus', $field);
 });
@@ -83,11 +87,14 @@ Form::macro('_help', function($text) {
 Form::macro('_actions', function($elements = array()) {
 	return '<div class="form-actions">'.implode($elements, '&nbsp;').'</div>'."\n";
 });
-Form::macro('_cancel', function($link = null, $title = null) {
+Form::macro('_cancel', function($title = null, $link = null, $failDefault = 'home') {
 	if (is_null($link)) $link = URL::previous();
-	if ($link == URL::full()) $link = URL::to('/');
+	if ($link == URL::full()) $link = route($failDefault);
 	if (is_null($title)) $title = trans('common.cancel');
 	return '<a href="'.$link.'" class="btn">'.$title.'</a>';
+});
+Form::macro('_userCancel', function($title = null, $link = null) {
+	return Form::_cancel($title, $link, 'user.home');
 });
 Form::macro('_submit', function($value = null, $options = array()) {
 	if (!isset($options['class'])) $options['class'] = 'btn btn-primary';

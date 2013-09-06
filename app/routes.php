@@ -33,9 +33,14 @@ Route::get('reset-password/change/success', array('as' => 'auth.login.reset-pass
 
 /* User */
 Route::group(array('prefix' => 'user'), function() {
-	Route::get('/', array('as' => 'user.home', 'uses' => 'UserController@getIndex'));
-	Route::get('accout-information', array('as' => 'user.account', 'uses' => 'UserController@getAccountInformation'));
-	Route::get('change-password', array('as' => 'user.password', 'uses' => 'UserController@getChangePassword'));
+	Route::get('/', array('as' => 'user', 'uses' => 'UserController@getIndex'));
+	Route::get('home', array('as' => 'user.home', 'uses' => 'UserController@getHome'));
+	Route::get('account-information', array('as' => 'user.account-information', 'uses' => 'UserController@getAccountInformation'));
+	Route::post('account-information', 'UserController@postAccountInformation');
+	Route::get('change-password', array('as' => 'user.change-password', 'uses' => 'UserController@getChangePassword'));
+	Route::post('change-password', 'UserController@postChangePassword');
+	Route::get('change-password/success', array('as' => 'user.change-password.success', 'uses' => 'UserController@getChangePasswordSuccess'));
+	Route::get('logout', array('as' => 'user.logout', 'uses' => 'AuthController@getLogout'));
 });
 
 /* Player */

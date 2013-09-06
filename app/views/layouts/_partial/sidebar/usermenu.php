@@ -1,58 +1,27 @@
-<?php $usermenu = array(
-	'admin' => array(),
-	'kullanici/' => array(
-		'kullanici/hesap-bilgileri' => array(),
-		'kullanici/sifre-degistir' => array()
-	),
-	'cikis' => array()
-	/*
-	'licence' => array(
-		'lisans-yetkilisi' => array(
-			'lisans-yetkilisi/lisans' => array(),
-			'lisans-yetkilisi/vize' => array()
-		)
-	),
-	'national' => array(
-		'ulusal-yetkili' => array(
-			'ulusal-yetkili/turnuva-girisi' => array()
-		)
-	),
-	'regional' => array(
-		'bolgesel-yetkili' => array(
-			'bolgesel-yetkili/turnuva-girisi' => array()
-		)
-	),
-	'club' => array(
-		'kulup-yetkilisi' => array(
-			'kulup-yetkilisi/turnuva-girisi' => array()
-		)
-	),
-	'player' => array(
-		'sporcu' => array(
-			'sporcu/lisans-bilgileri' => array(),
-			'sporcu/online-vize' => array()				
-		)
-	),
-	*/
-);
-?>
-	<ul class="well nav nav-list">
+<div class="well" style="padding: 20px 0; margin-top: 8px">
+	<ul class="nav nav-list">
 <?php	$cnt = 0; ?>
-<?php	foreach ($usermenu as $title => $items): ?>
-		<li class="nav-header"><?= $title ?></li>
-<?php	foreach ($items as $link => $item): ?>
-<?php	if (is_array($item)): ?>
-		<li<?= $link == Request::path() ? ' class="active"' : '' ?>>
-			<a href="<?= url($link) ?>"><?= $item ?><b class="caret"></b></a>
-		</li>
-<?php	else: ?>
-		<li<?= $link == Request::path() ? ' class="active"' : '' ?>>
-			<?= link_to($link, $item) ?>
-		</li>
+<?php	foreach ($usermenu as $header => $menu): ?>
+<?php	if (!is_int($header)): ?>
+		<li class="nav-header"><?= trans('usermenu.'.$header) ?></li>
 <?php	endif; ?>
+<?php	foreach ($menu as $item): ?>
+		<li<?= $item->selected ? ' class="active"' : '' ?>>
+			<a href="<?= route($item->route) ?>"><?= empty($item->icon) ? '' : '<i class="'.$item->icon.'"></i> ' ?><?= trans('usermenu.'.$item->route) ?></a>
+<?php		if (empty($item->items)): ?>
+			<ul>
+<?php		foreach($item->items as $item2): ?>
+				<li<?= $item2->selected ? ' class="active"' : '' ?>>
+					<a href="<?= route($item2->route) ?>"><?= empty($item2->icon) ? '' : '<i class="'.$item2->icon.'"></i> ' ?><?= trans('usermenu.'.$item2->route) ?></a>
+				</li>
+<?php		endforeach; ?>
+			</ul>
+<?php		endif; ?>
+		</li>
 <?php	endforeach; ?>
 <?php	if (++$cnt < count($usermenu)): ?>
 		<li class="divider"></li>
 <?php	endif; ?>
 <?php	endforeach; ?>
 	</ul>
+</div>

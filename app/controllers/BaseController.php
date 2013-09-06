@@ -7,7 +7,9 @@ class BaseController extends Controller {
 	protected $navbar;
 	
 	protected $breadcrumb;
-	
+
+	protected $sidebar;
+
 	protected $title;
 	
 	protected $heading;
@@ -34,6 +36,11 @@ class BaseController extends Controller {
 //		if (is_null($this->topmenu)) $this->populateTopMenu();
 		if (isset($this->navbar)) $this->layout->nest('navbar', $this->navbar); //, array('topmenu' => $this->topmenu));
 		if (isset($this->breadcrumb)) $this->layout->nest('breadcrumb', $this->breadcrumb);
+	}
+	
+	protected function setupSidebar()
+	{
+		if (isset($this->sidebar)) $this->layout->nest('sidebar', $this->sidebar);
 	}
 
 /*
@@ -67,8 +74,8 @@ class BaseController extends Controller {
 	{
 		if (isset($this->title)) $this->layout->title = $this->title;
 		if (isset($this->heading)) $this->layout->heading = $this->heading;
-		if (isset($this->navbar)) $this->setupNavbar();
-//		if (!empty($this->sidebar)) $this->setupSidebar();
+		$this->setupNavbar();
+		$this->setupSidebar();
 		$this->layout->content = View::make($view, array_merge($this->viewdata, $data));
 	}
 	

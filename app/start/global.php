@@ -85,3 +85,5 @@ require app_path().'/filters.php';
 require app_path().'/helpers/macros.php';
 
 View::composer('layouts._partial.navbar.homemenu', 'MenuComposer');
+
+View::composer('layouts._partial.sidebar.usermenu', 'UserMenuComposer');
