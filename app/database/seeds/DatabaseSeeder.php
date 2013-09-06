@@ -10,8 +10,17 @@ class DatabaseSeeder extends Seeder {
 	public function run()
 	{
 		Eloquent::unguard();
-
-		// $this->call('UserTableSeeder');
+		$this->command->info('========== Seeding Sentry ==========');
+		$this->call('SentrySeeder');
+		$this->command->info('');
+		$this->command->info('========== Seeding Regions ==========');
+		$this->call('RegionsTableSeeder');
+		$this->command->info('');
+		$this->command->info('========== Seeding Cities ==========');
+		$this->call('CitiesTableSeeder');
+		$this->command->info('');
+		$this->command->info('========== Seeding Clubs ==========');
+		$this->call('ClubsTableSeeder');
+		$this->command->info('');
 	}
-
 }
