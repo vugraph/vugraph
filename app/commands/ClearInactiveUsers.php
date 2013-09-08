@@ -1,8 +1,9 @@
-<?php
+<?php namespace Tbfmp;
 
+use DB;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputArgument;
+//use Symfony\Component\Console\Input\InputArgument;
 
 class ClearInactiveUsers extends Command {
 

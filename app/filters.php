@@ -42,6 +42,36 @@ Route::filter('auth', function()
 
 });
 
+Route::filter('auth.player', function()
+{
+	if (!Sentry::getUser()->hasAccess('player')) App::abort(403, 'You\'re not authorized to use this page.');
+});
+
+Route::filter('auth.club', function()
+{
+	if (!Sentry::getUser()->hasAccess('club')) App::abort(403, 'You\'re not authorized to use this page.');
+});
+
+Route::filter('auth.regional', function()
+{
+	if (!Sentry::getUser()->hasAccess('regional')) App::abort(403, 'You\'re not authorized to use this page.');
+});
+
+Route::filter('auth.national', function()
+{
+	if (!Sentry::getUser()->hasAccess('national')) App::abort(403, 'You\'re not authorized to use this page.');
+});
+
+
+Route::filter('auth.licence', function()
+{
+	if (!Sentry::getUser()->hasAccess('licence')) App::abort(403, 'You\'re not authorized to use this page.');
+});
+
+Route::filter('auth.admin', function()
+{
+	if (!Sentry::getUser()->hasAccess('superuser')) App::abort(403, 'You\'re not authorized to use this page.');
+});
 
 Route::filter('auth.basic', function()
 {

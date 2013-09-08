@@ -1,6 +1,9 @@
-<?php
+<?php namespace Tbfmp;
 
-abstract class MyMailer {
+use Config;
+use Mail;
+
+abstract class BaseMailer {
 	protected $to;
 	protected $email;
 	protected $subject;

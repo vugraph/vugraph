@@ -11,4 +11,4 @@
 |
 */
 
-$artisan->add(new ClearInactiveUsers);
+$artisan->add(new Tbfmp\ClearInactiveUsers);

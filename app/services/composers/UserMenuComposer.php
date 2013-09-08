@@ -1,4 +1,9 @@
-<?php
+<?php namespace Tbfmp;
+
+use App;
+use Exception;
+use Route;
+use Sentry;
 
 class UserMenuComposer {
 	protected $menu = array();
@@ -16,13 +21,15 @@ class UserMenuComposer {
 			$user = Sentry::getUser();
 			if ($user->hasAccess('club')) {
 				$this->menu['user.club.header'] = array(
-					new MenuItem('user.club.details'),
-					new MenuItem('user.club.add-tournament')
+					new MenuItem('user.club', 'icon-chevron-right'),
+					new MenuItem('user.club.tournaments', 'icon-chevron-right')
 				);
 			}
-/*			$this->menu[] = array(
-				new MenuItem('user.logout', 'icon-off')
-			); */
+			if ($user->hasAccess('superuser')) {
+				$this->menu['user.admin.header'] = array(
+					new MenuItem('user.admin.clubs', 'icon-chevron-right')
+				);
+			}
 		} catch (Exception $e) {
 			App::abort(500, $e->getMessage());
 		}

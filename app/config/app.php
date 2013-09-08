@@ -114,10 +114,7 @@ return array(
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
-		'Cartalyst\Sentry\SentryServiceProvider',
-		'Former\FormerServiceProvider',
-		'Krucas\Notification\NotificationServiceProvider'
-
+		'Cartalyst\Sentry\SentryServiceProvider'
 	),
 
 	/*
@@ -182,11 +179,7 @@ return array(
 		'URL'             => 'Illuminate\Support\Facades\URL',
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
-		'Sentry'          => 'Cartalyst\Sentry\Facades\Laravel\Sentry',
-		'Former'          => 'Former\Facades\Former',
-		'Notification'    => 'Krucas\Notification\Facades\Notification',
-		
-
+		'Sentry'          => 'Cartalyst\Sentry\Facades\Laravel\Sentry'
 	),
 
 );

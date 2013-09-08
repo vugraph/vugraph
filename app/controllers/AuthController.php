@@ -1,10 +1,16 @@
-<?php
+<?php namespace Tbfmp;
 
-/**
- * Authentication Tasks like Login, Logout, Register...
- *
- * @author bshan
- */
+use Exception;
+use Input;
+use Redirect;
+use Session;
+use Sentry;
+use Cartalyst\Sentry\Users\UserNotFoundException;
+use Cartalyst\Sentry\Users\WrongPasswordException;
+use Cartalyst\Sentry\Users\UserNotActivatedException;
+use Cartalyst\Sentry\Throttling\UserSuspendedException;
+use Cartalyst\Sentry\Throttling\UserBannedException;
+
 class AuthController extends BaseController {
 
 	public function __construct() {
@@ -12,13 +18,10 @@ class AuthController extends BaseController {
 		$this->navbar = 'layouts._partial.navbar.homemenu';
 //		$this->breadcrumb = 'layouts._partial.navbar.breadcrumb';
 	}
-	/**
-	 * Login page
-	 * @return View
-	 */
+
 	public function getRegister()
 	{
-		$this->title = trans('auth.register.title');
+		$this->title = trans('auth/register.title');
 		$this->showPage('auth.register');
 	}
 	
@@ -69,10 +72,8 @@ class AuthController extends BaseController {
 			} else {
 				$err = 'unknown error';
 			}
-		} catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
+		} catch (UserNotFoundException $e) {
 			$err = trans('auth/register.activate_error_content');
-//		} catch (Cartalyst\Sentry\Users\UserAlreadyActivatedException $e) {
-//			$err = trans('auth/register.activate_already_activated');
 		} catch (Exception $e) {
 			$err = $e->getMessage();
 		}
@@ -80,7 +81,7 @@ class AuthController extends BaseController {
 		$this->withError($err);
 		$this->showPage('result');
 	}
-	
+
 	public function getLogin()
 	{
 		$this->title = trans('auth/login.title');
@@ -101,19 +102,15 @@ class AuthController extends BaseController {
 				false
 			);
 			return Redirect::route('user.home');
-		} catch (Cartalyst\Sentry\Users\LoginRequiredException $e) {
+		} catch (WrongPasswordException $e) {
 			$err = trans('auth/login.invalid_credentials');
-		} catch (Cartalyst\Sentry\Users\PasswordRequiredException $e) {
+		} catch (UserNotFoundException $e) {
 			$err = trans('auth/login.invalid_credentials');
-		} catch (Cartalyst\Sentry\Users\WrongPasswordException $e) {
-			$err = trans('auth/login.invalid_credentials');
-		} catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
-			$err = trans('auth/login.invalid_credentials');
-		} catch (Cartalyst\Sentry\Users\UserNotActivatedException $e) {
+		} catch (UserNotActivatedException $e) {
 			$err = trans('auth/login.user_not_activated');
-		} catch (Cartalyst\Sentry\Throttling\UserSuspendedException $e) {
+		} catch (UserSuspendedException $e) {
 			$err = trans('auth/login.user_suspended');
-		} catch (Cartalyst\Sentry\Throttling\UserBannedException $e) {
+		} catch (UserBannedException $e) {
 			$err = trans('auth/login.user_banned');
 		} catch (Exception $e) {
 			$err = $e->getMessage();
@@ -146,7 +143,7 @@ class AuthController extends BaseController {
 			} else {
 				$err = trans('auth/reset-password.error_sending_email');
 			}
-		} catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
+		} catch (UserNotFoundException $e) {
 			$err = trans('auth/reset-password.email_not_found');
 		}
 		return Redirect::back()->onlyInput('email')->with('message-error', $err);
@@ -164,7 +161,7 @@ class AuthController extends BaseController {
 		$err = '';
 		try {
 			$user = Sentry::findUserByResetPasswordCode($code);
-		} catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
+		} catch (UserNotFoundException $e) {
 			$err = trans('auth/reset-password.change_error_content');
 		} catch (Exception $e) {
 			$err = $e->getMessage();
@@ -188,7 +185,7 @@ class AuthController extends BaseController {
 			if (!$user->attemptResetPassword($code, Input::get('password'))) {
 				$err = trans('auth/reset-password.change_error_message');
 			}
-		} catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
+		} catch (UserNotFoundException $e) {
 			$err = trans('auth/reset-password.change_error_content');
 		} catch (Exception $e) {
 			$err = $e->getMessage();

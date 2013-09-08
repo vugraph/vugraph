@@ -1,6 +1,8 @@
-<?php
+<?php namespace Tbfmp;
 
-class UserMailer extends MyMailer {
+use App;
+
+class UserMailer extends BaseMailer {
 	protected $user;
 	public function __construct($user) {
 		parent::__construct();

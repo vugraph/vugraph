@@ -1,6 +1,6 @@
-<?php
+<?php namespace Tbfmp;
 
-class RegisterValidator extends MyValidator {
+class RegisterValidator extends BaseValidator {
 	public static $rules = array(
 		'first_name'			=> 'required|between:2,30',
 		'last_name'				=> 'required|between:2,30',

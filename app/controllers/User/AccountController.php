@@ -1,30 +1,10 @@
-<?php
+<?php namespace Tbfmp\User;
 
-class UserController extends BaseController {
+use Exception;
+use Input;
+use Redirect;
 
-	protected $user;
-
-	public function __construct()
-	{
-		parent::__construct();
-		$this->navbar = 'layouts._partial.navbar.homemenu';
-		$this->sidebar = 'layouts._partial.sidebar.usermenu';
-		$this->beforeFilter('auth');
-//		foreach(Config::get('access') as $path => $permission) {
-//			if ($permission === '') continue;
-//			if (preg_match($path, Request::path())) {
-//				if (!$user->hasAccess($permission))	App::abort(401, 'Bu sayfaya erişim yetkiniz yok');
-//			}
-//		}
-		$this->user = Sentry::getUser();
-	}
-	
-	protected function setupLayout()
-	{
-		parent::setupLayout();
-		$this->viewdata['user'] = $this->user;
-	}
-	
+class AccountController extends UserBaseController {
 	public function getIndex()
 	{
 		$this->getHome();

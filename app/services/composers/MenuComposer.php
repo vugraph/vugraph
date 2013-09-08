@@ -1,4 +1,7 @@
-<?php
+<?php namespace Tbfmp;
+
+use Route;
+use Sentry;
 
 class MenuComposer {
 	protected $menu = array();

@@ -7,8 +7,9 @@ return array(
 	'user.change-password' => 'Şifre Değiştir',
 	
 	'user.club.header' => 'KULÜP YETKİLİSİ İŞLEMLERİ',
-	'user.club.details' => 'Kulüp Bilgileri',
-	'user.club.add-tournament' => 'Turnuva Gir',
+	'user.club' => 'Kulüp Bilgileri',
+	'user.club.tournaments' => 'Turnuvalar',
 
-	'user.logout' => 'Çıkış'
+	'user.admin.header' => 'YÖNETİCİ İŞLEMLERİ',
+	'user.admin.clubs' => 'Kulüpler'
 );

@@ -1,4 +1,8 @@
-<?php
+<?php namespace Tbfmp;
+
+use Controller;
+use Session;
+use View;
 
 class BaseController extends Controller {
 
@@ -32,9 +36,7 @@ class BaseController extends Controller {
 
 	protected function setupNavbar()
 	{
-//		if (is_null($this->navbar)) return;
-//		if (is_null($this->topmenu)) $this->populateTopMenu();
-		if (isset($this->navbar)) $this->layout->nest('navbar', $this->navbar); //, array('topmenu' => $this->topmenu));
+		if (isset($this->navbar)) $this->layout->nest('navbar', $this->navbar);
 		if (isset($this->breadcrumb)) $this->layout->nest('breadcrumb', $this->breadcrumb);
 	}
 	
@@ -43,33 +45,6 @@ class BaseController extends Controller {
 		if (isset($this->sidebar)) $this->layout->nest('sidebar', $this->sidebar);
 	}
 
-/*
-	protected function setupSidebar()
-	{
-		if (is_null($this->sidebar)) return;
-		if (is_array($this->sidebar)) {
-			if (Sentry::check() && isset($this->sidebar['auth'])) {
-				if (is_null($this->usermenu)) $this->populateUserMenu();
-				$sidebar = $this->sidebar['auth'];
-			} elseif (isset($this->sidebar['guest'])) {
-				$sidebar = $this->sidebar['guest'];
-			} else return;
-		} elseif (is_string($this->sidebar)) {
-			$sidebar = $this->sidebar;
-		} else return;
-		if (is_null($this->usermenu)) $this->layout->nest('sidebar', $sidebar);
-		else $this->layout->nest('sidebar', $sidebar, compact($this->usermenu));
-	}
-
-	protected function populateTopMenu() {
-		$this->topmenu = Config::get('topmenu');
-	}
-	
-	protected function populateUserMenu() {
-		$this->usermenu = Config::get('usermenu');
-	}
-*/
-	
 	protected function showPage($view, $data = array())
 	{
 		if (isset($this->title)) $this->layout->title = $this->title;

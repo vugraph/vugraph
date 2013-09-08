@@ -1,6 +1,6 @@
-<?php
+<?php namespace Tbfmp\Controllers;
 
-class SearchController extends BaseController {
+class Search extends Base {
 
 	public function getIndex()
 	{

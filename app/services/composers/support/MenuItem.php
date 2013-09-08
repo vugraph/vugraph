@@ -1,4 +1,4 @@
-<?php
+<?php namespace Tbfmp;
 
 class MenuItem {
 	public $route;

@@ -7190,9 +7190,9 @@ class Queue extends Illuminate\Support\Facades\Queue{
 	/**
 	 * Push a new job onto the queue after a delay.
 	 *
-	 * @param int     $delay
+	 * @param \DateTime|int  $delay
 	 * @param string  $job
-	 * @param mixed   $data
+	 * @param mixed  $data
 	 * @param string  $queue
 	 * @return mixed
 	 * @static 
@@ -7221,6 +7221,31 @@ class Queue extends Illuminate\Support\Facades\Queue{
 	 public static function marshal(){
 		//Method inherited from Illuminate\Queue\Queue
 		return Illuminate\Queue\SyncQueue::marshal();
+	 }
+
+	/**
+	 * Push a new an array of jobs onto the queue.
+	 *
+	 * @param array  $jobs
+	 * @param mixed  $data
+	 * @param string  $queue
+	 * @return mixed
+	 * @static 
+	 */
+	 public static function bulk($jobs, $data = '', $queue = null){
+		//Method inherited from Illuminate\Queue\Queue
+		return Illuminate\Queue\SyncQueue::bulk($jobs, $data, $queue);
+	 }
+
+	/**
+	 * Get the current UNIX timestamp.
+	 *
+	 * @return int
+	 * @static 
+	 */
+	 public static function getTime(){
+		//Method inherited from Illuminate\Queue\Queue
+		return Illuminate\Queue\SyncQueue::getTime();
 	 }
 
 	/**
@@ -9843,9 +9868,6 @@ class Session extends Illuminate\Support\Facades\Session{
 
 }
 
-class Str extends Illuminate\Support\Str{
-}
-
 class URL extends Illuminate\Support\Facades\URL{
 	/**
 	 * Create a new URL Generator instance.
@@ -10942,305 +10964,6 @@ class Sentry extends Cartalyst\Sentry\Facades\Laravel\Sentry{
 	 */
 	 public static function __call($method, $parameters){
 		return Cartalyst\Sentry\Sentry::__call($method, $parameters);
-	 }
-
-}
-
-class Former extends Former\Facades\Former{
-	/**
-	 * Build a new Former instance
-	 *
-	 * @param Illuminate\Container\Container $app
-	 * @static 
-	 */
-	 public static function __construct($app){
-		 Former\Former::__construct($app);
-	 }
-
-	/**
-	 * Acts as a router that redirects methods to all of Former classes
-	 *
-	 * @param string $method     The method called
-	 * @param array  $parameters An array of parameters
-	 * @return mixed
-	 * @static 
-	 */
-	 public static function __call($method, $parameters){
-		return Former\Former::__call($method, $parameters);
-	 }
-
-	/**
-	 * Register a macro with Former
-	 *
-	 * @param string  $name         The name of the macro
-	 * @param Closure $macro        The macro itself
-	 * @return mixed
-	 * @static 
-	 */
-	 public static function macro($name, $macro){
-		return Former\Former::macro($name, $macro);
-	 }
-
-	/**
-	 * Check if a macro exists
-	 *
-	 * @param string  $name
-	 * @return boolean
-	 * @static 
-	 */
-	 public static function hasMacro($name){
-		return Former\Former::hasMacro($name);
-	 }
-
-	/**
-	 * Get a registered macro
-	 *
-	 * @param string $name
-	 * @return Closure
-	 * @static 
-	 */
-	 public static function getMacro($name){
-		return Former\Former::getMacro($name);
-	 }
-
-	/**
-	 * Add values to populate the array
-	 *
-	 * @param mixed $values Can be an Eloquent object or an array
-	 * @static 
-	 */
-	 public static function populate($values){
-		 Former\Former::populate($values);
-	 }
-
-	/**
-	 * Set the value of a particular field
-	 *
-	 * @param string $field The field's name
-	 * @param mixed  $value Its new value
-	 * @static 
-	 */
-	 public static function populateField($field, $value){
-		 Former\Former::populateField($field, $value);
-	 }
-
-	/**
-	 * Get the value of a field
-	 *
-	 * @param string $field The field's name
-	 * @return mixed
-	 * @static 
-	 */
-	 public static function getValue($field, $fallback = null){
-		return Former\Former::getValue($field, $fallback);
-	 }
-
-	/**
-	 * Fetch a field value from both the new and old POST array
-	 *
-	 * @param string $name     A field name
-	 * @param string $fallback A fallback if nothing was found
-	 * @return string           The results
-	 * @static 
-	 */
-	 public static function getPost($name, $fallback = null){
-		return Former\Former::getPost($name, $fallback);
-	 }
-
-	/**
-	 * Get the Populator binded to Former
-	 *
-	 * @return Populator
-	 * @static 
-	 */
-	 public static function getPopulator(){
-		return Former\Former::getPopulator();
-	 }
-
-	/**
-	 * Set the errors to use for validations
-	 *
-	 * @param Message $validator The result from a validation
-	 * @return void
-	 * @static 
-	 */
-	 public static function withErrors($validator = null){
-		 Former\Former::withErrors($validator);
-	 }
-
-	/**
-	 * Add live validation rules
-	 *
-	 * @param array *$rules An array of Laravel rules
-	 * @return void
-	 * @static 
-	 */
-	 public static function withRules(){
-		 Former\Former::withRules();
-	 }
-
-	/**
-	 * Switch the framework used by Former
-	 *
-	 * @param string $framework The name of the framework to use
-	 * @static 
-	 */
-	 public static function framework($framework = null){
-		 Former\Former::framework($framework);
-	 }
-
-	/**
-	 * Get the current framework
-	 *
-	 * @return FrameworkInterface
-	 * @static 
-	 */
-	 public static function getFramework(){
-		return Former\Former::getFramework();
-	 }
-
-	/**
-	 * Get a class out of the Contaienr
-	 *
-	 * @param string $dependency The class
-	 * @return object
-	 * @static 
-	 */
-	 public static function getContainer($dependency = null){
-		return Former\Former::getContainer($dependency);
-	 }
-
-	/**
-	 * Get an option from the config
-	 *
-	 * @param string $option  The option
-	 * @param mixed  $default Optional fallback
-	 * @return mixed
-	 * @static 
-	 */
-	 public static function getOption($option, $default = null){
-		return Former\Former::getOption($option, $default);
-	 }
-
-	/**
-	 * Set an option on the config
-	 *
-	 * @param string $option
-	 * @param mixed  $value
-	 * @static 
-	 */
-	 public static function setOption($option, $value){
-		 Former\Former::setOption($option, $value);
-	 }
-
-	/**
-	 * Closes a form
-	 *
-	 * @return string A form closing tag
-	 * @static 
-	 */
-	 public static function close(){
-		return Former\Former::close();
-	 }
-
-	/**
-	 * Get the errors for the current field
-	 *
-	 * @param string $name A field name
-	 * @return string       An error message
-	 * @static 
-	 */
-	 public static function getErrors($name = null){
-		return Former\Former::getErrors($name);
-	 }
-
-	/**
-	 * Get a rule from the Rules array
-	 *
-	 * @param string $name The field to fetch
-	 * @return array        An array of rules
-	 * @static 
-	 */
-	 public static function getRules($name){
-		return Former\Former::getRules($name);
-	 }
-
-	/**
-	 * Returns the current Form
-	 *
-	 * @return Form
-	 * @static 
-	 */
-	 public static function form(){
-		return Former\Former::form();
-	 }
-
-	/**
-	 * Get the current field instance
-	 *
-	 * @return Field
-	 * @static 
-	 */
-	 public static function field(){
-		return Former\Former::field();
-	 }
-
-}
-
-class Notification extends Krucas\Notification\Facades\Notification{
-	/**
-	 * Creates new instance.
-	 *
-	 * @param \Illuminate\Config\Repository $configRepository
-	 * @param \Illuminate\Session\Store $sessionStore
-	 * @static 
-	 */
-	 public static function __construct($configRepository, $sessionStore){
-		 Krucas\Notification\Notification::__construct($configRepository, $sessionStore);
-	 }
-
-	/**
-	 * Returns container instance.
-	 *
-	 * @param null $container
-	 * @param callable $callback
-	 * @return mixed
-	 * @static 
-	 */
-	 public static function container($container = null, $callback = null){
-		return Krucas\Notification\Notification::container($container, $callback);
-	 }
-
-	/**
-	 * Returns config repository instance.
-	 *
-	 * @return \Illuminate\Config\Repository
-	 * @static 
-	 */
-	 public static function getConfigRepository(){
-		return Krucas\Notification\Notification::getConfigRepository();
-	 }
-
-	/**
-	 * Returns session store instance.
-	 *
-	 * @return \Illuminate\Session\Store
-	 * @static 
-	 */
-	 public static function getSessionStore(){
-		return Krucas\Notification\Notification::getSessionStore();
-	 }
-
-	/**
-	 * Calls NotificationBag function for a default container.
-	 *
-	 * @param $name
-	 * @param $arguments
-	 * @return \Krucas\Notification\NotificationBag|null
-	 * @static 
-	 */
-	 public static function __call($name, $arguments){
-		return Krucas\Notification\Notification::__call($name, $arguments);
 	 }
 
 }

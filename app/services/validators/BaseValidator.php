@@ -1,6 +1,9 @@
-<?php
+<?php namespace Tbfmp;
 
-abstract class MyValidator {
+use Input;
+use Validator;
+
+abstract class BaseValidator {
 	
 	protected $input;
 	

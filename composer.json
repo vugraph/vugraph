@@ -4,10 +4,7 @@
 	"keywords": ["framework", "laravel"],
 	"require": {
 		"laravel/framework": "4.0.*",
-        "cartalyst/sentry": "2.0.*",
-        "laravelbook/ardent": "dev-master",
-        "anahkiasen/former": "dev-master",
-        "edvinaskrucas/notification": "1.*"
+        "cartalyst/sentry": "2.0.*"
 	},
     "require-dev": {
         "barryvdh/laravel-ide-helper": "1.*",
@@ -30,10 +27,10 @@
 			"php artisan optimize"
 		],
 		"pre-update-cmd": [
-            "php artisan ide-helper:generate",
 			"php artisan clear-compiled"
 		],
 		"post-update-cmd": [
+            "php artisan ide-helper:generate",
 			"php artisan optimize"
 		],
 		"post-create-project-cmd": [

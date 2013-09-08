@@ -1,4 +1,4 @@
-<?php
+<?php namespace Tbfmp;
 
 class HomeController extends BaseController {
 
@@ -9,7 +9,7 @@ class HomeController extends BaseController {
 	}
 	public function getIndex()
 	{
-		$this->showPage('site.home');
+		$this->showPage('home');
 	}
 	
 	public function missingMethod($parameters)

@@ -11,14 +11,15 @@
 |
 */
 
-ClassLoader::addDirectories(array(
+//ClassLoader::addDirectories(array(
 
-	app_path().'/commands',
-	app_path().'/controllers',
-	app_path().'/models',
-	app_path().'/database/seeds',
+//	app_path().'/Commands',
+//	app_path().'/Controllers',
+//	app_path().'/Services',
+//	app_path().'/Models',
+//	app_path().'/Database/Seeds',
 
-));
+//));
 
 /*
 |--------------------------------------------------------------------------
@@ -84,6 +85,6 @@ require app_path().'/filters.php';
 
 require app_path().'/helpers/macros.php';
 
-View::composer('layouts._partial.navbar.homemenu', 'MenuComposer');
+View::composer('layouts._partial.navbar.homemenu', 'Tbfmp\MenuComposer');
 
-View::composer('layouts._partial.sidebar.usermenu', 'UserMenuComposer');
+View::composer('layouts._partial.sidebar.usermenu', 'Tbfmp\UserMenuComposer');

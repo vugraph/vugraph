@@ -23,16 +23,20 @@ class SentrySeeder extends Seeder {
 				'permissions' => array('national' => 1)
 			));
 			$groupBolgesel = Sentry::createGroup(array(
-				'name'        => 'Bölge Yetkilisi',
+				'name'        => 'regional',
 				'permissions' => array('regional' => 1)
 			));
 			$groupKulup = Sentry::createGroup(array(
 				'name'        => 'club',
-				'permissions' => array('temsilci.kulup' => 1)
+				'permissions' => array('club' => 1)
 			));
 			Sentry::createGroup(array(
 				'name'        => 'online',
 				'permissions' => array('online' => 1)
+			));
+			Sentry::createGroup(array(
+				'name'        => 'player',
+				'permissions' => array('player' => 1)
 			));
 		} catch (Exception $e) {
 			die($e->getMessage());

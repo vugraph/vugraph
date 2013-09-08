@@ -1,4 +1,4 @@
-<?php
+<?php namespace Tbfmp;
 
 /**
  * An Eloquent Model: 'Group'
@@ -10,9 +10,5 @@
  * @property \Carbon\Carbon $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\Cartalyst\Sentry\Users\Eloquent\User[] $users
  */
-class Group extends Cartalyst\Sentry\Groups\Eloquent\Group {
-	public static $rules = array(
-		
-	);
-	
+class Group extends \Cartalyst\Sentry\Groups\Eloquent\Group {
 }
