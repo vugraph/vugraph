@@ -4,7 +4,7 @@ class HomeController extends BaseController {
 
 	public function __construct() {
 		parent::__construct();
-		$this->navbar = 'layouts._partial.navbar.homemenu';
+//		$this->navbar = 'layouts._partial.navbar.homemenu';
 //		$this->breadcrumb = 'layouts._partial.navbar.breadcrumb';
 	}
 	public function getIndex()

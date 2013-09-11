@@ -24,6 +24,8 @@
 class Club extends BaseModel {
 
 	protected $table = 'clubs';
+	
+	protected $softDelete = true;
 
 	public function region()
 	{

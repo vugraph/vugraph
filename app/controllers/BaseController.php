@@ -16,7 +16,11 @@ class BaseController extends Controller {
 
 	protected $title;
 	
-	protected $heading;
+	protected $styles;
+	
+	protected $style;
+	
+	protected $scripts;
 	
 	protected $viewdata = array();
 	
@@ -24,6 +28,7 @@ class BaseController extends Controller {
 	{
 		$this->beforeFilter('csrf', array('on' => 'post'));
 		$this->title = trans('common.sitename');
+		$this->navbar = 'layouts._partial.navbar.menu';
 	}
 
 	protected function setupLayout()
@@ -47,8 +52,11 @@ class BaseController extends Controller {
 
 	protected function showPage($view, $data = array())
 	{
-		if (isset($this->title)) $this->layout->title = $this->title;
-		if (isset($this->heading)) $this->layout->heading = $this->heading;
+		$this->layout->title = $this->viewdata['title'] = $this->title;
+		if (!empty($this->styles)) $this->layout->styles = $this->styles;
+		if (!empty($this->style)) $this->layout->style = $this->style;
+		if (!empty($this->scripts)) $this->layout->scripts = $this->scripts;
+		if (!empty($this->script)) $this->layout->script = $this->script;
 		$this->setupNavbar();
 		$this->setupSidebar();
 		$this->layout->content = View::make($view, array_merge($this->viewdata, $data));

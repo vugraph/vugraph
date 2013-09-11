@@ -1,5 +1,5 @@
 <?php
 
 return array(
-	'title' => 'Kulüpler'
+	'title' => 'Kulüpleri Yönet'
 );

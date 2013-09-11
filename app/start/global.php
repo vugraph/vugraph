@@ -85,6 +85,6 @@ require app_path().'/filters.php';
 
 require app_path().'/helpers/macros.php';
 
-View::composer('layouts._partial.navbar.homemenu', 'Tbfmp\MenuComposer');
+View::composer('layouts._partial.navbar.menu', 'Tbfmp\MenuComposer');
 
-View::composer('layouts._partial.sidebar.usermenu', 'Tbfmp\UserMenuComposer');
+//View::composer('layouts._partial.navbar.usermenu', 'Tbfmp\UserMenuComposer');

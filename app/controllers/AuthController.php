@@ -15,7 +15,7 @@ class AuthController extends BaseController {
 
 	public function __construct() {
 		parent::__construct();
-		$this->navbar = 'layouts._partial.navbar.homemenu';
+//		$this->navbar = 'layouts._partial.navbar.menu';
 //		$this->breadcrumb = 'layouts._partial.navbar.breadcrumb';
 	}
 
@@ -56,7 +56,7 @@ class AuthController extends BaseController {
 	
 	public function getRegisterSuccess()
 	{
-		$this->title = $this->heading = trans('auth/register.success_title');
+		$this->title = trans('auth/register.success_title');
 		$this->withInfo(trans('auth/register.success_content'));
 		$this->showPage('result');
 	}
@@ -77,7 +77,7 @@ class AuthController extends BaseController {
 		} catch (Exception $e) {
 			$err = $e->getMessage();
 		}
-		$this->title = $this->heading = trans('auth/register.activate_error_title');
+		$this->title = trans('auth/register.activate_error_title');
 		$this->withError($err);
 		$this->showPage('result');
 	}
@@ -101,7 +101,7 @@ class AuthController extends BaseController {
 				),
 				false
 			);
-			return Redirect::route('user.home');
+			return Redirect::route('user.account.notifications');
 		} catch (WrongPasswordException $e) {
 			$err = trans('auth/login.invalid_credentials');
 		} catch (UserNotFoundException $e) {
@@ -151,7 +151,7 @@ class AuthController extends BaseController {
 	
 	public function getResetPasswordSuccess()
 	{
-		$this->title = $this->heading = trans('auth/reset-password.success_title');
+		$this->title = trans('auth/reset-password.success_title');
 		$this->withInfo(trans('auth/reset-password.success_content'));
 		$this->showPage('result');
 	}
@@ -170,7 +170,7 @@ class AuthController extends BaseController {
 			$this->title = trans('auth/reset-password.change_title');			
 			$this->showPage('auth.reset-password-change');
 		} else {
-			$this->title = $this->heading = trans('auth/reset-password.change_error_title');
+			$this->title = trans('auth/reset-password.change_error_title');
 			$this->withError($err);
 			$this->showPage('result');
 		}

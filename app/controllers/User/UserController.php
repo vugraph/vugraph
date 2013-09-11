@@ -1,9 +1,10 @@
 <?php namespace Tbfmp\User;
 
 use Tbfmp\BaseController;
+use Redirect;
 use Sentry;
 
-abstract class UserBaseController extends BaseController {
+class UserController extends BaseController {
 
 	protected $user;
 
@@ -11,9 +12,9 @@ abstract class UserBaseController extends BaseController {
 	{
 		parent::__construct();
 		$this->beforeFilter('auth');
-		$this->navbar = 'layouts._partial.navbar.homemenu';
-		$this->sidebar = 'layouts._partial.sidebar.usermenu';
 		$this->user = Sentry::getUser();
+//		$this->navbar = 'layouts._partial.navbar.menu';
+//		$this->sidebar = 'layouts._partial.sidebar.usermenu';
 	}
 	
 	protected function setupLayout()
@@ -22,4 +23,8 @@ abstract class UserBaseController extends BaseController {
 		$this->viewdata['user'] = $this->user;
 	}
 	
+	public function getIndex()
+	{
+		return Redirect::route('user.account');
+	}
 }

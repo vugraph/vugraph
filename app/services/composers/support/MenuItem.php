@@ -2,13 +2,13 @@
 
 class MenuItem {
 	public $route;
-	public $icon;
+	public $content;
 	public $items;
 	public $selected;
-	public function __construct($route, $icon = null, $items = array(), $selected = false)
+	public function __construct($route, $content, $items = array(), $selected = false)
 	{
 		$this->route = $route;
-		$this->icon = $icon;
+		$this->content = $content;
 		$this->items = $items;
 		$this->selected = $selected;
 	}

@@ -12,6 +12,11 @@
 <?= HTML::style('css/bootstrap.css') ?>
 <?php //HTML::style('css/bootstrap-responsive.css') ?>
 <?= HTML::style('css/style.css') ?>
+<?php if (isset($styles)): ?>
+<?php foreach($styles as $s): ?>
+<?= HTML::style($s) ?>
+<?php endforeach; ?>
+<?php endif; ?>
 <?php if (isset($style)): ?>
 <style>
 <?= $style."\n" ?>
@@ -34,11 +39,6 @@
 </div>
 <?php endif; ?>
 <div class="span<?= isset($sidebar) ? '9' : '12' ?>">
-<?php if (isset($heading)): ?>
-<div id="heading" class="page-header">
-<h1><small><?= $heading ?></small></h1>
-</div>
-<?php endif; ?>
 <div id="content">
 <?= $content."\n" ?>
 </div>
@@ -53,5 +53,15 @@
 </div>
 <?= HTML::script('js/jquery-1.10.2.js') ?>
 <?= HTML::script('js/bootstrap.js') ?>
+<?php if (isset($scripts)): ?>
+<?php foreach($scripts as $s): ?>
+<?= HTML::script($s) ?>
+<?php endforeach; ?>
+<?php endif; ?>
+<?php if (isset($script)): ?>
+<script>
+<?= $script ?>
+</script>
+<?php endif; ?>
 </body>
 </html>

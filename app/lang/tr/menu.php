@@ -15,11 +15,11 @@ return array(
 	'menu4' => 'Menu 4',
 
 	/* User */
-	'user' => 'Kullanıcı İşlemleri',
+	'user_panel' => 'Kullanıcı İşlemleri',
 
 	/* Auth */
-	'auth.login' => 'Giriş',
-	'auth.logout' => 'Çıkış',
-	'auth.register' => 'Kaydol',
+	'login' => 'Giriş',
+	'logout' => 'Çıkış',
+	'register' => 'Kaydol',
 
 );

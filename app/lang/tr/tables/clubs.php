@@ -1,6 +1,8 @@
 <?php
 
 return array(
+	'singular' => 'Kulüp',
+	'plural' => 'Kulüpler',
 	'id' => 'No',
 	'city_id' => 'İl Plaka No',
 	'name' => 'Ad',

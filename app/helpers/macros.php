@@ -49,7 +49,7 @@ HTML::macro('_messages', function($errors = null) {
 		}
 		$result .= '</ul>'."\n";
 	}
-	return $result;
+	return '<div id="messages">'."\n".$result.'</div>'."\n";
 });
 Form::macro('_row', function($left, $right, $fields = null) {
 	$state = '';
@@ -94,7 +94,7 @@ Form::macro('_cancel', function($title = null, $link = null, $failDefault = 'hom
 	return '<a href="'.$link.'" class="btn">'.$title.'</a>';
 });
 Form::macro('_userCancel', function($title = null, $link = null) {
-	return Form::_cancel($title, $link, 'user.home');
+	return Form::_cancel($title, $link, 'user.account.notifications');
 });
 Form::macro('_submit', function($value = null, $options = array()) {
 	if (!isset($options['class'])) $options['class'] = 'btn btn-primary';

@@ -4,24 +4,23 @@ use Exception;
 use Input;
 use Redirect;
 
-class AccountController extends UserBaseController {
+class AccountController extends UserController {
 	public function getIndex()
 	{
-		$this->getHome();
+		return Redirect::route('user.account.notifications');
 	}
 	
-	public function getHome()
+	public function getNotifications()
 	{
-		$this->showPage('user.home');
+		$this->showPage('user.account.notifications');
 	}
-	
-	public function getAccountInformation()
+	public function getDetails()
 	{
-		$this->title = trans('user/account-information.title');
-		$this->showPage('user.account-information');
+		$this->title = trans('user/account/details.title');
+		$this->showPage('user.account/details');
 	}
 	
-	public function postAccountInformation()
+	public function postDetails()
 	{
 		$validation = new AccountInformationValidator;
 		if (!$validation->passes()) return Redirect::back()->onlyInput('first_name', 'last_name')->withErrors($validation->getErrors());
@@ -30,9 +29,9 @@ class AccountController extends UserBaseController {
 			$this->user->first_name = trim(Input::get('first_name'));
 			$this->user->last_name = trim(Input::get('last_name'));
 			if ($this->user->save()) {
-				return Redirect::back()->with('message-success', trans('user/account-information.success_message'));
+				return Redirect::back()->with('message-success', trans('user/account/details.success_message'));
 			} else {
-				$err = trans('user/account-information.error_message');
+				$err = trans('user/account/details.error_message');
 			}
 		} catch (Exception $e) {
 			$err = $e->getMessage();
@@ -40,13 +39,13 @@ class AccountController extends UserBaseController {
 		return Redirect::back()->onlyInput('first_name', 'last_name')->with('message-error', $err);
 	}
 	
-	public function getChangePassword()
+	public function getPassword()
 	{
-		$this->title = trans('user/change-password.title');
-		$this->showPage('user.change-password');
+		$this->title = trans('user/account/password.title');
+		$this->showPage('user.account.password');
 	}
 	
-	public function postChangePassword()
+	public function postPassword()
 	{
 		$validation = new ChangePasswordValidator;
 		if (!$validation->passes()) return Redirect::back()->withErrors($validation->getErrors());
@@ -55,12 +54,12 @@ class AccountController extends UserBaseController {
 			if ($this->user->checkPassword(Input::get('current_password'))) {
 				$this->user->password = Input::get('password');
 				if ($this->user->save()) {
-					return Redirect::route('user.change-password.success')->with('message-success', trans('user/change-password.success_message'));
+					return Redirect::route('user.account.password.success')->with('message-success', trans('user/account/password.success_message'));
 				} else {
-					$err = trans('user/change-password.error_message');
+					$err = trans('user/account/password.error_message');
 				}
 			} else {
-				$err = trans('user/change-password.wrong_password_message');
+				$err = trans('user/account/password.wrong_password_message');
 			}
 		} catch (Exception $e) {
 			$err = $e->getMessage();
@@ -68,9 +67,9 @@ class AccountController extends UserBaseController {
 		return Redirect::back()->with('message-error', $err);
 	}
 	
-	public function getChangePasswordSuccess()
+	public function getPasswordSuccess()
 	{
-		$this->title = $this->heading = trans('user/change-password.success_title');
+		$this->title = trans('user/account/password.success_title');
 		$this->showPage('result');
 	}
 	

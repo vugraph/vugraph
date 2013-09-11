@@ -1,6 +1,6 @@
 <?php
 Form::_autofocus('first_name');
-echo Form::_open();
+echo Form::_open(array('method' => 'delete'));
 echo Form::_fieldsetOpen(trans('auth/register.title'));
 echo Form::_messages($errors->all());
 echo Form::_row(
