@@ -16,5 +16,7 @@ return array(
 	'previous' => '&laquo; Previous',
 
 	'next'     => 'Next &raquo;',
+	
+	'showing' => 'Showing results :first-:last of :total.'
 
 );

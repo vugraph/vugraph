@@ -27,14 +27,14 @@ class Club extends BaseModel {
 	
 	protected $softDelete = true;
 
-	public function region()
-	{
-		return $this->belongsTo('Region');
-	}
-
+//	public function region()
+//	{
+//		return $this->belongsTo('Region');
+//	}
+//
 	public function city()
 	{
-		return $this->belongsTo('City');
+		return $this->belongsTo('Tbfmp\City');
 	}
 
 }

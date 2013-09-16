@@ -5,6 +5,7 @@ return array(
 	'plural' => 'Kulüpler',
 	'id' => 'No',
 	'city_id' => 'İl Plaka No',
+	'city_name' => 'İl',
 	'name' => 'Ad',
 	'shortname' => 'Kısa Ad',
 	'address' => 'Adres',

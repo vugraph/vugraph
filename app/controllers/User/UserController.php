@@ -1,8 +1,10 @@
 <?php namespace Tbfmp\User;
 
-use Tbfmp\BaseController;
+use Input;
 use Redirect;
 use Sentry;
+use Session;
+use Tbfmp\BaseController;
 
 class UserController extends BaseController {
 

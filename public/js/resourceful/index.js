@@ -3,7 +3,7 @@ $(function() {
 	f = $('form#destroy');
 //	f.on('submit', function() {
 //	});
-	f.find('button.destroy').click('click', function(e) {
+	f.find('button.destroy').on('click', function(e) {
 		e.preventDefault();
 		if (confirm(f.data('delete-dialog'))) {
 			$(document.body).fadeOut();
@@ -12,5 +12,9 @@ $(function() {
 				.submit();
 		}
 		return false;
+	});
+	$('ul#perpage').find('a').on('click', function() {
+		$(document.body).fadeOut();
+		return true;
 	});
 });

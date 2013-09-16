@@ -16,5 +16,9 @@ return array(
 	'previous' => '&laquo; Geri',
 
 	'next'     => 'İleri &raquo;',
+	
+	'showing'  => 'Toplam :total öğeden :first-:last arası gösteriliyor.',
+	
+	'total'    => '{0} Hiçbir öğe bulunmuyor.|[1,9] Sadece :total öğe bulundu.|[10,Inf]Toplam :total öğe bulundu.'
 
 );

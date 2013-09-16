@@ -63,5 +63,20 @@
 <?= $script ?>
 </script>
 <?php endif; ?>
+<p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
+<ul>
+<?php
+foreach(DB::getQueryLog() as $sql) {
+	echo '<li><dl>';
+	foreach ($sql as $key => $item) {
+		echo '<dt>'.$key.'</dt>';
+		echo '<dd>';
+		print_r($item);
+		echo '</dd>';
+	}
+	echo '</dl></li>'."\n";
+}
+?>
+</ul>
 </body>
 </html>

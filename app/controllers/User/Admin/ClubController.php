@@ -1,58 +1,40 @@
 <?php namespace Tbfmp\User\Admin;
 
+use DB;
 use Input;
 use Redirect;
+use Request;
 use Session;
 use Tbfmp\Club;
 use Tbfmp\MenuItem;
+use Tbfmp\User\PaginationHelper;
 
 class ClubController extends AdminController {
 	
-	protected $defaultOrderBy = 'name';
-	protected $orderByFields = array(
-		'id',
-		'name',
-		'city_id',
-		'shortname'
-	);
-	protected $perpageValues = array(
-		10,
-		20,
-		50,
-		100
-	);
-
 	public function index()
 	{
-		if (Input::has('perpage')) {
-			$perpage = intval(Input::get('perpage'));
-			if (in_array($perpage, $this->perpageValues)) Session::put('prefs.admin.clubs.perpage', $perpage);
-		}
-		if (Session::has('prefs.admin.clubs.perpage')) $perpage = Session::get('prefs.admin.clubs.perpage');
-		else $perpage = 20;
-
-		$appends = array();
-		if (Input::has('order') && in_array($order = Input::get('order'), $this->orderByFields) && $order != $this->defaultOrderBy) $appends['order'] = $order;
-		else $order = $this->defaultOrderBy;
-		if (Input::has('dir') && ($dir = Input::get('dir')) == 'desc') $appends['dir'] = $dir;
-		else $dir = 'asc';
-
+		$fields = array('id' => 'clubs.id', 'city_name' => 'cities.name', 'name' => 'clubs.name', 'shortname' => 'clubs.shortname');
+		$orderByFields = array('id', 'city_name', 'name');
+		$paginationHelper = new PaginationHelper('clubs', $orderByFields, 'id');
+		if (Input::has('per-page')) $paginationHelper->setPerPage(Input::get('per-page'));
+		if (Input::has('order-by')) $paginationHelper->setOrderBy(Input::get('order-by'));
+		if (Input::has('order-by-dir')) $paginationHelper->setOrderByDir(Input::get('order-by-dir'));
 		$this->title = trans('user/admin/clubs.title');
 		$this->scripts[] = 'js/resourceful/index.js';
-		$this->viewdata['toolbox'] = array(
-			new MenuItem('user.admin.clubs.create', '<i class="icon-plus-sign icon-white"></i> '.trans('tables/common.add_new'))
-		);
-		$this->viewdata['table'] = 'clubs';
-		$this->viewdata['fields'] = array('id', 'name', 'city_id', 'shortname');
-		$this->viewdata['orderByAppends'] = array();
-		foreach ($this->orderByFields as $orderByField) {
-			$this->viewdata['orderByLinks'][$orderByField] = array(
-//				'image' => '<i class="icon-chevron-up"></i>';
-//				'link' => URL::
-			);
-		}
-		
-		$this->viewdata['paginator'] = Club::orderBy($order, $dir)->paginate($perpage, $this->viewdata['fields'])->appends($appends);
+		$this->viewdata['fields'] = array_keys($fields);
+		$this->viewdata['perPageOptions'] = $paginationHelper->getPerPageOptions();
+		$this->viewdata['orderBy'] = $paginationHelper->getOrderByLinks();
+		array_walk($fields, function(&$value, $key) { if (!is_numeric($key)) $value =  $value.' AS '.$key; });
+		$rset = DB::table('clubs')
+			->select($fields)
+			->join('cities', 'clubs.city_id', '=', 'cities.id')
+			->whereNull('deleted_at')
+			->orderBy($paginationHelper->getOrderBy(), $paginationHelper->getOrderByDir());
+		if ($paginationHelper->getOrderBy() != 'id')
+			$rset->orderBy('clubs.id', $paginationHelper->getOrderByDir());
+		$paginator = $rset->paginate($paginationHelper->getPerPage())->appends($paginationHelper->getAppends());
+		if (Request::query('page') > $paginator->getLastPage()) return Redirect::to($paginator->getUrl($paginator->getLastPage()));
+		$this->viewdata['paginator'] = $paginator;
 		$this->showPage('user.admin.clubs.index');
 	}
 	
