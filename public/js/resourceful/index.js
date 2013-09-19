@@ -17,4 +17,7 @@ $(function() {
 		$(document.body).fadeOut();
 		return true;
 	});
+	$('#filterbutton').on('click', function() {
+		$('#filter').toggle();
+	});
 });

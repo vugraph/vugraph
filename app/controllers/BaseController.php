@@ -8,6 +8,8 @@ class BaseController extends Controller {
 
 	protected $layout = 'layouts.default';
 	
+	protected $page;
+
 	protected $navbar;
 	
 	protected $breadcrumb;
@@ -60,6 +62,15 @@ class BaseController extends Controller {
 		$this->setupNavbar();
 		$this->setupSidebar();
 		$this->layout->content = View::make($view, array_merge($this->viewdata, $data));
+	}
+	
+	protected function _show($view)
+	{
+		$this->layout->page = $this->page;
+		if (!empty($this->page->navbar)) $this->layout->nest('navbar', $this->page->navbar, array('menu' => $this->page->menu));
+		if (!empty($this->page->breadcrumb)) $this->layout->nest('breadcrumb', $this->page->breadcrumb);
+		if (!empty($this->page->sidebar)) $this->layout->nest('sidebar', $this->page->sidebar);
+		$this->layout->nest('content', $view, array('data' => $this->page->data));
 	}
 	
 	private function instantMessage($type, $msg)

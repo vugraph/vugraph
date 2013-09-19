@@ -6,20 +6,20 @@
 <meta name="keywords" content="">
 <meta name="author" content="Guray Sunamak, Odeva Internet Teknolojileri - www.odeva.com">
 <meta name="description" content="">
-<?php if (isset($title)): ?>
-<title><?= $title ?></title>
+<?php if (!empty($page->title)): ?>
+<title><?= $page->title ?></title>
 <?php endif; ?>
 <?= HTML::style('css/bootstrap.css') ?>
 <?php //HTML::style('css/bootstrap-responsive.css') ?>
 <?= HTML::style('css/style.css') ?>
-<?php if (isset($styles)): ?>
-<?php foreach($styles as $s): ?>
+<?php if (!empty($page->styleFiles)): ?>
+<?php foreach($page->styleFiles as $s): ?>
 <?= HTML::style($s) ?>
 <?php endforeach; ?>
 <?php endif; ?>
-<?php if (isset($style)): ?>
+<?php if (!empty($page->style)): ?>
 <style>
-<?= $style."\n" ?>
+<?= $page->style ?>
 </style>
 <?php endif; ?>
 <!--[if lt IE 9]>
@@ -29,16 +29,16 @@
 </head>
 <body>
 <div id="container" class="container">
-<?= isset($navbar) ? $navbar."\n" : '' ?>
-<?= isset($breadcrumb) ? $breadcrumb."\n" : '' ?>
+<?= empty($navbar) ? '' : $navbar."\n" ?>
+<?= empty($breadcrumb) ? '' : $breadcrumb."\n" ?>
 <div id="middle" class="row">
-<?php if (isset($sidebar)): ?>
+<?php if (!empty($sidebar)): ?>
 <div id="sidebar" class="span3">
 <!--p><a href="<?= route('home') ?>" title="<?= trans('common.brandname') ?>"><?= HTML::image('img/blank.gif', 'Logo', array('class' => 'img-circle img-polaroid', 'width' => '140', 'height' => '140')) ?></a></p-->
 <?= $sidebar."\n" ?>
 </div>
 <?php endif; ?>
-<div class="span<?= isset($sidebar) ? '9' : '12' ?>">
+<div class="span<?= empty($sidebar) ? '12' : '9' ?>">
 <div id="content">
 <?= $content."\n" ?>
 </div>
@@ -53,14 +53,14 @@
 </div>
 <?= HTML::script('js/jquery-1.10.2.js') ?>
 <?= HTML::script('js/bootstrap.js') ?>
-<?php if (isset($scripts)): ?>
-<?php foreach($scripts as $s): ?>
+<?php if (!empty($page->scriptFiles)): ?>
+<?php foreach($page->scriptFiles as $s): ?>
 <?= HTML::script($s) ?>
 <?php endforeach; ?>
 <?php endif; ?>
-<?php if (isset($script)): ?>
+<?php if (!empty($page->script)): ?>
 <script>
-<?= $script ?>
+<?= $page->script ?>
 </script>
 <?php endif; ?>
 <p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>

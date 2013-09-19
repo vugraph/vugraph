@@ -5,6 +5,7 @@ use Input;
 use Redirect;
 use Session;
 use Sentry;
+use Validator;
 use Cartalyst\Sentry\Users\UserNotFoundException;
 use Cartalyst\Sentry\Users\WrongPasswordException;
 use Cartalyst\Sentry\Users\UserNotActivatedException;
@@ -21,14 +22,22 @@ class AuthController extends BaseController {
 
 	public function getRegister()
 	{
-		$this->title = trans('auth/register.title');
-		$this->showPage('auth.register');
+		$this->page = new SitePage(trans('auth/register.title'));
+		$this->_show('auth.register');
 	}
 	
 	public function postRegister()
 	{
-		$validation = new RegisterValidator;
-		if (!$validation->passes()) return Redirect::back()->exceptInput('password', 'password_confirmation')->withErrors($validation->getErrors());
+		$rules = array(
+			'first_name'			=> 'required|between:2,30',
+			'last_name'				=> 'required|between:2,30',
+			'email'					=> 'required|email|unique:users',
+			'password'				=> 'required|between:6,30|confirmed',
+			'password_confirmation'	=> 'required|between:6,30'
+		);
+		$validator = Validator::make(Input::all(), $rules);
+		$validator->setAttributeNames(trans('auth/register.labels'));
+		if (!$validator->passes()) return Redirect::back()->exceptInput('password', 'password_confirmation')->withErrors($validator->messages());
 		try {
 			$user = Sentry::register(array(
 				'first_name' => trim(Input::get('first_name')),
@@ -84,8 +93,11 @@ class AuthController extends BaseController {
 
 	public function getLogin()
 	{
-		$this->title = trans('auth/login.title');
-		$this->showPage('auth.login');
+		$page = new SitePage();
+		$page->setTitle(trans('auth/login.title'));
+		$this->_show('auth.login', $page);
+//		$this->title = trans('auth/login.title');
+//		$this->showPage('auth.login');
 	}
 	
 	public function postLogin()

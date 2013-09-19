@@ -2,10 +2,10 @@
 	<div class="navbar-inner">
 		<div class="container">
 			<a href="<?= url(Config::get('app.brandurl')) ?>" class="brand"><?= trans('common.brandname') ?></a>
-<?php		foreach ($menu as $lrkey => $lr): ?>
+<?php		foreach (array('left', 'right') as $lr): ?>
 <?php		$cnt = 0; ?>
-			<ul class="nav<?= $lrkey == 'right' ? ' pull-right' : '' ?>">
-<?php			foreach ($lr as $item): ?>
+			<ul class="nav<?= $lr == 'right' ? ' pull-right' : '' ?>">
+<?php			foreach ($menu->$lr as $item): ?>
 <?php			if (empty($item->items)): ?>
 				<li<?= $item->selected ? ' class="active"' : '' ?>>
 					<a href="<?= route($item->route) ?>"><?= empty($item->icon) ? '' : '<i class="'.$item->icon.'"></i> ' ?><?= $item->content ?></a>
@@ -22,7 +22,7 @@
 					</ul>
 				</li>
 <?php			endif; ?>
-<?php			if (++$cnt < count($lr)): ?>
+<?php			if (++$cnt < count($menu->$lr)): ?>
 				<li class="divider-vertical"></li>
 <?php			endif; ?>
 <?php			endforeach; ?>
@@ -31,4 +31,4 @@
 		</div>
 	</div>
 </div>
-
+<?php //var_dump($menu);

@@ -2,13 +2,15 @@
 
 return array(
 	'title' => 'Siteye Kayıt',
-	'first_name' => 'Adınız',
-	'last_name' => 'Soyadınız',
-	'email' => 'E-posta adresiniz',
+	'labels' => array(
+		'first_name' => 'Adınız',
+		'last_name' => 'Soyadınız',
+		'email' => 'E-posta adresiniz',
+		'password' => 'Şifre belirleyiniz',
+		'password_confirmation' => 'Şifre (tekrar)'
+	),
 	'email_help' => 'Adresinize onay e-postası gelecektir',
-	'password' => 'Şifre belirleyiniz',
 	'password_help' => 'En az 6 en çok 30 karakter',
-	'password_confirmation' => 'Şifre (tekrar)',
 	'register' => 'Kaydol',
 	'success_title' => 'Kaydınızı Tamamlamak İçin',
 	'success_message' => 'Kayıt onay e-postası adresinize başarıyla gönderilmiştir.',

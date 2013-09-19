@@ -11,9 +11,6 @@
 |
 */
 
-
-/** Authorization **/
-
 /* Registration */
 Route::get('register', array('as' => 'auth.register', 'uses' => 'Tbfmp\AuthController@getRegister'));
 Route::post('register', 'Tbfmp\AuthController@postRegister');
@@ -37,38 +34,38 @@ Route::get('reset-password/change/success', array('as' => 'auth.login.reset-pass
 
 /* User */
 Route::group(array('prefix' => 'user'), function() {
-	Route::get('/', array('as' => 'user', 'uses' => 'Tbfmp\User\UserController@getIndex'));
+	Route::get('/', array('as' => 'user', 'uses' => 'Tbfmp\UserController@getIndex'));
 	/* Account */
 	Route::group(array('prefix' => 'account'), function() {
-		Route::get('/', array('as' => 'user.account', 'uses' => 'Tbfmp\User\AccountController@getIndex'));
-		Route::get('notifications', array('as' => 'user.account.notifications', 'uses' => 'Tbfmp\User\AccountController@getNotifications'));
-		Route::get('details', array('as' => 'user.account.details', 'uses' => 'Tbfmp\User\AccountController@getDetails'));
-		Route::post('details', 'Tbfmp\User\AccountController@postDetails');
+		Route::get('/', array('as' => 'user.account', 'uses' => 'Tbfmp\AccountController@getIndex'));
+		Route::get('notifications', array('as' => 'user.account.notifications', 'uses' => 'Tbfmp\AccountController@getNotifications'));
+		Route::get('details', array('as' => 'user.account.details', 'uses' => 'Tbfmp\AccountController@getDetails'));
+		Route::post('details', 'Tbfmp\AccountController@postDetails');
 		/* Account Password */
 		Route::group(array('prefix' => 'password'), function() {
-			Route::get('/', array('as' => 'user.account.password', 'uses' => 'Tbfmp\User\AccountController@getPassword'));
-			Route::post('/', 'Tbfmp\User\AccountController@postPassword');
-			Route::get('success', array('as' => 'user.account.password.success', 'uses' => 'Tbfmp\User\AccountController@getPasswordSuccess'));
+			Route::get('/', array('as' => 'user.account.password', 'uses' => 'Tbfmp\AccountController@getPassword'));
+			Route::post('/', 'Tbfmp\AccountController@postPassword');
+			Route::get('success', array('as' => 'user.account.password.success', 'uses' => 'Tbfmp\AccountController@getPasswordSuccess'));
 		});
 	});
 	/* Club User */
 	Route::group(array('prefix' => 'club'), function() {
-		Route::get('/', array('as' => 'user.club', 'uses' => 'Tbfmp\User\ClubController@getIndex'));
+		Route::get('/', array('as' => 'user.club', 'uses' => 'Tbfmp\ClubController@getIndex'));
 		/* Tournament */
 		Route::group(array('prefix' => 'tournaments'), function() {
-			Route::get('/', array('as' => 'user.club.tournaments', 'uses' => 'Tbfmp\User\TournamentController@getIndex'));
+			Route::get('/', array('as' => 'user.club.tournaments', 'uses' => 'Tbfmp\TournamentController@getIndex'));
 		});
 		
 	});
 	Route::model('club', 'Tbfmp\Club');
 	/* Admin User */
 	Route::group(array('prefix' => 'admin'), function() {
-		Route::get('/', array('as' => 'user.admin', 'uses' => 'Tbfmp\User\Admin\AdminController@getIndex'));
+		Route::get('/', array('as' => 'user.admin', 'uses' => 'Tbfmp\AdminController@getIndex'));
 		/* Club */
 		Route::group(array('prefix' => 'clubs'), function() {
-			Route::get('/', array('as' => 'user.admin.clubs.index', 'uses' => 'Tbfmp\User\Admin\ClubController@index'));
-			Route::any('/{club}', array('as' => 'user.admin.clubs.destroy', 'uses' => 'Tbfmp\User\Admin\ClubController@destroy'));
-			Route::get('create', array('as' => 'user.admin.clubs.create', 'uses' => 'Tbfmp\User\Admin\ClubController@getCreate'));
+			Route::get('/', array('as' => 'user.admin.clubs.index', 'uses' => 'Tbfmp\ClubController@index'));
+			Route::any('/{club}', array('as' => 'user.admin.clubs.destroy', 'uses' => 'Tbfmp\ClubController@destroy'));
+			Route::get('create', array('as' => 'user.admin.clubs.create', 'uses' => 'Tbfmp\ClubController@getCreate'));
 		});
 	});
 });
@@ -116,6 +113,8 @@ Route::get('menu3', array('as' => 'menu3', 'uses' => 'Tbfmp\HomeController@getMe
 Route::get('menu3a', array('as' => 'menu3a', 'uses' => 'Tbfmp\HomeController@getMenu3a'));
 Route::get('menu3b', array('as' => 'menu3b', 'uses' => 'Tbfmp\HomeController@getMenu3b'));
 Route::get('menu4', array('as' => 'menu4', 'uses' => 'Tbfmp\HomeController@getMenu4'));
+
+//Route::controller('/', 'Tbfmp\HomeController');
 /*
 Route::get('/', 'HomeController@getGuncel');
 Route::get('klasman', 'HomeController@getKlasman');

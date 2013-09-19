@@ -10509,12 +10509,12 @@ class Sentry extends Cartalyst\Sentry\Facades\Laravel\Sentry{
 	/**
 	 * Create a new Sentry object.
 	 *
-	 * @param Cartalyst\Sentry\Sessions\SessionInterface  $session
-	 * @param Cartalyst\Sentry\Cookies\CookieInterface  $cookie
-	 * @param Cartalyst\Sentry\Users\UserProviderInterface  $userProvider
-	 * @param Cartalyst\Sentry\Groups\GroupProviderInterface  $groupProvider
-	 * @param Cartalyst\Sentry\Throttling\ThrottleProviderInterface  $throttleProvider
-	 * @param string  $ipAddress
+	 * @param \Cartalyst\Sentry\Users\ProviderInterface $userProvider
+	 * @param \Cartalyst\Sentry\Groups\ProviderInterface $groupProvider
+	 * @param \Cartalyst\Sentry\Throttling\ProviderInterface $throttleProvider
+	 * @param \Cartalyst\Sentry\Sessions\SessionInterface $session
+	 * @param \Cartalyst\Sentry\Cookies\CookieInterface $cookie
+	 * @param string $ipAddress
 	 * @return void
 	 * @static 
 	 */
@@ -10528,7 +10528,7 @@ class Sentry extends Cartalyst\Sentry\Facades\Laravel\Sentry{
 	 *
 	 * @param array  $credentials
 	 * @param bool   $activate
-	 * @return Cartalyst\Sentry\Users\UserInterface
+	 * @return \Cartalyst\Sentry\Users\UserInterface
 	 * @static 
 	 */
 	 public static function register($credentials, $activate = false){
@@ -10541,12 +10541,12 @@ class Sentry extends Cartalyst\Sentry\Facades\Laravel\Sentry{
 	 *
 	 * @param array  $credentials
 	 * @param bool   $remember
-	 * @return Cartalyst\Sentry\Users\UserInterface
-	 * @throws Cartalyst\Sentry\Throttling\UserBannedException
-	 * @throws Cartalyst\Sentry\Throttling\UserSuspendedException
-	 * @throws Cartalyst\Sentry\Users\LoginRequiredException
-	 * @throws Cartalyst\Sentry\Users\PasswordRequiredException
-	 * @throws Cartalyst\Sentry\Users\UserNotFoundException
+	 * @return \Cartalyst\Sentry\Users\UserInterface
+	 * @throws \Cartalyst\Sentry\Throttling\UserBannedException
+	 * @throws \Cartalyst\Sentry\Throttling\UserSuspendedException
+	 * @throws \Cartalyst\Sentry\Users\LoginRequiredException
+	 * @throws \Cartalyst\Sentry\Users\PasswordRequiredException
+	 * @throws \Cartalyst\Sentry\Users\UserNotFoundException
 	 * @static 
 	 */
 	 public static function authenticate($credentials, $remember = false){
@@ -10557,7 +10557,7 @@ class Sentry extends Cartalyst\Sentry\Facades\Laravel\Sentry{
 	 * Alias for authenticating with the remember flag checked.
 	 *
 	 * @param array  $credentials
-	 * @return Cartalyst\Sentry\Users\UserInterface
+	 * @return \Cartalyst\Sentry\Users\UserInterface
 	 * @static 
 	 */
 	 public static function authenticateAndRemember($credentials){
@@ -10578,10 +10578,10 @@ class Sentry extends Cartalyst\Sentry\Facades\Laravel\Sentry{
 	 * Logs in the given user and sets properties
 	 * in the session.
 	 *
-	 * @param Cartalyst\Sentry\Users\UserInterface  $user
+	 * @param \Cartalyst\Sentry\Users\UserInterface  $user
 	 * @param bool  $remember
 	 * @return void
-	 * @throws Cartalyst\Sentry\Users\UserNotActivatedException
+	 * @throws \Cartalyst\Sentry\Users\UserNotActivatedException
 	 * @static 
 	 */
 	 public static function login($user, $remember = false){
@@ -10591,7 +10591,7 @@ class Sentry extends Cartalyst\Sentry\Facades\Laravel\Sentry{
 	/**
 	 * Alias for logging in and remembering.
 	 *
-	 * @param Cartalyst\Sentry\Users\UserInterface  $user
+	 * @param \Cartalyst\Sentry\Users\UserInterface  $user
 	 * @static 
 	 */
 	 public static function loginAndRemember($user){
@@ -10611,7 +10611,7 @@ class Sentry extends Cartalyst\Sentry\Facades\Laravel\Sentry{
 	/**
 	 * Sets the user to be used by Sentry.
 	 *
-	 * @param Cartalyst\Sentry\Users\UserInterface
+	 * @param \Cartalyst\Sentry\Users\UserInterface
 	 * @return void
 	 * @static 
 	 */
@@ -10622,7 +10622,7 @@ class Sentry extends Cartalyst\Sentry\Facades\Laravel\Sentry{
 	/**
 	 * Returns the current user being used by Sentry, if any.
 	 *
-	 * @return Cartalyst\Sentry\Users\UserInterface
+	 * @return \Cartalyst\Sentry\Users\UserInterface
 	 * @static 
 	 */
 	 public static function getUser(){
@@ -10632,7 +10632,7 @@ class Sentry extends Cartalyst\Sentry\Facades\Laravel\Sentry{
 	/**
 	 * Sets the session driver for Sentry.
 	 *
-	 * @param Cartalyst\Sentry\Sessions\SessionInterface  $session
+	 * @param \Cartalyst\Sentry\Sessions\SessionInterface  $session
 	 * @return void
 	 * @static 
 	 */
@@ -10643,7 +10643,7 @@ class Sentry extends Cartalyst\Sentry\Facades\Laravel\Sentry{
 	/**
 	 * Gets the session driver for Sentry.
 	 *
-	 * @return Cartalyst\Sentry\Sessions\SessionInterface
+	 * @return \Cartalyst\Sentry\Sessions\SessionInterface
 	 * @static 
 	 */
 	 public static function getSession(){
@@ -10653,7 +10653,7 @@ class Sentry extends Cartalyst\Sentry\Facades\Laravel\Sentry{
 	/**
 	 * Sets the cookie driver for Sentry.
 	 *
-	 * @param Cartalyst\Sentry\Cookies\CookieInterface  $cookie
+	 * @param \Cartalyst\Sentry\Cookies\CookieInterface  $cookie
 	 * @return void
 	 * @static 
 	 */
@@ -10664,7 +10664,7 @@ class Sentry extends Cartalyst\Sentry\Facades\Laravel\Sentry{
 	/**
 	 * Gets the cookie driver for Sentry.
 	 *
-	 * @return Cartalyst\Sentry\Cookies\CookieInterface
+	 * @return \Cartalyst\Sentry\Cookies\CookieInterface
 	 * @static 
 	 */
 	 public static function getCookie(){
@@ -10674,7 +10674,7 @@ class Sentry extends Cartalyst\Sentry\Facades\Laravel\Sentry{
 	/**
 	 * Sets the group provider for Sentry.
 	 *
-	 * @param Cartalyst\Sentry\Groups\ProviderInterface
+	 * @param \Cartalyst\Sentry\Groups\ProviderInterface
 	 * @return void
 	 * @static 
 	 */
@@ -10685,7 +10685,7 @@ class Sentry extends Cartalyst\Sentry\Facades\Laravel\Sentry{
 	/**
 	 * Gets the group provider for Sentry.
 	 *
-	 * @return Cartalyst\Sentry\Groups\ProviderInterface
+	 * @return \Cartalyst\Sentry\Groups\ProviderInterface
 	 * @static 
 	 */
 	 public static function getGroupProvider(){
@@ -10695,7 +10695,7 @@ class Sentry extends Cartalyst\Sentry\Facades\Laravel\Sentry{
 	/**
 	 * Sets the user provider for Sentry.
 	 *
-	 * @param Cartalyst\Sentry\Users\ProviderInterface
+	 * @param \Cartalyst\Sentry\Users\ProviderInterface
 	 * @return void
 	 * @static 
 	 */
@@ -10706,7 +10706,7 @@ class Sentry extends Cartalyst\Sentry\Facades\Laravel\Sentry{
 	/**
 	 * Gets the user provider for Sentry.
 	 *
-	 * @return Cartalyst\Sentry\Users\ProviderInterface
+	 * @return \Cartalyst\Sentry\Users\ProviderInterface
 	 * @static 
 	 */
 	 public static function getUserProvider(){
@@ -10716,7 +10716,7 @@ class Sentry extends Cartalyst\Sentry\Facades\Laravel\Sentry{
 	/**
 	 * Sets the throttle provider for Sentry.
 	 *
-	 * @param Cartalyst\Sentry\Throttling\ProviderInterface
+	 * @param \Cartalyst\Sentry\Throttling\ProviderInterface
 	 * @return void
 	 * @static 
 	 */
@@ -10727,7 +10727,7 @@ class Sentry extends Cartalyst\Sentry\Facades\Laravel\Sentry{
 	/**
 	 * Gets the throttle provider for Sentry.
 	 *
-	 * @return Cartalyst\Sentry\Throttling\ProviderInterface
+	 * @return \Cartalyst\Sentry\Throttling\ProviderInterface
 	 * @static 
 	 */
 	 public static function getThrottleProvider(){
@@ -10759,8 +10759,8 @@ class Sentry extends Cartalyst\Sentry\Facades\Laravel\Sentry{
 	 * Find the group by ID.
 	 *
 	 * @param int  $id
-	 * @return Cartalyst\Sentry\GroupInterface  $group
-	 * @throws Cartalyst\Sentry\GroupNotFoundException
+	 * @return \Cartalyst\Sentry\Groups\GroupInterface  $group
+	 * @throws \Cartalyst\Sentry\Groups\GroupNotFoundException
 	 * @static 
 	 */
 	 public static function findGroupById($id){
@@ -10771,8 +10771,8 @@ class Sentry extends Cartalyst\Sentry\Facades\Laravel\Sentry{
 	 * Find the group by name.
 	 *
 	 * @param string  $name
-	 * @return Cartalyst\Sentry\GroupInterface  $group
-	 * @throws Cartalyst\Sentry\GroupNotFoundException
+	 * @return \Cartalyst\Sentry\Groups\GroupInterface  $group
+	 * @throws \Cartalyst\Sentry\Groups\GroupNotFoundException
 	 * @static 
 	 */
 	 public static function findGroupByName($name){
@@ -10793,7 +10793,7 @@ class Sentry extends Cartalyst\Sentry\Facades\Laravel\Sentry{
 	 * Creates a group.
 	 *
 	 * @param array  $attributes
-	 * @return Cartalyst\Sentry\Groups\GroupInterface
+	 * @return \Cartalyst\Sentry\Groups\GroupInterface
 	 * @static 
 	 */
 	 public static function createGroup($attributes){
@@ -10804,8 +10804,8 @@ class Sentry extends Cartalyst\Sentry\Facades\Laravel\Sentry{
 	 * Finds a user by the given user ID.
 	 *
 	 * @param mixed  $id
-	 * @return Cartalyst\Sentry\Users\UserInterface
-	 * @throws Cartalyst\Sentry\Users\UserNotFoundException
+	 * @return \Cartalyst\Sentry\Users\UserInterface
+	 * @throws \Cartalyst\Sentry\Users\UserNotFoundException
 	 * @static 
 	 */
 	 public static function findUserById($id){
@@ -10816,8 +10816,8 @@ class Sentry extends Cartalyst\Sentry\Facades\Laravel\Sentry{
 	 * Finds a user by the login value.
 	 *
 	 * @param string  $login
-	 * @return Cartalyst\Sentry\Users\UserInterface
-	 * @throws Cartalyst\Sentry\Users\UserNotFoundException
+	 * @return \Cartalyst\Sentry\Users\UserInterface
+	 * @throws \Cartalyst\Sentry\Users\UserNotFoundException
 	 * @static 
 	 */
 	 public static function findUserByLogin($login){
@@ -10828,8 +10828,8 @@ class Sentry extends Cartalyst\Sentry\Facades\Laravel\Sentry{
 	 * Finds a user by the given credentials.
 	 *
 	 * @param array  $credentials
-	 * @return Cartalyst\Sentry\Users\UserInterface
-	 * @throws Cartalyst\Sentry\Users\UserNotFoundException
+	 * @return \Cartalyst\Sentry\Users\UserInterface
+	 * @throws \Cartalyst\Sentry\Users\UserNotFoundException
 	 * @static 
 	 */
 	 public static function findUserByCredentials($credentials){
@@ -10840,9 +10840,9 @@ class Sentry extends Cartalyst\Sentry\Facades\Laravel\Sentry{
 	 * Finds a user by the given activation code.
 	 *
 	 * @param string  $code
-	 * @return Cartalyst\Sentry\Users\UserInterface
-	 * @throws RuntimeException
-	 * @throws Cartalyst\Sentry\Users\UserNotFoundException
+	 * @return \Cartalyst\Sentry\Users\UserInterface
+	 * @throws \RuntimeException
+	 * @throws \Cartalyst\Sentry\Users\UserNotFoundException
 	 * @static 
 	 */
 	 public static function findUserByActivationCode($code){
@@ -10853,9 +10853,9 @@ class Sentry extends Cartalyst\Sentry\Facades\Laravel\Sentry{
 	 * Finds a user by the given reset password code.
 	 *
 	 * @param string  $code
-	 * @return Cartalyst\Sentry\Users\UserInterface
-	 * @throws RuntimeException
-	 * @throws Cartalyst\Sentry\Users\UserNotFoundException
+	 * @return \Cartalyst\Sentry\Users\UserInterface
+	 * @throws \RuntimeException
+	 * @throws \Cartalyst\Sentry\Users\UserNotFoundException
 	 * @static 
 	 */
 	 public static function findUserByResetPasswordCode($code){
@@ -10876,7 +10876,7 @@ class Sentry extends Cartalyst\Sentry\Facades\Laravel\Sentry{
 	 * Returns all users who belong to
 	 * a group.
 	 *
-	 * @param Cartalyst\Sentry\Groups\GroupInterface  $group
+	 * @param \Cartalyst\Sentry\Groups\GroupInterface  $group
 	 * @return array
 	 * @static 
 	 */
@@ -10912,7 +10912,7 @@ class Sentry extends Cartalyst\Sentry\Facades\Laravel\Sentry{
 	 * Creates a user.
 	 *
 	 * @param array  $credentials
-	 * @return Cartalyst\Sentry\Users\UserInterface
+	 * @return \Cartalyst\Sentry\Users\UserInterface
 	 * @static 
 	 */
 	 public static function createUser($credentials){
@@ -10922,7 +10922,7 @@ class Sentry extends Cartalyst\Sentry\Facades\Laravel\Sentry{
 	/**
 	 * Returns an empty user object.
 	 *
-	 * @return Cartalyst\Sentry\Users\UserInterface
+	 * @return \Cartalyst\Sentry\Users\UserInterface
 	 * @static 
 	 */
 	 public static function getEmptyUser(){
@@ -10934,7 +10934,7 @@ class Sentry extends Cartalyst\Sentry\Facades\Laravel\Sentry{
 	 *
 	 * @param mixed   $id
 	 * @param string  $ipAddress
-	 * @return Cartalyst\Sentry\Throttling\ThrottleInterface
+	 * @return \Cartalyst\Sentry\Throttling\ThrottleInterface
 	 * @static 
 	 */
 	 public static function findThrottlerByUserId($id, $ipAddress = null){
@@ -10946,7 +10946,7 @@ class Sentry extends Cartalyst\Sentry\Facades\Laravel\Sentry{
 	 *
 	 * @param string  $login
 	 * @param string  $ipAddress
-	 * @return Cartalyst\Sentry\Throttling\ThrottleInterface
+	 * @return \Cartalyst\Sentry\Throttling\ThrottleInterface
 	 * @static 
 	 */
 	 public static function findThrottlerByUserLogin($login, $ipAddress = null){
@@ -10959,7 +10959,7 @@ class Sentry extends Cartalyst\Sentry\Facades\Laravel\Sentry{
 	 * @param string  $method
 	 * @param array   $parameters
 	 * @return mixed
-	 * @throws BadMethodCallException
+	 * @throws \BadMethodCallException
 	 * @static 
 	 */
 	 public static function __call($method, $parameters){
