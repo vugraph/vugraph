@@ -1,4 +1,4 @@
-<div id="navbar" class="<?= isset($navbarclass) ? $navbarclass : 'navbar navbar-fixed-top' ?>">
+<div id="navbar" class="<?= isset($menu->navbarclass) ? $menu->navbarclass : 'navbar navbar-fixed-top' ?>">
 	<div class="navbar-inner">
 		<div class="container">
 			<a href="<?= url(Config::get('app.brandurl')) ?>" class="brand"><?= trans('common.brandname') ?></a>

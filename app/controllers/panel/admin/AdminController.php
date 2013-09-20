@@ -1,9 +1,8 @@
-<?php namespace Tbfmp\User\Admin;
+<?php namespace Tbfmp;
 
 use App;
-use Tbfmp\User\UserController;
 
-class AdminController extends UserController {
+class AdminController extends PanelController {
 	
 	public function __construct()
 	{
@@ -18,7 +17,7 @@ class AdminController extends UserController {
 	
 	public function getIndex()
 	{
-		$this->showPage('result');
+		$this->_show('result');
 	}
 
 }

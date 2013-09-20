@@ -2,7 +2,11 @@
 
 return array(
 	'title' => 'Şifrenizi mi Unuttunuz?',
-	'email' => 'E-posta adresiniz',
+	'labels' => array(
+		'email' => 'E-posta adresiniz',
+		'password' => 'Yeni şifre',
+		'password_confirmation' => 'Yeni şifre (tekrar)'
+	),
 	'email_help' => 'Adresinize sıfırlama bağlantısı gelecektir',
 	'submit' => 'Gönder',
 	'success_title' => 'Şifrenizi Sıfırlamak İçin',
@@ -14,9 +18,7 @@ return array(
 	'change_error_title' => 'Şifre Sıfırlama',
 	'change_error_content' => 'Geçersiz şifre sıfırlama kodu.',
 	'change_title' => 'Yeni Şifrenizi Belirleyiniz',
-	'password' => 'Yeni şifre',
 	'password_help' => 'En az 6 en çok 30 karakter',
-	'password_confirmation' => 'Yeni şifre (tekrar)',
 	'change' => 'Değiştir',
 	'change_success_message' => 'Şifreniz başarıyla değiştirilmiştir.',
 	'change_error_message' => 'Şifre değiştirilemedi.'

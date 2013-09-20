@@ -30,42 +30,41 @@ Route::get('reset-password/change/{code}', array('as' => 'auth.login.reset-passw
 	->where('code', '[A-Za-z0-9]+');
 Route::post('reset-password/change/{code}', 'Tbfmp\AuthController@postResetPasswordChange')
 	->where('code', '[A-Za-z0-9]+');
-Route::get('reset-password/change/success', array('as' => 'auth.login.reset-password.change.success', 'uses' => 'Tbfmp\AuthController@getResetPasswordChangeSuccess'));
 
 /* User */
-Route::group(array('prefix' => 'user'), function() {
-	Route::get('/', array('as' => 'user', 'uses' => 'Tbfmp\UserController@getIndex'));
+Route::group(array('prefix' => 'panel'), function() {
+	Route::get('/', array('as' => 'panel', 'uses' => 'Tbfmp\PanelController@getIndex'));
 	/* Account */
 	Route::group(array('prefix' => 'account'), function() {
-		Route::get('/', array('as' => 'user.account', 'uses' => 'Tbfmp\AccountController@getIndex'));
-		Route::get('notifications', array('as' => 'user.account.notifications', 'uses' => 'Tbfmp\AccountController@getNotifications'));
-		Route::get('details', array('as' => 'user.account.details', 'uses' => 'Tbfmp\AccountController@getDetails'));
+		Route::get('/', array('as' => 'panel.account', 'uses' => 'Tbfmp\AccountController@getIndex'));
+		Route::get('notifications', array('as' => 'panel.account.notifications', 'uses' => 'Tbfmp\AccountController@getNotifications'));
+		Route::get('details', array('as' => 'panel.account.details', 'uses' => 'Tbfmp\AccountController@getDetails'));
 		Route::post('details', 'Tbfmp\AccountController@postDetails');
 		/* Account Password */
 		Route::group(array('prefix' => 'password'), function() {
-			Route::get('/', array('as' => 'user.account.password', 'uses' => 'Tbfmp\AccountController@getPassword'));
+			Route::get('/', array('as' => 'panel.account.password', 'uses' => 'Tbfmp\AccountController@getPassword'));
 			Route::post('/', 'Tbfmp\AccountController@postPassword');
-			Route::get('success', array('as' => 'user.account.password.success', 'uses' => 'Tbfmp\AccountController@getPasswordSuccess'));
+			Route::get('success', array('as' => 'panel.account.password.success', 'uses' => 'Tbfmp\AccountController@getPasswordSuccess'));
 		});
 	});
 	/* Club User */
 	Route::group(array('prefix' => 'club'), function() {
-		Route::get('/', array('as' => 'user.club', 'uses' => 'Tbfmp\ClubController@getIndex'));
+		Route::get('/', array('as' => 'panel.club', 'uses' => 'Tbfmp\ClubController@getIndex'));
 		/* Tournament */
 		Route::group(array('prefix' => 'tournaments'), function() {
-			Route::get('/', array('as' => 'user.club.tournaments', 'uses' => 'Tbfmp\TournamentController@getIndex'));
+			Route::get('/', array('as' => 'panel.club.tournaments', 'uses' => 'Tbfmp\TournamentController@getIndex'));
 		});
 		
 	});
 	Route::model('club', 'Tbfmp\Club');
 	/* Admin User */
 	Route::group(array('prefix' => 'admin'), function() {
-		Route::get('/', array('as' => 'user.admin', 'uses' => 'Tbfmp\AdminController@getIndex'));
+		Route::get('/', array('as' => 'panel.admin', 'uses' => 'Tbfmp\AdminController@getIndex'));
 		/* Club */
 		Route::group(array('prefix' => 'clubs'), function() {
-			Route::get('/', array('as' => 'user.admin.clubs.index', 'uses' => 'Tbfmp\ClubController@index'));
-			Route::any('/{club}', array('as' => 'user.admin.clubs.destroy', 'uses' => 'Tbfmp\ClubController@destroy'));
-			Route::get('create', array('as' => 'user.admin.clubs.create', 'uses' => 'Tbfmp\ClubController@getCreate'));
+			Route::get('/', array('as' => 'panel.admin.clubs.index', 'uses' => 'Tbfmp\ClubController@index'));
+			Route::any('/{club}', array('as' => 'panel.admin.clubs.destroy', 'uses' => 'Tbfmp\ClubController@destroy'));
+			Route::get('create', array('as' => 'panel.admin.clubs.create', 'uses' => 'Tbfmp\ClubController@getCreate'));
 		});
 	});
 });
@@ -74,7 +73,7 @@ Route::group(array('prefix' => 'user'), function() {
 /*
 Route::get('sporcu', 'PlayerController@getIndex');
 Route::get('sporcu/lisans-bilgileri', 'PlayerController@getLisansBilgileri');
-Route::get('sporcu/online-vize', 'UserController@getOnlineVize');
+Route::get('sporcu/online-vize', 'PanelController@getOnlineVize');
 */
 
 /* Club */
@@ -138,3 +137,4 @@ Route::get('sikca-sorulan-sorular', 'HomeController@getSikcaSorulanSorular');
  * 
  */
 
+Route::controller('', 'Tbfmp\HomeController');

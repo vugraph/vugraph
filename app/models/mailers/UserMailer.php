@@ -3,6 +3,7 @@
 use App;
 
 class UserMailer extends BaseMailer {
+
 	protected $user;
 	public function __construct($user) {
 		parent::__construct();
@@ -25,4 +26,5 @@ class UserMailer extends BaseMailer {
 		$this->data['link'] = route('auth.login.reset-password.change', array('code' => $code));
 		return $this;
 	}
+
 }

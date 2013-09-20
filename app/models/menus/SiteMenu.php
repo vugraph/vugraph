@@ -4,9 +4,9 @@ use Sentry;
 
 class SiteMenu extends BaseMenu {
 
-	public function __construct($navbarclass)
+	public function __construct()
 	{
-		parent::__construct($navbarclass);
+		parent::__construct('navbar navbar-fixed-top');
 		$this->left = array(
 			new MenuItem('home', '<i class="icon-home"></i> '.trans('menu.home')),
 			new MenuItem('menu1', trans('menu.menu1')),
@@ -24,8 +24,8 @@ class SiteMenu extends BaseMenu {
 		if (Sentry::check()) {
 			$user = Sentry::getUser();
 			$this->right = array(
-				new MenuItem('user.account', '<i class="icon-user"></i> '.trim($user->first_name.' '.$user->last_name), array(
-					new MenuItem('user.account.notifications', '<i class="icon-list-alt"></i> '.trans('menu.user_panel')),
+				new MenuItem('panel.account', '<i class="icon-user"></i> '.substr(trim($user->first_name.' '.$user->last_name), 0, 20), array(
+					new MenuItem('panel.account.notifications', '<i class="icon-list-alt"></i> '.trans('menu.user_panel')),
 					new MenuItem('auth.logout', '<i class="icon-off"></i> '.trans('menu.logout'))
 				))
 			);

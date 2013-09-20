@@ -1,5 +1,6 @@
 <?php namespace Tbfmp;
 
+use App;
 use Controller;
 use Session;
 use View;
@@ -9,8 +10,8 @@ class BaseController extends Controller {
 	protected $layout = 'layouts.default';
 	
 	protected $page;
-
-	protected $navbar;
+	
+/*	protected $navbar;
 	
 	protected $breadcrumb;
 
@@ -24,7 +25,7 @@ class BaseController extends Controller {
 	
 	protected $scripts;
 	
-	protected $viewdata = array();
+	protected $viewdata = array(); */
 	
 	public function __construct()
 	{
@@ -40,7 +41,7 @@ class BaseController extends Controller {
 			$this->layout = View::make($this->layout);
 		}
 	}
-
+/*
 	protected function setupNavbar()
 	{
 		if (isset($this->navbar)) $this->layout->nest('navbar', $this->navbar);
@@ -52,7 +53,7 @@ class BaseController extends Controller {
 		if (isset($this->sidebar)) $this->layout->nest('sidebar', $this->sidebar);
 	}
 
-	protected function showPage($view, $data = array())
+	protected function _show($view, $data = array())
 	{
 		$this->layout->title = $this->viewdata['title'] = $this->title;
 		if (!empty($this->styles)) $this->layout->styles = $this->styles;
@@ -63,16 +64,17 @@ class BaseController extends Controller {
 		$this->setupSidebar();
 		$this->layout->content = View::make($view, array_merge($this->viewdata, $data));
 	}
-	
+*/	
 	protected function _show($view)
 	{
+		if (!($this->page instanceof Page)) App::abort(500, 'Fatal error. Can\'t show uninitialized page.');
 		$this->layout->page = $this->page;
 		if (!empty($this->page->navbar)) $this->layout->nest('navbar', $this->page->navbar, array('menu' => $this->page->menu));
 		if (!empty($this->page->breadcrumb)) $this->layout->nest('breadcrumb', $this->page->breadcrumb);
 		if (!empty($this->page->sidebar)) $this->layout->nest('sidebar', $this->page->sidebar);
-		$this->layout->nest('content', $view, array('data' => $this->page->data));
+		$this->layout->nest('content', $view, $this->page->data);
 	}
-	
+/*	
 	private function instantMessage($type, $msg)
 	{
 		Session::put('message-'.$type, $msg);
@@ -98,4 +100,5 @@ class BaseController extends Controller {
 	{
 		$this->instantMessage('success', $msg);
 	}
+*/
 }

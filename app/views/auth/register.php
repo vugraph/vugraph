@@ -5,7 +5,7 @@ echo Form::_fieldsetOpen(trans('auth/register.title'));
 echo Form::_messages($errors->all());
 echo Form::_row(
 	Form::_label('first_name', trans('auth/register.labels.first_name')),
-	Form::_input('text', 'first_name', null, array('required' => 'required', 'maxlength' => '30', 'pattern' => '.{1,30}')),
+	Form::_input('text', 'first_name', null, array('required' => 'required', 'maxlength' => '30', 'pattern' => '.{2,30}')),
 	'first_name'
 );
 echo Form::_row(

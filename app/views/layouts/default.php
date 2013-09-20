@@ -78,5 +78,16 @@ foreach(DB::getQueryLog() as $sql) {
 }
 ?>
 </ul>
+<?php
+echo '<dl>'."\n";
+foreach(array('GET' => $_GET, 'POST' => $_POST, 'SESSION' => $_SESSION) as $key => $value) {
+	if (empty($value)) continue;
+	echo '<dt>'.$key.'</dt>'."\n";
+	echo '<dd><pre>'."\n";
+	var_dump($value);
+	echo '</pre></dd>'."\n";
+}
+echo '</dl>'."\n";
+?>
 </body>
 </html>

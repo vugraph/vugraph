@@ -2,8 +2,10 @@
 
 return array(
 	'title' => 'Kullanıcı Girişi',
-	'email' => 'E-posta adresiniz',
-	'password' => 'Şifreniz',
+	'labels' => array(
+		'email' => 'E-posta adresiniz',
+		'password' => 'Şifreniz'
+	),
 	'login' => 'Giriş',
 	'forgot_password' => 'Şifremi unuttum',
 	'invalid_credentials' => 'Yanlış kullanıcı adı veya şifre.',

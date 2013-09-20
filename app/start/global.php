@@ -16,7 +16,7 @@ ClassLoader::addDirectories(array(
 //	app_path().'/Commands',
 //	app_path().'/Controllers',
 //	app_path().'/Services',
-	app_path().'/Models',
+	app_path().'/models',
 //	app_path().'/Database/Seeds',
 
 ));
@@ -82,8 +82,6 @@ App::down(function()
 */
 
 require app_path().'/filters.php';
-
-require app_path().'/helpers/macros.php';
 
 //View::composer('layouts._partial.navbar.menu', 'Tbfmp\MenuComposer');
 

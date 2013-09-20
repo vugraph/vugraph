@@ -1,5 +1,5 @@
 <div class="page-header">
-	<h2 class="pull-left"><?= trans('user/admin/clubs.title') ?></h2>
+	<h2 class="pull-left"><?= trans('panel/admin/clubs.title') ?></h2>
 	<div class="pull-right toolbox">
 		<!--a href="javascript:void(0)" id="filterbutton" class="btn btn-small btn-info dropdown-toggle" data-toggle="dropdown"><i class="icon-filter icon-white"></i> <?= trans('tables/common.filter') ?></a-->
 		&nbsp;
@@ -12,14 +12,14 @@
 			</ul>
 		</div>
 		&nbsp;
-		<a href="<?= route('user.admin.clubs.create') ?>" class="btn btn-small btn-success"><i class="icon-plus-sign icon-white"></i> <?= trans('tables/common.add_new') ?></a>
+		<a href="<?= route('panel.admin.clubs.create') ?>" class="btn btn-small btn-success"><i class="icon-plus-sign icon-white"></i> <?= trans('tables/common.add_new') ?></a>
 	</div>
 </div>
 <div id="filter" class="alert alert-info" style="clear: both;">
 <?= ''//Form::open(array('id' => 'filter', 'method' => 'get', 'class' => 'form-horizontal', 'style' => 'clear: both')) ?>
 <?=	''//Form::_fieldsetOpen(trans('tables/common.filter')); ?>
 	<div class="pull-left">
-<?=		Form::label('city', trans('user/admin/clubs.filter_by_city')).
+<?=		Form::label('city', trans('panel/admin/clubs.filter_by_city')).
 		Form::select('city', array(1 => 'Adana', 2 => 'Urfa')) ?>
 	</div>
 	<div class="pull-right">
@@ -37,7 +37,7 @@
 <?php		$fields = $page->getFields(); ?>
 <?php		$orderByLinks = $page->getOrderByLinks(); ?>
 <?php		foreach($fields as $field): ?>
-			<th><?= isset($orderByLinks[$field]) ? '<a href="'.$orderByLinks[$field]->link.'" style="display: block">'.trans('tables/clubs.'.$field).(isset($orderByLinks[$field]->image) ? '<span class="pull-right">'.$orderByLinks[$field]->image.'</span>' : '').'</a>' : trans('tables/clubs.'.$field) ?></th>
+			<th><?= isset($orderByLinks[$field]) ? '<a href="'.$orderByLinks[$field]->link.'" style="display: block">'.trans('tables/clubs.fields.'.$field).(isset($orderByLinks[$field]->image) ? '<span class="pull-right">'.$orderByLinks[$field]->image.'</span>' : '').'</a>' : trans('tables/clubs.fields.'.$field) ?></th>
 <?php		endforeach; ?>
 			<th><?= trans('tables/common.action') ?></th>
 		</tr>
@@ -49,7 +49,7 @@
 			<td><?= $item->$field ?></td>
 <?php		endforeach; ?>
 			<td>
-				<button data-action="<?= route('user.admin.clubs.destroy', $item->id) ?>" class="destroy btn btn-mini btn-danger"><?= trans('tables/common.delete') ?></button>
+				<button data-action="<?= route('panel.admin.clubs.destroy', $item->id) ?>" class="destroy btn btn-mini btn-danger"><?= trans('tables/common.delete') ?></button>
 			</td>
 		</tr>
 <?php	endforeach; ?>

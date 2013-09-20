@@ -5,7 +5,7 @@ echo Form::_open();
 echo Form::_fieldsetOpen(trans('auth/reset-password.title'));
 echo Form::_messages($errors->all());
 echo Form::_row(
-	Form::_label('email', trans('auth/reset-password.email')),
+	Form::_label('email', trans('auth/reset-password.labels.email')),
 	Form::_input('email', 'email', null, array('required' => 'required', 'maxlength' => '100')).
 	Form::_help(trans('auth/reset-password.email_help'))
 );

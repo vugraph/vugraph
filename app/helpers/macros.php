@@ -51,6 +51,11 @@ HTML::macro('_messages', function($errors = null) {
 	}
 	return '<div id="messages">'."\n".$result.'</div>'."\n";
 });
+HTML::macro('_back', function($link = null, $failDefault = 'home') {
+	if (is_null($link)) $link = URL::previous();
+	if ($link == URL::current()) $link = route($failDefault);
+	return '<a href="'.$link.'" class="btn">'.$name.'</a>';
+});
 Form::macro('_row', function($left, $right, $fields = null) {
 	$state = '';
 	if (!empty($fields) && Session::has('errors')) {
@@ -89,12 +94,12 @@ Form::macro('_actions', function($elements = array()) {
 });
 Form::macro('_cancel', function($title = null, $link = null, $failDefault = 'home') {
 	if (is_null($link)) $link = URL::previous();
-	if ($link == URL::full()) $link = route($failDefault);
+	if ($link == URL::current()) $link = route($failDefault);
 	if (is_null($title)) $title = trans('common.cancel');
 	return '<a href="'.$link.'" class="btn">'.$title.'</a>';
 });
 Form::macro('_userCancel', function($title = null, $link = null) {
-	return Form::_cancel($title, $link, 'user.account.notifications');
+	return Form::_cancel($title, $link, 'panel.account.notifications');
 });
 Form::macro('_submit', function($value = null, $options = array()) {
 	if (!isset($options['class'])) $options['class'] = 'btn btn-primary';

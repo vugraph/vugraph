@@ -1,6 +1,9 @@
 <?php namespace Tbfmp;
 
-abstract class BasePage {
+use Session;
+use URL;
+
+class Page {
 
 	public $title;
 	
@@ -20,26 +23,32 @@ abstract class BasePage {
 	
 	public $sidebar = null;
 	
-	public $content = null;
-	
 	public function __construct($title = null)
 	{
+		require_once(app_path().'/helpers/macros.php');
 		$this->title = is_null($title) ? trans('common.sitename') : $title;
 	}
 	
-	public function setTitle($title)
+	public function setHeading($heading = null)
 	{
-		$this->title = $title;
-	}
-	
-	public function setHeading($heading)
-	{
+		if (is_null($heading)) $heading = $this->title;
 		$this->data['heading'] = $heading;
 	}
 	
-	public function setTitleAndHeading($title)
+	public function setLinks()
 	{
-		$this->title = $this->data['heading'] = $title;
+		$args = func_get_args();
+		foreach($args as $arg) {
+			if ($arg == 'back') {
+				$link = URL::previous();
+				if ($link == URL::current()) $link = route('home');
+				$this->data['links'][$link] = trans('common.back');
+			} else {
+//				if (preg_match('/^panel\./',$arg)) $prefix = 'panel/';
+//				else $prefix = '';
+				$this->data['links'][route($arg)] = trans('route.'.$arg);
+			}
+		}
 	}
 	
 	public function addStyleFile($styleFiles)

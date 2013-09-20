@@ -6,6 +6,9 @@
     padding-top: 20px;
 }
 
+#content {
+    min-height: 400px;
+}
 /*#messages {
     padding-top: 20px;
 }*/

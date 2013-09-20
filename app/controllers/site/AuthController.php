@@ -12,17 +12,11 @@ use Cartalyst\Sentry\Users\UserNotActivatedException;
 use Cartalyst\Sentry\Throttling\UserSuspendedException;
 use Cartalyst\Sentry\Throttling\UserBannedException;
 
-class AuthController extends BaseController {
-
-	public function __construct() {
-		parent::__construct();
-//		$this->navbar = 'layouts._partial.navbar.menu';
-//		$this->breadcrumb = 'layouts._partial.navbar.breadcrumb';
-	}
+class AuthController extends SiteController {
 
 	public function getRegister()
 	{
-		$this->page = new SitePage(trans('auth/register.title'));
+		$this->page = new FormPage(trans('auth/register.title'));
 		$this->_show('auth.register');
 	}
 	
@@ -37,7 +31,7 @@ class AuthController extends BaseController {
 		);
 		$validator = Validator::make(Input::all(), $rules);
 		$validator->setAttributeNames(trans('auth/register.labels'));
-		if (!$validator->passes()) return Redirect::back()->exceptInput('password', 'password_confirmation')->withErrors($validator->messages());
+		if ($validator->fails()) return Redirect::back()->onlyInput('first_name', 'last_name', 'email')->withErrors($validator->messages());
 		try {
 			$user = Sentry::register(array(
 				'first_name' => trim(Input::get('first_name')),
@@ -46,7 +40,7 @@ class AuthController extends BaseController {
 				'password' => Input::get('password')
 			));
 		} catch (Exception $e) {
-			return Redirect::back()->exceptInput('password', 'password_confirmation')->with('message-error', $e->getMessage());
+			return Redirect::back()->onlyInput('first_name', 'last_name', 'email')->with('message-error', $e->getMessage());
 		}
 		try {
 			$mailer = new UserMailer($user);
@@ -54,20 +48,21 @@ class AuthController extends BaseController {
 				return Redirect::route('auth.register.success')->with('message-success', trans('auth/register.success_message'));
 			} else {
 				$user->delete();
-				return Redirect::back()->exceptInput('password', 'password_confirmation')->with('message-error', trans('auth/register.error_sending_email'));
+				return Redirect::back()->onlyInput('first_name', 'last_name', 'email')->with('message-error', trans('auth/register.error_sending_email'));
 			}
 		} catch (Exception $e) {
 			$user->delete();
-			return Redirect::back()->exceptInput('password', 'password_confirmation')->with('message-error', $e->getMessage());
+			return Redirect::back()->onlyInput('first_name', 'last_name', 'email')->with('message-error', $e->getMessage());
 		}
 		return Redirect::route('auth.register.success');
 	}
 	
 	public function getRegisterSuccess()
 	{
-		$this->title = trans('auth/register.success_title');
-		$this->withInfo(trans('auth/register.success_content'));
-		$this->showPage('result');
+		$this->page = new Page(trans('auth/register.success_title'));
+		$this->page->setHeading();
+		$this->page->withInfo(trans('auth/register.success_content'));
+		$this->_show('result');
 	}
 
 	public function getActivate($code)
@@ -86,24 +81,26 @@ class AuthController extends BaseController {
 		} catch (Exception $e) {
 			$err = $e->getMessage();
 		}
-		$this->title = trans('auth/register.activate_error_title');
-		$this->withError($err);
-		$this->showPage('result');
+		$this->page = new Page(trans('auth/register.activate_error_title'));
+		$this->page->withError($err);
+		$this->_show('result');
 	}
 
 	public function getLogin()
 	{
-		$page = new SitePage();
-		$page->setTitle(trans('auth/login.title'));
-		$this->_show('auth.login', $page);
-//		$this->title = trans('auth/login.title');
-//		$this->showPage('auth.login');
+		$this->page = new FormPage(trans('auth/login.title'));
+		$this->_show('auth.login');
 	}
 	
 	public function postLogin()
 	{
-		$validation = new LoginValidator;
-		if (!$validation->passes()) return Redirect::back()->exceptInput('password')->withErrors($validation->getErrors());
+		$rules = array(
+			'email'			=> 'required|email',
+			'password'		=> 'required',
+		);
+		$validator = Validator::make(Input::all(), $rules);
+		$validator->setAttributeNames(trans('auth/login.labels'));
+		if ($validator->fails()) return Redirect::back()->onlyInput('email')->withErrors($validator->messages());
 		$err = '';
 		try {
 			$user = Sentry::authenticate(
@@ -113,7 +110,7 @@ class AuthController extends BaseController {
 				),
 				false
 			);
-			return Redirect::route('user.account.notifications');
+			return Redirect::route('panel.account.notifications');
 		} catch (WrongPasswordException $e) {
 			$err = trans('auth/login.invalid_credentials');
 		} catch (UserNotFoundException $e) {
@@ -127,7 +124,7 @@ class AuthController extends BaseController {
 		} catch (Exception $e) {
 			$err = $e->getMessage();
 		}
-		return Redirect::back()->exceptInput('password')->with('message-error', $err);
+		return Redirect::back()->onlyInput('email')->with('message-error', $err);
 	}
 	
 	public function getLogout()
@@ -138,14 +135,16 @@ class AuthController extends BaseController {
 	
 	public function getResetPassword()
 	{
-		$this->title = trans('auth/reset-password.title');
-		$this->showPage('auth.reset-password');
+		$this->page = new FormPage(trans('auth/reset-password.title'));
+		$this->_show('auth.reset-password');
 	}
 
 	public function postResetPassword()
 	{
-		$validation = new ResetPasswordValidator;
-		if (!$validation->passes()) return Redirect::back()->onlyInput('email')->withErrors($validation->getErrors());
+		$rules = array('email' => 'required|email');
+		$validator = Validator::make(Input::all(), $rules);
+		$validator->setAttributeNames(trans('auth/reset-password.labels'));
+		if ($validator->fails()) return Redirect::back()->onlyInput('email')->withErrors($validator->messages());
 		$err = '';
 		try {
 			$user = Sentry::findUserByLogin(trim(Input::get('email')));
@@ -163,9 +162,10 @@ class AuthController extends BaseController {
 	
 	public function getResetPasswordSuccess()
 	{
-		$this->title = trans('auth/reset-password.success_title');
-		$this->withInfo(trans('auth/reset-password.success_content'));
-		$this->showPage('result');
+		$this->page = new Page(trans('auth/reset-password.success_title'));
+		$this->page->setHeading();
+		$this->page->withInfo(trans('auth/reset-password.success_content'));
+		$this->_show('result');
 	}
 	
 	public function getResetPasswordChange($code)
@@ -179,19 +179,24 @@ class AuthController extends BaseController {
 			$err = $e->getMessage();
 		}
 		if (empty($err)) {
-			$this->title = trans('auth/reset-password.change_title');			
-			$this->showPage('auth.reset-password-change');
+			$this->page = new Page(trans('auth/reset-password.change_title'));
+			$this->_show('auth.reset-password-change');
 		} else {
-			$this->title = trans('auth/reset-password.change_error_title');
-			$this->withError($err);
-			$this->showPage('result');
+			$this->page = new Page(trans('auth/reset-password.change_error_title'));
+			$this->page->withError($err);
+			$this->_show('result');
 		}
 	}
 	
 	public function postResetPasswordChange($code)
 	{
-		$validation = new ResetPasswordChangeValidator;
-		if (!$validation->passes()) return Redirect::back()->withErrors($validation->getErrors());
+		$rules = array(
+			'password'				=> 'required|between:6,30|confirmed',
+			'password_confirmation'	=> 'required|between:6,30'
+		);
+		$validator = Validator::make(Input::all(), $rules);
+		$validator->setAttributeNames(trans('auth/reset-password.labels'));
+		if ($validator->fails()) return Redirect::back()->withErrors($validator->messages());
 		try {
 			$user = Sentry::findUserByResetPasswordCode($code);
 			if (!$user->attemptResetPassword($code, Input::get('password'))) {

@@ -4,7 +4,7 @@ use Request;
 use Route;
 use Session;
 
-class ResourceIndexPage extends UserPage {
+class ResourceIndexPage extends Page {
 	
 	protected $routeName;
 
@@ -24,25 +24,25 @@ class ResourceIndexPage extends UserPage {
 	
 	protected $perPage = 10;
 	
-	protected $page = 1;
+	protected $curPage = 1;
 	
 	protected $filter;
 	
 	protected $search;
 	
-	public function __construct(array $fields, array $orderFields = array())
+	public function __construct($title, array $fields, array $orderFields = array())
 	{
-		parent::__construct();
+		parent::__construct($title);
 		$this->fields = array_values($fields);
 		$this->orderFields = $orderFields;
 		$this->routeName = Route::currentRouteName();
-		if (Request::has('page') && ($tmpPage = intval(Request::get('page'))) > 1)
-			$this->page = $tmpPage;
-		if (Request::has('orderby') && in_array($tmpOrderBy = Request::get('orderby'), $this->orderFields))
+		if (1 < $tmpPage = intval(Request::query('page', 0)))
+			$this->curPage = $tmpPage;
+		if (in_array($tmpOrderBy = Request::query('orderby'), $this->orderFields))
 			$this->orderBy = $tmpOrderBy;
-		if (Request::has('orderdir') && Request::get('orderdir') == 'desc')
+		if (Request::get('orderdir') == 'desc')
 			$this->orderDir = 'desc';
-		if (Request::has('perpage') && ($tmpPerPage = intval(Request::get('perpage'))) > 0) {
+		if (0 < $tmpPerPage = intval(Request::query('perpage', 0))) {
 			$this->perPage = $tmpPerPage;
 			Session::put('prefs.'.$this->routeName.'.perPage', $tmpPerPage);
 		} elseif (Session::has('prefs.'.$this->routeName.'.perPage')) 
@@ -56,7 +56,7 @@ class ResourceIndexPage extends UserPage {
 	protected function getLink(array $params)
 	{
 		$query_data = array();
-		if ($this->page > 1) $query_data['page'] = $this->page;
+		if ($this->curPage > 1) $query_data['page'] = $this->curPage;
 		if ($this->orderBy != $this->defaultOrderBy) $query_data['orderby'] = $this->orderBy;
 		if ($this->orderDir != $this->defaultOrderDir) $query_data['orderdir'] = $this->orderDir;
 		foreach ($params as $key => $value) {
@@ -74,7 +74,7 @@ class ResourceIndexPage extends UserPage {
 	
 	public function getPage()
 	{
-		return $this->page;
+		return $this->curPage;
 	}
 	
 	public function getOrderBy()

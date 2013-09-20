@@ -10,6 +10,7 @@ return array(
 	'cancel' => 'İptal',
 	'ok' => 'Tamam',
 	'submit' => 'Gönder',
-	'update' => 'Güncelle'
+	'update' => 'Güncelle',
+	'back' => 'Geri'
 
 );
