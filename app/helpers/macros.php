@@ -1,4 +1,24 @@
 <?php
+HTML::macro('_messages', function($errors = null) {
+	$result = '';
+	if (Session::has('message-success')) $result .= '<p class="alert alert-success">'.Session::get('message-success').'</p>'."\n";
+	if (Session::has('message-info')) $result .= '<p class="alert alert-info">'.Session::get('message-info').'</p>'."\n";
+	if (Session::has('message-warning')) $result .= '<p class="alert">'.Session::get('message-warning').'</p>'."\n";
+	if (Session::has('message-error')) $result .= '<p class="alert alert-error">'.Session::get('message-error').'</p>'."\n";
+	if (!empty($errors)) {
+		$result .= '<ul class="unstyled">';
+		foreach ($errors as $error) {
+			$result .= '<li class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>'.$error.'</li>';
+		}
+		$result .= '</ul>'."\n";
+	}
+	return '<div id="messages">'."\n".$result.'</div>'."\n";
+});
+HTML::macro('_back', function($link = null, $failDefault = 'home') {
+	if (is_null($link)) $link = URL::previous();
+	if ($link == URL::current()) $link = route($failDefault);
+	return '<a href="'.$link.'" class="btn">'.$name.'</a>';
+});
 Form::macro('_open', function(array $options = array()) {
 	if (!isset($options['class'])) $options['class'] = 'form-horizontal well';
 	return Form::open($options)."\n";
@@ -35,26 +55,6 @@ Form::macro('_legend', function($legend) {
 Form::macro('_messages', function($errors) {
 	$result = HTML::_messages($errors);
 	if (!empty($result)) return Form::_row('', '<div style="float: left">'."\n".$result.'</div>'."\n");
-});
-HTML::macro('_messages', function($errors = null) {
-	$result = '';
-	if (Session::has('message-success')) $result .= '<p class="alert alert-success">'.Session::get('message-success').'</p>'."\n";
-	if (Session::has('message-info')) $result .= '<p class="alert alert-info">'.Session::get('message-info').'</p>'."\n";
-	if (Session::has('message-warning')) $result .= '<p class="alert">'.Session::get('message-warning').'</p>'."\n";
-	if (Session::has('message-error')) $result .= '<p class="alert alert-error">'.Session::get('message-error').'</p>'."\n";
-	if (!empty($errors)) {
-		$result .= '<ul class="unstyled">';
-		foreach ($errors as $error) {
-			$result .= '<li class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>'.$error.'</li>';
-		}
-		$result .= '</ul>'."\n";
-	}
-	return '<div id="messages">'."\n".$result.'</div>'."\n";
-});
-HTML::macro('_back', function($link = null, $failDefault = 'home') {
-	if (is_null($link)) $link = URL::previous();
-	if ($link == URL::current()) $link = route($failDefault);
-	return '<a href="'.$link.'" class="btn">'.$name.'</a>';
 });
 Form::macro('_row', function($left, $right, $fields = null) {
 	$state = '';
@@ -95,7 +95,7 @@ Form::macro('_actions', function($elements = array()) {
 Form::macro('_cancel', function($title = null, $link = null, $failDefault = 'home') {
 	if (is_null($link)) $link = URL::previous();
 	if ($link == URL::current()) $link = route($failDefault);
-	if (is_null($title)) $title = trans('common.cancel');
+	if (is_null($title)) $title = trans('form.cancel');
 	return '<a href="'.$link.'" class="btn">'.$title.'</a>';
 });
 Form::macro('_userCancel', function($title = null, $link = null) {

@@ -6,7 +6,7 @@
 		<div class="btn-group">
 			<button class="btn btn-small btn-info dropdown-toggle" data-toggle="dropdown"><?= trans('tables/common.per_page') ?> <span class="caret"></span></button>
 			<ul id="perpage" class="dropdown-menu">
-<?php			foreach($page->getPerPageOptions() as $perPage): ?>
+<?php			foreach($indexPage->getPerPageOptions() as $perPage): ?>
 				<li<?= $perPage->selected ? ' class="active"' : '' ?>><a href="<?= $perPage->link ?>"><?= $perPage->value ?></a></li>
 <?php			endforeach; ?>
 			</ul>
@@ -34,9 +34,8 @@
 <table class="table table-striped table-bordered table-hover table-condensed">
 	<thead>
 		<tr>
-<?php		$fields = $page->getFields(); ?>
-<?php		$orderByLinks = $page->getOrderByLinks(); ?>
-<?php		foreach($fields as $field): ?>
+<?php		$orderByLinks = $indexPage->getOrderByLinks(); ?>
+<?php		foreach($indexPage->getFields() as $field): ?>
 			<th><?= isset($orderByLinks[$field]) ? '<a href="'.$orderByLinks[$field]->link.'" style="display: block">'.trans('tables/clubs.fields.'.$field).(isset($orderByLinks[$field]->image) ? '<span class="pull-right">'.$orderByLinks[$field]->image.'</span>' : '').'</a>' : trans('tables/clubs.fields.'.$field) ?></th>
 <?php		endforeach; ?>
 			<th><?= trans('tables/common.action') ?></th>
@@ -45,7 +44,7 @@
 	<tbody>
 <?php	foreach ($paginator->getItems() as $item): ?>
 		<tr>
-<?php		foreach ($fields as $field): ?>
+<?php		foreach ($indexPage->getFields() as $field): ?>
 			<td><?= $item->$field ?></td>
 <?php		endforeach; ?>
 			<td>

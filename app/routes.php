@@ -12,129 +12,129 @@
 */
 
 /* Registration */
-Route::get('register', array('as' => 'auth.register', 'uses' => 'Tbfmp\AuthController@getRegister'));
-Route::post('register', 'Tbfmp\AuthController@postRegister');
-Route::get('register/success', array('as' => 'auth.register.success', 'uses' => 'Tbfmp\AuthController@getRegisterSuccess'));
-Route::get('register/activate/{code}', array('as' => 'auth.register.activate', 'uses' => 'Tbfmp\AuthController@getActivate'))
+Route::get('register', array('as' => 'auth.register', 'uses' => 'Odeva\Masterpoint\Controller\Auth@getRegister'));
+Route::post('register', 'Odeva\Masterpoint\Controller\Auth@postRegister');
+Route::get('register/success', array('as' => 'auth.register.success', 'uses' => 'Odeva\Masterpoint\Controller\Auth@getRegisterSuccess'));
+Route::get('register/activate/{code}', array('as' => 'auth.register.activate', 'uses' => 'Odeva\Masterpoint\Controller\Auth@getActivate'))
 	->where('code', '[A-Za-z0-9]+');
 /* Login */
-Route::get('login', array('as' => 'auth.login', 'uses' => 'Tbfmp\AuthController@getLogin'));
-Route::post('login', 'Tbfmp\AuthController@postLogin');
+Route::get('login', array('as' => 'auth.login', 'uses' => 'Odeva\Masterpoint\Controller\Auth@getLogin'));
+Route::post('login', 'Odeva\Masterpoint\Controller\Auth@postLogin');
 /* Logout */
-Route::get('logout', array('as' => 'auth.logout', 'uses' => 'Tbfmp\AuthController@getLogout'));
+Route::get('logout', array('as' => 'auth.logout', 'uses' => 'Odeva\Masterpoint\Controller\Auth@getLogout'));
 /* Reset Password */
-Route::get('reset-password', array('as' => 'auth.login.reset-password', 'uses' => 'Tbfmp\AuthController@getResetPassword'));
-Route::post('reset-password', 'Tbfmp\AuthController@postResetPassword');
-Route::get('reset-password/success', array('as' => 'auth.login.reset-password.success', 'uses' => 'Tbfmp\AuthController@getResetPasswordSuccess'));
-Route::get('reset-password/change/{code}', array('as' => 'auth.login.reset-password.change', 'uses' => 'Tbfmp\AuthController@getResetPasswordChange'))
+Route::get('reset-password', array('as' => 'auth.login.reset-password', 'uses' => 'Odeva\Masterpoint\Controller\Auth@getResetPassword'));
+Route::post('reset-password', 'Odeva\Masterpoint\Controller\Auth@postResetPassword');
+Route::get('reset-password/success', array('as' => 'auth.login.reset-password.success', 'uses' => 'Odeva\Masterpoint\Controller\Auth@getResetPasswordSuccess'));
+Route::get('reset-password/change/{code}', array('as' => 'auth.login.reset-password.change', 'uses' => 'Odeva\Masterpoint\Controller\Auth@getResetPasswordChange'))
 	->where('code', '[A-Za-z0-9]+');
-Route::post('reset-password/change/{code}', 'Tbfmp\AuthController@postResetPasswordChange')
+Route::post('reset-password/change/{code}', 'Odeva\Masterpoint\Controller\Auth@postResetPasswordChange')
 	->where('code', '[A-Za-z0-9]+');
 
 /* User */
 Route::group(array('prefix' => 'panel'), function() {
-	Route::get('/', array('as' => 'panel', 'uses' => 'Tbfmp\PanelController@getIndex'));
+	Route::get('/', array('as' => 'panel', 'uses' => 'Odeva\Masterpoint\Controller\Panel@getIndex'));
 	/* Account */
 	Route::group(array('prefix' => 'account'), function() {
-		Route::get('/', array('as' => 'panel.account', 'uses' => 'Tbfmp\AccountController@getIndex'));
-		Route::get('notifications', array('as' => 'panel.account.notifications', 'uses' => 'Tbfmp\AccountController@getNotifications'));
-		Route::get('details', array('as' => 'panel.account.details', 'uses' => 'Tbfmp\AccountController@getDetails'));
-		Route::post('details', 'Tbfmp\AccountController@postDetails');
+		Route::get('/', array('as' => 'panel.account', 'uses' => 'Odeva\Masterpoint\Controller\Account@getIndex'));
+		Route::get('notifications', array('as' => 'panel.account.notifications', 'uses' => 'Odeva\Masterpoint\Controller\Account@getNotifications'));
+		Route::get('details', array('as' => 'panel.account.details', 'uses' => 'Odeva\Masterpoint\Controller\Account@getDetails'));
+		Route::post('details', 'Odeva\Masterpoint\Controller\Account@postDetails');
 		/* Account Password */
 		Route::group(array('prefix' => 'password'), function() {
-			Route::get('/', array('as' => 'panel.account.password', 'uses' => 'Tbfmp\AccountController@getPassword'));
-			Route::post('/', 'Tbfmp\AccountController@postPassword');
-			Route::get('success', array('as' => 'panel.account.password.success', 'uses' => 'Tbfmp\AccountController@getPasswordSuccess'));
+			Route::get('/', array('as' => 'panel.account.password', 'uses' => 'Odeva\Masterpoint\Controller\Account@getPassword'));
+			Route::post('/', 'Odeva\Masterpoint\Controller\Account@postPassword');
+			Route::get('success', array('as' => 'panel.account.password.success', 'uses' => 'Odeva\Masterpoint\Controller\Account@getPasswordSuccess'));
 		});
 	});
 	/* Club User */
 	Route::group(array('prefix' => 'club'), function() {
-		Route::get('/', array('as' => 'panel.club', 'uses' => 'Tbfmp\ClubController@getIndex'));
+		Route::get('/', array('as' => 'panel.club', 'uses' => 'Odeva\Masterpoint\Controller\Club@getIndex'));
 		/* Tournament */
 		Route::group(array('prefix' => 'tournaments'), function() {
-			Route::get('/', array('as' => 'panel.club.tournaments', 'uses' => 'Tbfmp\TournamentController@getIndex'));
+			Route::get('/', array('as' => 'panel.club.tournaments', 'uses' => 'Odeva\Masterpoint\Controller\Tournament@getIndex'));
 		});
 		
 	});
-	Route::model('club', 'Tbfmp\Club');
+	Route::model('club', 'Odeva\Masterpoint\Controller\Club');
 	/* Admin User */
 	Route::group(array('prefix' => 'admin'), function() {
-		Route::get('/', array('as' => 'panel.admin', 'uses' => 'Tbfmp\AdminController@getIndex'));
+		Route::get('/', array('as' => 'panel.admin', 'uses' => 'Odeva\Masterpoint\Controller\Admin@getIndex'));
 		/* Club */
 		Route::group(array('prefix' => 'clubs'), function() {
-			Route::get('/', array('as' => 'panel.admin.clubs.index', 'uses' => 'Tbfmp\ClubController@index'));
-			Route::any('/{club}', array('as' => 'panel.admin.clubs.destroy', 'uses' => 'Tbfmp\ClubController@destroy'));
-			Route::get('create', array('as' => 'panel.admin.clubs.create', 'uses' => 'Tbfmp\ClubController@getCreate'));
+			Route::get('/', array('as' => 'panel.admin.clubs.index', 'uses' => 'Odeva\Masterpoint\Controller\Club@index'));
+			Route::any('/{club}', array('as' => 'panel.admin.clubs.destroy', 'uses' => 'Odeva\Masterpoint\Controller\Club@destroy'));
+			Route::get('create', array('as' => 'panel.admin.clubs.create', 'uses' => 'Odeva\Masterpoint\Controller\Club@getCreate'));
 		});
 	});
 });
 
 /* Player */
 /*
-Route::get('sporcu', 'PlayerController@getIndex');
-Route::get('sporcu/lisans-bilgileri', 'PlayerController@getLisansBilgileri');
-Route::get('sporcu/online-vize', 'PanelController@getOnlineVize');
+Route::get('sporcu', 'Player@getIndex');
+Route::get('sporcu/lisans-bilgileri', 'Player@getLisansBilgileri');
+Route::get('sporcu/online-vize', 'Panel@getOnlineVize');
 */
 
 /* Club */
 /*
-Route::get('kulup-yetkilisi', 'ClubUserController@getIndex');
-Route::get('kulup-yetkilisi/turnuva-girisi', 'ClubUserController@getTurnuvaGirisi');
+Route::get('kulup-yetkilisi', 'ClubUser@getIndex');
+Route::get('kulup-yetkilisi/turnuva-girisi', 'ClubUser@getTurnuvaGirisi');
 */
 
 /* Regional */
 /*
-Route::get('bolgesel-yetkili', 'RegionalUserController@getIndex');
-Route::get('bolgesel-yetkili/turnuva-girisi', 'RegionalUserController@getTurnuvaGirisi');
+Route::get('bolgesel-yetkili', 'RegionalUser@getIndex');
+Route::get('bolgesel-yetkili/turnuva-girisi', 'RegionalUser@getTurnuvaGirisi');
 */
 /* National */
 /*
-Route::get('ulusal-yetkili', 'NationalUserController@getIndex');
-Route::get('ulusal-yetkili/turnuva-girisi', 'NationalUserController@getTurnuvaGirisi');
+Route::get('ulusal-yetkili', 'NationalUser@getIndex');
+Route::get('ulusal-yetkili/turnuva-girisi', 'NationalUser@getTurnuvaGirisi');
 */
 
 /* Licence User */
 /*
-Route::get('lisans-yetkilisi', 'LicenceUserController@getIndex');
-Route::get('lisans-yetkilisi/lisans', 'LicenceUserController@getVize');
-Route::get('lisans-yetkilisi/vize', 'LicenceUserController@getVize');
+Route::get('lisans-yetkilisi', 'LicenceUser@getIndex');
+Route::get('lisans-yetkilisi/lisans', 'LicenceUser@getVize');
+Route::get('lisans-yetkilisi/vize', 'LicenceUser@getVize');
 */
 
 /* Superadmin */
 /* Site */
-Route::get('/', array('as' => 'home', 'uses' => 'Tbfmp\HomeController@getIndex'));
-Route::get('menu1', array('as' => 'menu1', 'uses' => 'Tbfmp\HomeController@getMenu1'));
-Route::get('menu2', array('as' => 'menu2', 'uses' => 'Tbfmp\HomeController@getMenu2'));
-Route::get('menu2a', array('as' => 'menu2a', 'uses' => 'Tbfmp\HomeController@getMenu2a'));
-Route::get('menu2b', array('as' => 'menu2b', 'uses' => 'Tbfmp\HomeController@getMenu2b'));
-Route::get('menu2c', array('as' => 'menu2c', 'uses' => 'Tbfmp\HomeController@getMenu2c'));
-Route::get('menu3', array('as' => 'menu3', 'uses' => 'Tbfmp\HomeController@getMenu3'));
-Route::get('menu3a', array('as' => 'menu3a', 'uses' => 'Tbfmp\HomeController@getMenu3a'));
-Route::get('menu3b', array('as' => 'menu3b', 'uses' => 'Tbfmp\HomeController@getMenu3b'));
-Route::get('menu4', array('as' => 'menu4', 'uses' => 'Tbfmp\HomeController@getMenu4'));
+Route::get('/', array('as' => 'home', 'uses' => 'Odeva\Masterpoint\Controller\Home@getIndex'));
+Route::get('menu1', array('as' => 'menu1', 'uses' => 'Odeva\Masterpoint\Controller\Home@getMenu1'));
+Route::get('menu2', array('as' => 'menu2', 'uses' => 'Odeva\Masterpoint\Controller\Home@getMenu2'));
+Route::get('menu2a', array('as' => 'menu2a', 'uses' => 'Odeva\Masterpoint\Controller\Home@getMenu2a'));
+Route::get('menu2b', array('as' => 'menu2b', 'uses' => 'Odeva\Masterpoint\Controller\Home@getMenu2b'));
+Route::get('menu2c', array('as' => 'menu2c', 'uses' => 'Odeva\Masterpoint\Controller\Home@getMenu2c'));
+Route::get('menu3', array('as' => 'menu3', 'uses' => 'Odeva\Masterpoint\Controller\Home@getMenu3'));
+Route::get('menu3a', array('as' => 'menu3a', 'uses' => 'Odeva\Masterpoint\Controller\Home@getMenu3a'));
+Route::get('menu3b', array('as' => 'menu3b', 'uses' => 'Odeva\Masterpoint\Controller\Home@getMenu3b'));
+Route::get('menu4', array('as' => 'menu4', 'uses' => 'Odeva\Masterpoint\Controller\Home@getMenu4'));
 
-//Route::controller('/', 'Tbfmp\HomeController');
+//Route::controller('/', 'Odeva\Masterpoint\Controller\HomeController');
 /*
-Route::get('/', 'HomeController@getGuncel');
-Route::get('klasman', 'HomeController@getKlasman');
-Route::get('genel-klasman', 'HomeController@getGenelKlasman');
-Route::get('sezona-gore-klasman', 'HomeController@getSezoneGoreKlasman');
-Route::get('sadece-altin-klasmani', 'HomeController@getSadeceAltinKlasmani');
-Route::get('online-masterpoint-klasmani', 'HomeController@getOnlineMasterpointKlasmani');
-Route::get('turnuvalar', 'HomeController@getTurnuvalar');
-Route::get('federasyon-turnuvalari', 'HomeController@getFederasyonTurnuvalari');
-Route::get('bolgesel-turnuvalar', 'HomeController@getBolgeselTurnuvalar');
-Route::get('kulup-turnuvalari', 'HomeController@getKulupTurnuvalari');
-Route::get('oyuncular', 'HomeController@getOyuncular');
-Route::get('kulupler', 'HomeController@getKulupler');
-Route::get('kayitli-kulupler', 'HomeController@getKayitliKulupler');
-Route::get('kayitli-turnuvalar', 'HomeController@getKayitliTurnuvalar');
-Route::get('kulup-istatistikleri', 'HomeController@getKulupIstatistikleri');
-Route::get('yardim', 'HomeController@getYardim');
-Route::get('masterpoint-kitapcigi', 'HomeController@getMasterpointKitapcigi');
-Route::get('kullanim-klavuzu', 'HomeController@getKullanimKlavuzu');
-Route::get('sikca-sorulan-sorular', 'HomeController@getSikcaSorulanSorular');
+Route::get('/', 'Home@getGuncel');
+Route::get('klasman', 'Home@getKlasman');
+Route::get('genel-klasman', 'Home@getGenelKlasman');
+Route::get('sezona-gore-klasman', 'Home@getSezoneGoreKlasman');
+Route::get('sadece-altin-klasmani', 'Home@getSadeceAltinKlasmani');
+Route::get('online-masterpoint-klasmani', 'Home@getOnlineMasterpointKlasmani');
+Route::get('turnuvalar', 'Home@getTurnuvalar');
+Route::get('federasyon-turnuvalari', 'Home@getFederasyonTurnuvalari');
+Route::get('bolgesel-turnuvalar', 'Home@getBolgeselTurnuvalar');
+Route::get('kulup-turnuvalari', 'Home@getKulupTurnuvalari');
+Route::get('oyuncular', 'Home@getOyuncular');
+Route::get('kulupler', 'Home@getKulupler');
+Route::get('kayitli-kulupler', 'Home@getKayitliKulupler');
+Route::get('kayitli-turnuvalar', 'Home@getKayitliTurnuvalar');
+Route::get('kulup-istatistikleri', 'Home@getKulupIstatistikleri');
+Route::get('yardim', 'Home@getYardim');
+Route::get('masterpoint-kitapcigi', 'Home@getMasterpointKitapcigi');
+Route::get('kullanim-klavuzu', 'Home@getKullanimKlavuzu');
+Route::get('sikca-sorulan-sorular', 'Home@getSikcaSorulanSorular');
  * 
  */
 
-Route::controller('', 'Tbfmp\HomeController');
+Route::controller('', 'Odeva\Masterpoint\Controller\Home');

@@ -26,8 +26,8 @@ return array(
 	|
 	*/
 
-	'url' => 'http://vugraph.net',
-	'brandurl' => 'http://odeva.com',
+	'url' => 'http://masterpoint.tbricfed.org.tr',
+	'brandurl' => 'http://www.tbricfed.org.tr',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -175,7 +175,7 @@ return array(
 		'Schema'          => 'Illuminate\Support\Facades\Schema',
 		'Seeder'          => 'Illuminate\Database\Seeder',
 		'Session'         => 'Illuminate\Support\Facades\Session',
-//		'Str'             => 'Illuminate\Support\Str',
+		'Str'             => 'Odeva\Masterpoint\Support\Str',
 		'URL'             => 'Illuminate\Support\Facades\URL',
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',

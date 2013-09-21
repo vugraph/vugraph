@@ -1,4 +1,4 @@
-<?php if (!empty($heading)): ?>
+<?php if (isset($heading)): ?>
 <div class="page-header">
 <h3><?= $heading ?></h3>
 </div>

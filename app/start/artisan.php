@@ -11,4 +11,4 @@
 |
 */
 
-$artisan->add(new Tbfmp\ClearInactiveUsers);
+$artisan->add(new Odeva\Masterpoint\Command\ClearInactiveUsers);

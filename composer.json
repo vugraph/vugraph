@@ -7,14 +7,11 @@
         "cartalyst/sentry": "2.0.*"
 	},
     "require-dev": {
-        "barryvdh/laravel-ide-helper": "1.*",
         "way/generators": "dev-master"
     },
 	"autoload": {
 		"classmap": [
-			"app/commands",
-			"app/controllers",
-			"app/models",
+			"app/src",
 			"app/database/migrations",
 			"app/database/seeds",
 			"app/tests/TestCase.php"
@@ -28,7 +25,6 @@
 			"php artisan clear-compiled"
 		],
 		"post-update-cmd": [
-            "php artisan ide-helper:generate",
 			"php artisan optimize"
 		],
 		"post-create-project-cmd": [

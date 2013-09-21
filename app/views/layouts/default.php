@@ -6,20 +6,16 @@
 <meta name="keywords" content="">
 <meta name="author" content="Guray Sunamak, Odeva Internet Teknolojileri - www.odeva.com">
 <meta name="description" content="">
-<?php if (!empty($page->title)): ?>
-<title><?= $page->title ?></title>
-<?php endif; ?>
+<title><?= $title ?></title>
 <?= HTML::style('css/bootstrap.css') ?>
 <?php //HTML::style('css/bootstrap-responsive.css') ?>
 <?= HTML::style('css/style.css') ?>
-<?php if (!empty($page->styleFiles)): ?>
-<?php foreach($page->styleFiles as $s): ?>
+<?php foreach($styles as $s): ?>
 <?= HTML::style($s) ?>
 <?php endforeach; ?>
-<?php endif; ?>
-<?php if (!empty($page->style)): ?>
+<?php if (!empty($style)): ?>
 <style>
-<?= $page->style ?>
+<?= $style ?>
 </style>
 <?php endif; ?>
 <!--[if lt IE 9]>
@@ -29,18 +25,18 @@
 </head>
 <body>
 <div id="container" class="container">
-<?= empty($navbar) ? '' : $navbar."\n" ?>
-<?= empty($breadcrumb) ? '' : $breadcrumb."\n" ?>
+<?= isset($navbar) ? $navbar."\n" : '' ?>
+<?= isset($breadcrumb) ? $breadcrumb."\n" : '' ?>
 <div id="middle" class="row">
-<?php if (!empty($sidebar)): ?>
+<?php if (isset($sidebar)): ?>
 <div id="sidebar" class="span3">
 <!--p><a href="<?= route('home') ?>" title="<?= trans('common.brandname') ?>"><?= HTML::image('img/blank.gif', 'Logo', array('class' => 'img-circle img-polaroid', 'width' => '140', 'height' => '140')) ?></a></p-->
 <?= $sidebar."\n" ?>
 </div>
 <?php endif; ?>
-<div class="span<?= empty($sidebar) ? '12' : '9' ?>">
+<div class="span<?= isset($sidebar) ? '9' : '12' ?>">
 <div id="content">
-<?= $content."\n" ?>
+<?= isset($content) ? $content."\n" : '' ?>
 </div>
 </div>
 </div>
@@ -53,14 +49,12 @@
 </div>
 <?= HTML::script('js/jquery-1.10.2.js') ?>
 <?= HTML::script('js/bootstrap.js') ?>
-<?php if (!empty($page->scriptFiles)): ?>
-<?php foreach($page->scriptFiles as $s): ?>
+<?php foreach($scripts as $s): ?>
 <?= HTML::script($s) ?>
 <?php endforeach; ?>
-<?php endif; ?>
-<?php if (!empty($page->script)): ?>
+<?php if (!empty($script)): ?>
 <script>
-<?= $page->script ?>
+<?= $script ?>
 </script>
 <?php endif; ?>
 <p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
@@ -71,7 +65,7 @@ foreach(DB::getQueryLog() as $sql) {
 	foreach ($sql as $key => $item) {
 		echo '<dt>'.$key.'</dt>';
 		echo '<dd>';
-		print_r($item);
+		echo htmlentities(print_r($item, true));
 		echo '</dd>';
 	}
 	echo '</dl></li>'."\n";
@@ -84,7 +78,7 @@ foreach(array('GET' => $_GET, 'POST' => $_POST, 'SESSION' => $_SESSION) as $key 
 	if (empty($value)) continue;
 	echo '<dt>'.$key.'</dt>'."\n";
 	echo '<dd><pre>'."\n";
-	var_dump($value);
+	echo htmlentities(print_r($value, true));
 	echo '</pre></dd>'."\n";
 }
 echo '</dl>'."\n";

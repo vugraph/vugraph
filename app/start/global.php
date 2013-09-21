@@ -13,11 +13,14 @@
 
 ClassLoader::addDirectories(array(
 
-//	app_path().'/Commands',
-//	app_path().'/Controllers',
-//	app_path().'/Services',
-	app_path().'/models',
-//	app_path().'/Database/Seeds',
+	app_path().'/src/Odeva/Masterpoint/Command',
+	app_path().'/src/Odeva/Masterpoint/Controller',
+	app_path().'/src/Odeva/Masterpoint/Mailer',
+	app_path().'/src/Odeva/Masterpoint/Menu',
+	app_path().'/src/Odeva/Masterpoint/Model',
+	app_path().'/src/Odeva/Masterpoint/Page',
+	app_path().'/src/Odeva/Masterpoint/Support',
+	app_path().'/Database/Seeds',
 
 ));
 
@@ -82,6 +85,8 @@ App::down(function()
 */
 
 require app_path().'/filters.php';
+
+require(app_path().'/helpers/macros.php');
 
 //View::composer('layouts._partial.navbar.menu', 'Tbfmp\MenuComposer');
 

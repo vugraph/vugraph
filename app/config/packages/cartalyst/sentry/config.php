@@ -95,7 +95,7 @@ return array(
 		|
 		*/
 
-		'model' => 'Tbfmp\\Group',
+		'model' => 'Odeva\Masterpoint\Model\Group',
 
 	),
 
@@ -120,7 +120,7 @@ return array(
 		|
 		*/
 
-		'model' => 'Tbfmp\\User',
+		'model' => 'Odeva\Masterpoint\Model\User',
 
 		/*
 		|--------------------------------------------------------------------------

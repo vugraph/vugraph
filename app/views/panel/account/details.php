@@ -17,7 +17,7 @@ echo Form::_row(
 echo Form::_actions(
 	array(
 		Form::_userCancel(),
-		Form::_submit(trans('common.update'))
+		Form::_submit(trans('form.update'))
 	)
 );
 echo Form::_fieldsetClose();
