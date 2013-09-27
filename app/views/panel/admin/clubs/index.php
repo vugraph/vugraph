@@ -3,28 +3,23 @@
 	<div class="pull-right toolbox">
 		<!--a href="javascript:void(0)" id="filterbutton" class="btn btn-small btn-info dropdown-toggle" data-toggle="dropdown"><i class="icon-filter icon-white"></i> <?= trans('tables/common.filter') ?></a-->
 		&nbsp;
-		<div class="btn-group">
-			<button class="btn btn-small btn-info dropdown-toggle" data-toggle="dropdown"><?= trans('tables/common.per_page') ?> <span class="caret"></span></button>
-<?php		echo HTML::_perPage(); ?>
-		</div>
+<?php		echo HTML::_perPage(Session::get('prefs.'.$table.'.perPage', '10')); ?>
 		&nbsp;
 		<a href="<?= route('panel.admin.clubs.create') ?>" class="btn btn-small btn-success"><i class="icon-plus-sign icon-white"></i> <?= trans('tables/common.add_new') ?></a>
 	</div>
 </div>
-<div id="filter" class="alert alert-info" style="clear: both;">
-<?= ''//Form::open(array('id' => 'filter', 'method' => 'get', 'class' => 'form-horizontal', 'style' => 'clear: both')) ?>
-<?=	''//Form::_fieldsetOpen(trans('tables/common.filter')); ?>
-	<div class="pull-left">
-<?=		Form::label('city', trans('panel/admin/clubs.filter_by_city')).
-		Form::select('city', $cities, Input::get('city')) ?>
-	</div>
-	<div class="pull-right">
-<?=		Form::label('search', 'Arama yap').
-		Form::input('text', 'search') ?>
-	</div>
-	<div style="clear: both"></div>
-<?= ''//Form::close() ?>
-</div>
+<?php
+/* echo '<form method="GET" action="http://vugraph.local/panel/admin/clubs" accept-charset="UTF-8" id="form-filters" class="alert alert-info">
+	<input name="deneme" />
+	<input type="submit" />
+</form>'; */
+?>
+<?php
+echo HTML::_filters(
+	array(Form::_filter('city', $cities, trans('panel/admin/clubs.filter_by_city'))),
+	array(Form::_search('search'))
+);
+?>
 <?= Form::open(array('id' => 'data-table', 'method' => 'delete', 'data-delete-dialog' => trans('tables/common.delete_dialog'))) ?>
 <?= HTML::_messages($errors->all()) ?>
 <?= HTML::_dataTable($fields, $paginator->getItems(), $actions); ?>

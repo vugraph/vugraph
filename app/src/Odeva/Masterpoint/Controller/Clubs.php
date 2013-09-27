@@ -22,6 +22,7 @@ class Clubs extends Admin {
 		$this->title = trans('panel/admin/clubs.title');
 		$this->scripts[] = 'js/resourceful/index.js';
 		$club = New Club;
+		$table = $club->getTable();
 		$paginator = $club->autoPaginate();
 		$fields = $club->getFields();
 		$actions = array(
@@ -29,8 +30,8 @@ class Clubs extends Admin {
 			'delete' => 'panel.admin.clubs.destroy'
 		);
 		$city = New City;
-		$cities =  $city->lists(trans('tables/common.all'));
-		$this->nest('panel.admin.clubs.index', compact('paginator', 'fields', 'actions', 'cities'));
+		$cities =  $city->lists(array('' => trans('tables/common.all')));
+		$this->nest('panel.admin.clubs.index', compact('table', 'paginator', 'fields', 'actions', 'cities'));
 	}
 	
 	public function destroy(Club $club)

@@ -107,13 +107,44 @@ Form::macro('_submit', function($value = null, $options = array()) {
 	if (!isset($options['class'])) $options['class'] = 'btn btn-primary';
 	return Form::submit($value, $options);
 });
-HTML::macro('_perPage', function() {
-	$perPage = Session::get('perPage', '10');
-	$html = '<ul id="perpage" class="dropdown-menu">'."\n";
+HTML::macro('_perPage', function($default) {
+	$html = Form::open(array('id' => 'form-perpage', 'method' => 'get'));
+	$html .= '<div class="btn-group">'."\n";
+	$html .= '<button class="btn btn-small btn-info dropdown-toggle" data-toggle="dropdown">'.trans('tables/common.per_page').' <span class="caret"></span></button>'."\n";	
+	$html .= '<ul id="perpage" class="dropdown-menu">'."\n";
 	foreach (array('10', '20', '50', '100') as $option) {
-		$html .= '<li'.($perPage == $option ? ' class="active"' : '').'><a href="'.HTML::_makeSelfLink(array('perpage' => $option, 'page' => null)).'">'.$option.'</a></li>'."\n";
+		$html .= '<li'.($default == $option ? ' class="active"' : '').'><a href="javascript:perPage('.$option.')">'.$option.'</a></li>'."\n";
 	}
 	$html .= '</ul>'."\n";
+	$html .= '</div>'."\n";
+	$html .= Form::input('hidden', 'perpage', Request::query('perpage', '10'), array('id' => 'input-perpage'));
+	$html .= Form::close();
+	return $html;
+});
+HTML::macro('_filters', function($left, $right) {
+	$html = Form::open(array('id' => 'form-filters', 'class' => 'alert alert-info', 'method' => 'get'));
+	if ($orderBy = Request::query('orderby')) $html .= Form::input('hidden', 'orderby', $orderBy);
+	if ($orderDir = Request::query('orderdir')) $html .= Form::input('hidden', 'orderdir', $orderDir);
+	$html .= '<div class="pull-left">'."\n";
+	foreach ($left as $item) $html .= $item."\n";
+	$html .= '</div>'."\n";
+	$html .= '<div class="pull-right">'."\n";
+	foreach ($right as $item) $html .= $item."\n";
+	$html .= '</div>'."\n";
+	$html .= '<div style="clear: both"></div>'."\n";
+	$html .= Form::close();
+	return $html;
+});
+Form::macro('_filter', function($name, $values, $label) {
+	return Form::label($name, $label).Form::select($name, $values, Request::query($name));
+});
+Form::macro('_search', function($q) {
+	$value = Request::query($q);
+	if (!empty($value)) $html = '<button id="search-reset" class="pull-right btn btn-mini btn-info">'.trans('tables/common.clear').'</button>';
+	else $html = '';
+	$html .= Form::label($q, 'Arama yap');
+	$html .= Form::input('search', $q, $value, array('class' => 'search-query'));
+	$html .= "\n";
 	return $html;
 });
 HTML::macro('_dataTable', function($fields, $data, $actions) {

@@ -61,7 +61,7 @@ Route::group(array('prefix' => 'panel'), function() {
 		Route::get('/', array('as' => 'panel.admin', 'uses' => 'Odeva\Masterpoint\Controller\Admin@getIndex'));
 		/* Club */
 		Route::group(array('prefix' => 'clubs'), function() {
-			Route::get('/', array('as' => 'panel.admin.clubs.index', 'uses' => 'Odeva\Masterpoint\Controller\Clubs@index'));
+			Route::any('/', array('as' => 'panel.admin.clubs.index', 'uses' => 'Odeva\Masterpoint\Controller\Clubs@index'));
 			Route::any('/{club}', array('as' => 'panel.admin.clubs.destroy', 'uses' => 'Odeva\Masterpoint\Controller\Clubs@destroy'));
 			Route::get('/{club}/edit', array('as' => 'panel.admin.clubs.edit', 'uses' => 'Odeva\Masterpoint\Controller\Clubs@edit'));
 			Route::get('create', array('as' => 'panel.admin.clubs.create', 'uses' => 'Odeva\Masterpoint\Controller\Clubs@getCreate'));

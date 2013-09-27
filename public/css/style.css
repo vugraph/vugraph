@@ -12,6 +12,13 @@
 #datatable thead a {
     display: block;
 }
+
+#form-filters {
+    clear: both;
+}
+#form-perpage {
+    display: inline;
+}
 /*#messages {
     padding-top: 20px;
 }*/

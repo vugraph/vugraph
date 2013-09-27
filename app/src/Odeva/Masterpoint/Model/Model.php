@@ -63,10 +63,10 @@ abstract class Model extends \Illuminate\Database\Eloquent\Model {
 		if (!is_null($search = Request::query('search')) && !empty($search)) $this->search = $search;
 	}
 
-	public function lists($prepend)
+	public function lists($prepend = array())
 	{
-		if (is_null($prepend)) return $this->newQuery()->orderBy('name')->lists('name', 'id');
-		return array(0 => $prepend) + $this->newQuery()->orderBy('name')->lists('name', 'id');
+		if (empty($prepend)) return $this->newQuery()->orderBy('name')->lists('name', 'id');
+		return $prepend + $this->newQuery()->orderBy('name')->lists('name', 'id');
 	}
 	
 }
