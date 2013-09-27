@@ -9,6 +9,9 @@
 #content {
     min-height: 400px;
 }
+#datatable thead a {
+    display: block;
+}
 /*#messages {
     padding-top: 20px;
 }*/

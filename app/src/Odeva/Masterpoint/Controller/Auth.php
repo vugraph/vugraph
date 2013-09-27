@@ -18,8 +18,8 @@ class Auth extends Site {
 
 	public function getRegister()
 	{
+		$this->title = trans('auth/register.title');
 		$this->nest('auth.register');
-		$this->layout->title = trans('auth/register.title');
 	}
 	
 	public function postRegister()
@@ -61,9 +61,9 @@ class Auth extends Site {
 	
 	public function getRegisterSuccess()
 	{
-		$this->nest('result');
-		$this->layout->title = $this->layout->content->heading = trans('auth/register.success_title');
+		$this->title = $this->heading = trans('auth/register.success_title');
 		$this->withInfo(trans('auth/register.success_content'));
+		$this->nest('result');
 	}
 
 	public function getActivate($code)
@@ -82,16 +82,16 @@ class Auth extends Site {
 		} catch (Exception $e) {
 			$err = $e->getMessage();
 		}
-		$this->nest('result');
-		$this->layout->title = $this->layout->content->heading = trans('auth/register.activate_error_title');
+		$this->title = $this->heading = trans('auth/register.activate_error_title');
 		$this->withError($err);
+		$this->nest('result');
 		
 	}
 
 	public function getLogin()
 	{
+		$this->title = trans('auth/login.title');
 		$this->nest('auth.login');
-		$this->layout->title = trans('auth/login.title');
 	}
 	
 	public function postLogin()
@@ -137,8 +137,8 @@ class Auth extends Site {
 	
 	public function getResetPassword()
 	{
+		$this->title = trans('auth/reset-password.title');
 		$this->nest('auth.reset-password');
-		$this->layout->title = trans('auth/reset-password.title');
 	}
 
 	public function postResetPassword()
@@ -164,9 +164,9 @@ class Auth extends Site {
 	
 	public function getResetPasswordSuccess()
 	{
-		$this->nest('result');
-		$this->layout->title = $this->layout->content->heading = trans('auth/reset-password.success_title');
+		$this->title = $this->heading = trans('auth/reset-password.success_title');
 		$this->withInfo(trans('auth/reset-password.success_content'));
+		$this->nest('result');
 	}
 	
 	public function getResetPasswordChange($code)
@@ -180,12 +180,12 @@ class Auth extends Site {
 			$err = $e->getMessage();
 		}
 		if (empty($err)) {
+			$this->title = trans('auth/reset-password.change_title');
 			$this->nest('auth.reset-password-change');
-			$this->layout->title = trans('auth/reset-password.change_title');
 		} else {
-			$this->nest('result');
-			$this->layout->title = $this->layout->content->heading = trans('auth/reset-password.change_error_title');
+			$this->title = $this->heading = trans('auth/reset-password.change_error_title');
 			$this->withError($err);
+			$this->nest('result');
 		}
 	}
 	

@@ -13,16 +13,17 @@ class Account extends Panel {
 	{
 		return Redirect::route('panel.account.notifications');
 	}
+
 	public function getNotifications()
 	{
+		$this->title = trans('panel/account/notifications.title');
 		$this->nest('panel.account.notifications');
-		$this->layout->title = trans('panel/account/notifications.title');
 	}
+
 	public function getDetails()
 	{
-		$this->nest('panel.account.details');
-		$this->layout->title = trans('panel/account/details.title');
-		$this->layout->content->user = $this->user;
+		$this->title = trans('panel/account/details.title');
+		$this->nest('panel.account.details', array('user' => $this->user));
 	}
 	
 	public function postDetails()
@@ -51,8 +52,8 @@ class Account extends Panel {
 	
 	public function getPassword()
 	{
+		$this->title = trans('panel/account/password.title');
 		$this->nest('panel.account.password');
-		$this->layout->title = trans('panel/account/password.title');
 	}
 	
 	public function postPassword()
@@ -85,8 +86,8 @@ class Account extends Panel {
 	
 	public function getPasswordSuccess()
 	{
+		$this->title = $this->heading = trans('panel/account/password.success_title');
 		$this->nest('result');
-		$this->layout->title = $this->layout->content->heading = trans('panel/account/password.success_title');
 	}
 	
 }

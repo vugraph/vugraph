@@ -1,4 +1,5 @@
 <?php
+
 HTML::macro('_messages', function($errors = null) {
 	$result = '';
 	if (Session::has('message-success')) $result .= '<p class="alert alert-success">'.Session::get('message-success').'</p>'."\n";
@@ -17,7 +18,7 @@ HTML::macro('_messages', function($errors = null) {
 HTML::macro('_back', function($link = null, $failDefault = 'home') {
 	if (is_null($link)) $link = URL::previous();
 	if ($link == URL::current()) $link = route($failDefault);
-	return '<a href="'.$link.'" class="btn">'.$name.'</a>';
+	return '<a href="'.$link.'" class="btn">'.trans('tables/common.back').'</a>';
 });
 Form::macro('_open', function(array $options = array()) {
 	if (!isset($options['class'])) $options['class'] = 'form-horizontal well';
@@ -71,7 +72,8 @@ Form::macro('_label', function($name, $value = null, $options = array()) {
 Form::macro('_input', function($type, $name, $value = null, $options = array()) {
 	if (Form::_hasFocus($name)) $options['autofocus'] = 'autofocus';
 	if (Form::_hasError($name)) $options['oninput'] = '$(this).parents(\'div.control-group\').removeClass(\'error\')';
-	if (!empty($shared) && $shared == $name) $options['autofocus'] = 'autofocus';
+	$shared = View::getShared();
+	if (!empty($shared) && $shared === $name) $options['autofocus'] = 'autofocus';
 	return Form::input($type, $name, $value, $options);
 });
 Form::macro('_hasError', function($field) {
@@ -104,4 +106,76 @@ Form::macro('_userCancel', function($title = null, $link = null) {
 Form::macro('_submit', function($value = null, $options = array()) {
 	if (!isset($options['class'])) $options['class'] = 'btn btn-primary';
 	return Form::submit($value, $options);
+});
+HTML::macro('_perPage', function() {
+	$perPage = Session::get('perPage', '10');
+	$html = '<ul id="perpage" class="dropdown-menu">'."\n";
+	foreach (array('10', '20', '50', '100') as $option) {
+		$html .= '<li'.($perPage == $option ? ' class="active"' : '').'><a href="'.HTML::_makeSelfLink(array('perpage' => $option, 'page' => null)).'">'.$option.'</a></li>'."\n";
+	}
+	$html .= '</ul>'."\n";
+	return $html;
+});
+HTML::macro('_dataTable', function($fields, $data, $actions) {
+	$html = '';
+	if (count($data) == 0) return $html;
+	$html .= '<table id="datatable" class="table table-striped table-bordered table-hover table-condensed">'."\n";
+	$html .= '<thead>'."\n";
+	$html .= '<tr>'."\n";
+	$params = Request::query();
+	foreach ($fields as $field => $fieldTrans) {
+		$html .= '<td>';
+		$html .= '<a href="'.HTML::_makeSelfLink(
+			array(
+				'orderby' => $field,
+				'orderdir' => isset($params['orderby']) && $params['orderby'] == $field
+					? !isset($params['orderdir']) || $params['orderdir'] != 'desc' ? 'desc'	: 'asc'
+					: null
+			)
+		).'">';
+		$html .= $fieldTrans;
+		if (!isset($params['orderby'])) $params['orderby'] = 'id';
+		if (!isset($params['orderdir'])) $params['orderdir'] = 'asc';
+		if ($params['orderby'] == $field) $html .= '<span class="pull-right"><i class="icon-chevron-'.($params['orderdir'] == 'desc' ? 'up' : 'down').'"></i></span>';
+		$html .= '</a>';
+		$html .= '</td>'."\n";
+	}
+	if (!empty($actions)) $html .= '<td>'.trans('tables/common.action').'</td>'."\n";
+	$html .= '</tr>'."\n";
+	$html .= '</thead>'."\n";
+	$html .= '<tbody>'."\n";
+	foreach ($data as $item) {
+		$html .= '<tr>'."\n";
+		foreach ($fields as $field => $fieldTrans) {
+			$html .= '<td>'.$item->$field.'</td>'."\n";
+		}
+		if (!empty($actions)) {
+			$html .= '<td>';
+			foreach ($actions as $key => $action) {
+				if ($key == 'edit') {
+					$html .= '<a href="'.route($action, $item->id).'" class="edit btn btn-mini">'.trans('tables/common.edit').'</a>&nbsp;';
+				} elseif ($key == 'delete') {
+					$html .= '<button data-action="'.route($action, $item->id).'" class="delete btn btn-mini btn-danger">'.trans('tables/common.delete').'</button>&nbsp;';
+				}
+			}
+			$html .= '</td>'."\n";
+		}
+		$html .= '</tr>'."\n";
+	}
+	$html .= '</tbody>'."\n";
+	$html .= '</table>'."\n";
+	return $html;
+});
+/* Create a url with params set as query string variables */
+HTML::macro('_makeSelfLink', function(array $queryString) {
+	$url = Request::url();
+	$params = Request::query();
+	unset($params['perpage']);
+	foreach ($queryString as $key => $value) {
+		if (is_null($value)) unset($params[$key]);
+		else $params[$key] = $value;
+	}
+	$q = http_build_query($params, '', '&amp;');
+	if (!empty($q)) $url .= '?'.$q;
+	return $url;
 });

@@ -1,7 +1,9 @@
 <?php namespace Odeva\Masterpoint\Controller;
 
 use Sentry;
-use Odeva\Masterpoint\Menu\User as UserMenu;
+use Odeva\Masterpoint\Menu\Panel as PanelMenu;
+use Odeva\Masterpoint\Menu\Site as SiteMenu;
+use Odeva\Masterpoint\Model\User;
 
 class Panel extends Controller {
 
@@ -15,7 +17,7 @@ class Panel extends Controller {
 	protected function setupLayout()
 	{
 		parent::setupLayout();
-		$this->layout->navbar->menu = new UserMenu;
+		$this->layout->navbar->menu = ($this->user instanceof User) ? new PanelMenu($this->user) : new SiteMenu;
 	}
 	
 	public function getIndex()

@@ -1,5 +1,6 @@
 <?php namespace Odeva\Masterpoint\Model;
 
+use Cartalyst\Sentry\Groups\Eloquent\Group as SentryGroup;
 /**
  * An Eloquent Model: 'Group'
  *
@@ -10,5 +11,5 @@
  * @property \Carbon\Carbon $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\Cartalyst\Sentry\Users\Eloquent\User[] $users
  */
-class Group extends \Cartalyst\Sentry\Groups\Eloquent\Group {
+class Group extends SentryGroup {
 }

@@ -3,15 +3,15 @@
 use App;
 use Exception;
 use Sentry;
+use Odeva\Masterpoint\Model\User;
 
-class User extends Menu {
+class Panel extends Menu {
 
-	public function __construct()
+	public function __construct(User $user)
 	{
 		parent::__construct('navbar navbar-fixed-top navbar-inxverse');
 		try {
 			$this->left[] = new Item('home', '<i class="icon-home icon-white"></i> '.trans('panel/menu.home'));
-			$user = Sentry::getUser();
 			if ($user->hasAccess('club')) {
 				$this->left[] = new Item('panel.club', trans('panel/menu.club'), array(
 					new Item('panel.club.tournaments', '<i class="icon-chevron-right"></i> '.trans('panel/menu.club.tournaments'))

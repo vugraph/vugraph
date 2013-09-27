@@ -17,7 +17,8 @@ class City extends Model {
 
 	public function region()
 	{
-		return $this->belongsTo('Region');
+		return $this->belongsTo(__NAMESPACE__.'\Region');
 	}
+	
 
 }

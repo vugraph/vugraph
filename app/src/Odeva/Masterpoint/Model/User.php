@@ -1,5 +1,6 @@
 <?php namespace Odeva\Masterpoint\Model;
 
+use Cartalyst\Sentry\Users\Eloquent\User as SentryUser;
 /**
  * An Eloquent Model: 'User'
  *
@@ -20,6 +21,6 @@
  * @property string $old_usernames
  * @property-read \Illuminate\Database\Eloquent\Collection|\Cartalyst\Sentry\Groups\Eloquent\Group[] $groups
  */
-class User extends \Cartalyst\Sentry\Users\Eloquent\User {
+class User extends SentryUser {
 
 }
