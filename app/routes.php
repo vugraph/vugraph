@@ -33,6 +33,7 @@ Route::post('reset-password/change/{code}', 'Odeva\Masterpoint\Controller\Auth@p
 /* User */
 Route::group(array('prefix' => 'panel'), function() {
 	Route::get('/', array('as' => 'panel', 'uses' => 'Odeva\Masterpoint\Controller\Panel@getIndex'));
+	Route::post('perpage', array('as' => 'panel.perpage', 'uses' => 'Odeva\Masterpoint\Controller\Panel@postPerPage'));
 	/* Account */
 	Route::group(array('prefix' => 'account'), function() {
 		Route::get('/', array('as' => 'panel.account', 'uses' => 'Odeva\Masterpoint\Controller\Account@getIndex'));
@@ -61,9 +62,9 @@ Route::group(array('prefix' => 'panel'), function() {
 		Route::get('/', array('as' => 'panel.admin', 'uses' => 'Odeva\Masterpoint\Controller\Admin@getIndex'));
 		/* Club */
 		Route::group(array('prefix' => 'clubs'), function() {
-			Route::any('/', array('as' => 'panel.admin.clubs.index', 'uses' => 'Odeva\Masterpoint\Controller\Clubs@index'));
-			Route::any('/{club}', array('as' => 'panel.admin.clubs.destroy', 'uses' => 'Odeva\Masterpoint\Controller\Clubs@destroy'));
-			Route::get('/{club}/edit', array('as' => 'panel.admin.clubs.edit', 'uses' => 'Odeva\Masterpoint\Controller\Clubs@edit'));
+			Route::get('/', array('as' => 'panel.admin.clubs.index', 'uses' => 'Odeva\Masterpoint\Controller\Clubs@index'));
+			Route::any('{club}', array('as' => 'panel.admin.clubs.destroy', 'uses' => 'Odeva\Masterpoint\Controller\Clubs@destroy'));
+			Route::get('{club}/edit', array('as' => 'panel.admin.clubs.edit', 'uses' => 'Odeva\Masterpoint\Controller\Clubs@edit'));
 			Route::get('create', array('as' => 'panel.admin.clubs.create', 'uses' => 'Odeva\Masterpoint\Controller\Clubs@getCreate'));
 		});
 	});

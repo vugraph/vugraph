@@ -24,6 +24,11 @@ class Clubs extends Admin {
 		$club = New Club;
 		$table = $club->getTable();
 		$paginator = $club->autoPaginate();
+//		if ($paginator->getLastPage() > $paginator->getCurrentPage()) {
+//			$params = Request::query();
+//			unset($params['page']);
+//			return Redirect::route('panel.admin.clubs.index', $params);
+//		}
 		$fields = $club->getFields();
 		$actions = array(
 			'edit' => 'panel.admin.clubs.edit',

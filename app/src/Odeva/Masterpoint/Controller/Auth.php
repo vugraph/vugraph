@@ -112,6 +112,7 @@ class Auth extends Site {
 				),
 				false
 			);
+			if (Session::has('loginRedirect')) return Redirect::to(Session::get('loginRedirect'));
 			return Redirect::route('panel.account.notifications');
 		} catch (WrongPasswordException $e) {
 			$err = trans('auth/login.invalid_credentials');

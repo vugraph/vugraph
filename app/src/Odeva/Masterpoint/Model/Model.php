@@ -20,6 +20,7 @@ abstract class Model extends \Illuminate\Database\Eloquent\Model {
 	public function __construct()
 	{
 		parent::__construct();
+		$this->perPage = 10;
 	}
 	
 	public function setFields($fields)
@@ -47,8 +48,13 @@ abstract class Model extends \Illuminate\Database\Eloquent\Model {
 		foreach($this->fields as $key => $value) $select[] = empty($value) || $key == $value ? $value : $value.' AS '.$key;
 		$params = Request::query();
 		unset($params['page']);
-		unset($params['perpage']);
-		return $rset->paginate($this->perPage, $select)->appends($params);
+		$paginator = $rset->paginate($this->perPage, $select)->appends($params);
+		if ($paginator->getLastPage() < $this->curPage) {
+			$total = $paginator->getTotal();
+			$results = (array) $rset->forPage($paginator->getCurrentPage(), $this->perPage)->get($select)->all();
+			$paginator = $paginator->getEnvironment()->make($results, $total, $this->perPage)->appends($params);
+		}
+		return $paginator;
 	}
 	
 	protected function processQueryString()
@@ -56,10 +62,7 @@ abstract class Model extends \Illuminate\Database\Eloquent\Model {
 		if (!is_null($orderBy = Request::query('orderby')) && array_key_exists($orderBy, $this->fields)) $this->orderBy = $orderBy;
 		if (!is_null($orderDir = Request::query('orderdir')) && in_array($orderDir, array('asc', 'desc'))) $this->orderDir = $orderDir;
 		if (!is_null($curPage = intval(Request::query('page', '1'))) && $curPage > 0) $this->curPage = $curPage;
-		if (0 < $perPage = intval(Request::query('perpage', '0'))) {
-			$this->perPage = $perPage;
-			Session::put('prefs.'.$this->table.'.perPage', $perPage);
-		} elseif (Session::has('prefs.'.$this->table.'.perPage')) $this->perPage = Session::get('prefs.'.$this->table.'.perPage');
+		if (Session::has('prefs.'.$this->table.'.perPage')) $this->perPage = Session::get('prefs.'.$this->table.'.perPage');
 		if (!is_null($search = Request::query('search')) && !empty($search)) $this->search = $search;
 	}
 

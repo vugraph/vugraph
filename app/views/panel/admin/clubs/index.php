@@ -1,53 +1,19 @@
-<div class="page-header">
-	<h2 class="pull-left"><?= trans('panel/admin/clubs.title') ?></h2>
-	<div class="pull-right toolbox">
-		<!--a href="javascript:void(0)" id="filterbutton" class="btn btn-small btn-info dropdown-toggle" data-toggle="dropdown"><i class="icon-filter icon-white"></i> <?= trans('tables/common.filter') ?></a-->
-		&nbsp;
-<?php		echo HTML::_perPage(Session::get('prefs.'.$table.'.perPage', '10')); ?>
-		&nbsp;
-		<a href="<?= route('panel.admin.clubs.create') ?>" class="btn btn-small btn-success"><i class="icon-plus-sign icon-white"></i> <?= trans('tables/common.add_new') ?></a>
-	</div>
-</div>
 <?php
-/* echo '<form method="GET" action="http://vugraph.local/panel/admin/clubs" accept-charset="UTF-8" id="form-filters" class="alert alert-info">
-	<input name="deneme" />
-	<input type="submit" />
-</form>'; */
-?>
-<?php
+echo HTML::_header(
+	trans('panel/admin/'.$table.'.title'),
+	HTML::_toolbox(
+		array(
+			HTML::_perPage($table, $paginator->getPerPage()),
+			HTML::_addNew(route('panel.admin.'.$table.'.create'))
+		)
+	)
+);
 echo HTML::_filters(
-	array(Form::_filter('city', $cities, trans('panel/admin/clubs.filter_by_city'))),
+	array(Form::_filter('city', $cities, trans('panel/admin/'.$table.'.filter_by_city'))),
 	array(Form::_search('search'))
 );
-?>
-<?= Form::open(array('id' => 'data-table', 'method' => 'delete', 'data-delete-dialog' => trans('tables/common.delete_dialog'))) ?>
-<?= HTML::_messages($errors->all()) ?>
-<?= HTML::_dataTable($fields, $paginator->getItems(), $actions); ?>
-<?php /*
-<table class="table table-striped table-bordered table-hover table-condensed">
-	<thead>
-		<tr>
-<?php		//$orderByLinks = $indexPage->getOrderByLinks(); ?>
-<?php		foreach($clubs->getFields() as $field): ?>
-			<th><?= isset($orderByLinks[$field]) ? '<a href="'.$orderByLinks[$field]->link.'" style="display: block">'.trans('tables/clubs.fields.'.$field).(isset($orderByLinks[$field]->image) ? '<span class="pull-right">'.$orderByLinks[$field]->image.'</span>' : '').'</a>' : trans('tables/clubs.fields.'.$field) ?></th>
-<?php		endforeach; ?>
-			<th><?= trans('tables/common.action') ?></th>
-		</tr>
-	</thead>
-	<tbody>
-<?php	foreach ($clubs->getPaginator()->getItems() as $item): ?>
-		<tr>
-<?php		foreach ($clubs->getFields() as $field): ?>
-			<td><?= $item->$field ?></td>
-<?php		endforeach; ?>
-			<td>
-				<button data-action="<?= route('panel.admin.clubs.destroy', $item->id) ?>" class="destroy btn btn-mini btn-danger"><?= trans('tables/common.delete') ?></button>
-			</td>
-		</tr>
-<?php	endforeach; ?>
-	</tbody>
-</table>
- * 
- */ ?>
-<?= Form::close() ?>
-<?= $paginator->links() ?>
+echo Form::open(array('id' => 'data-table', 'method' => 'delete', 'data-delete-dialog' => trans('tables/common.delete_dialog')));
+echo HTML::_messages($errors->all());
+echo HTML::_dataTable($fields, $paginator->getItems(), $actions);
+echo Form::close();
+echo $paginator->links();

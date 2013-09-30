@@ -107,19 +107,39 @@ Form::macro('_submit', function($value = null, $options = array()) {
 	if (!isset($options['class'])) $options['class'] = 'btn btn-primary';
 	return Form::submit($value, $options);
 });
-HTML::macro('_perPage', function($default) {
-	$html = Form::open(array('id' => 'form-perpage', 'method' => 'get'));
+HTML::macro('_header', function($header, $extras = '') {
+	return '<div class="page-header">'."\n".
+		'<h2 class="pull-left">'.$header.'</h2>'."\n".
+		(empty($extras) ? '' : $extras."\n").
+		'</div>'."\n";
+});
+HTML::macro('_toolbox', function($tools) {
+	$html = '<div class="pull-right toolbox">'."\n";
+	foreach ($tools as $tool) $html .= '&nbsp;'.$tool."\n";
+	$html .= '</div>'."\n";
+	return $html;
+});
+HTML::macro('_perPage', function($table, $default) {
+	$html = Form::open(array('id' => 'form-perpage', 'route' => 'panel.perpage'));
+	$html .= Form::input('hidden', 'table', $table);
+	$html .= Form::input('hidden', 'perpage', $default, array('id' => 'input-perpage'));
 	$html .= '<div class="btn-group">'."\n";
-	$html .= '<button class="btn btn-small btn-info dropdown-toggle" data-toggle="dropdown">'.trans('tables/common.per_page').' <span class="caret"></span></button>'."\n";	
+	$html .= '<button class="btn btn-small btn-info dropdown-toggle" data-toggle="dropdown">'.trans('tables/common.per_page').' <span class="caret"></span></button>'."\n";
 	$html .= '<ul id="perpage" class="dropdown-menu">'."\n";
+	$cnt = 0;
 	foreach (array('10', '20', '50', '100') as $option) {
-		$html .= '<li'.($default == $option ? ' class="active"' : '').'><a href="javascript:perPage('.$option.')">'.$option.'</a></li>'."\n";
+		$html .= '<li'.($default == $option ? ' class="active"' : '').'>';
+		$html .= '<a href="javascript:setPerPage('.$option.')">'.$option.'</a>';
+		$html .= '</li>'."\n";
 	}
 	$html .= '</ul>'."\n";
 	$html .= '</div>'."\n";
-	$html .= Form::input('hidden', 'perpage', Request::query('perpage', '10'), array('id' => 'input-perpage'));
 	$html .= Form::close();
 	return $html;
+});
+HTML::macro('_addNew', function($url, $title = null) {
+	if (empty($title)) $title = '<i class="icon-plus-sign icon-white"></i> '.trans('tables/common.add_new');
+	return '<a href="'.$url.'" class="btn btn-small btn-success">'.$title.'</a>';
 });
 HTML::macro('_filters', function($left, $right) {
 	$html = Form::open(array('id' => 'form-filters', 'class' => 'alert alert-info', 'method' => 'get'));
@@ -201,7 +221,6 @@ HTML::macro('_dataTable', function($fields, $data, $actions) {
 HTML::macro('_makeSelfLink', function(array $queryString) {
 	$url = Request::url();
 	$params = Request::query();
-	unset($params['perpage']);
 	foreach ($queryString as $key => $value) {
 		if (is_null($value)) unset($params[$key]);
 		else $params[$key] = $value;

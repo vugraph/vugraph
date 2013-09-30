@@ -1,5 +1,9 @@
 function setPerPage(perPage) {
-	$('')
+	$('#perpage'+perPage).prop('checked', true);
+	$('#input-perpage').val(perPage);
+	$('#form-perpage').submit();
+	$(document.body).fadeOut();
+	return false;
 }
 function getReplacedUri(replace) {
 	var vars = {}, hash;
@@ -61,9 +65,6 @@ $(function() {
 			}
 		});
 		fdt.find('.edit').on('click', function() {
-			$(document.body).fadeOut();
-		});
-		$('ul#perpage').find('a').on('click', function() {
 			$(document.body).fadeOut();
 		});
 	}

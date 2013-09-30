@@ -37,7 +37,7 @@ App::after(function($request, $response)
 Route::filter('auth', function()
 {
 	if (!Sentry::check()) {
-		Session::put('loginRedirect', Request::url());
+		Session::put('loginRedirect', Request::fullUrl());
 		return Redirect::route('auth.login');
     }
 
