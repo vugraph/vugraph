@@ -29,7 +29,20 @@ class Club extends Model {
 	protected $table = 'clubs';
 	
 	protected $softDelete = true;
+	
+	protected $fillable = array('city_id', 'name', 'shortname', 'address', 'phone', 'fax', 'email', 'website');
 
+	protected $rules = array(
+		'city_id'	=> 'required',
+		'name'		=> 'required|between:2,60',
+		'shortname'	=> 'max:15',
+		'address'	=> 'max:240',
+		'phone'		=> 'max:60',
+		'fax'		=> 'max:60',
+		'email'		=> 'email|max:120',
+		'website'	=> 'url|max:120'
+	);
+	
 //	public function region()
 //	{
 //		return $this->belongsTo('Region');
@@ -67,5 +80,5 @@ class Club extends Model {
 		$this->processQueryString();
 		return $this->getPagination($this->joinCities());
 	}
-
+	
 }

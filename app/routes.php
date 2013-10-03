@@ -63,9 +63,11 @@ Route::group(array('prefix' => 'panel'), function() {
 		/* Club */
 		Route::group(array('prefix' => 'clubs'), function() {
 			Route::get('/', array('as' => 'panel.admin.clubs.index', 'uses' => 'Odeva\Masterpoint\Controller\Clubs@index'));
-			Route::any('{club}', array('as' => 'panel.admin.clubs.destroy', 'uses' => 'Odeva\Masterpoint\Controller\Clubs@destroy'));
+			Route::post('/', array('as' => 'panel.admin.clubs.store', 'uses' => 'Odeva\Masterpoint\Controller\Clubs@store'));
+			Route::get('create', array('as' => 'panel.admin.clubs.create', 'uses' => 'Odeva\Masterpoint\Controller\Clubs@create'));
 			Route::get('{club}/edit', array('as' => 'panel.admin.clubs.edit', 'uses' => 'Odeva\Masterpoint\Controller\Clubs@edit'));
-			Route::get('create', array('as' => 'panel.admin.clubs.create', 'uses' => 'Odeva\Masterpoint\Controller\Clubs@getCreate'));
+			Route::put('{club}', array('as' => 'panel.admin.clubs.update', 'uses' => 'Odeva\Masterpoint\Controller\Clubs@update'));
+			Route::delete('{club}', array('as' => 'panel.admin.clubs.destroy', 'uses' => 'Odeva\Masterpoint\Controller\Clubs@destroy'));
 		});
 	});
 });

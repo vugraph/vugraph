@@ -2,7 +2,6 @@
 
 use App;
 use Exception;
-use Sentry;
 use Odeva\Masterpoint\Model\User;
 
 class Panel extends Menu {
@@ -12,12 +11,12 @@ class Panel extends Menu {
 		parent::__construct('navbar navbar-fixed-top navbar-inxverse');
 		try {
 			$this->left[] = new Item('home', '<i class="icon-home icon-white"></i> '.trans('panel/menu.home'));
-			if ($user->hasAccess('club')) {
+			if ($user->club_id) {
 				$this->left[] = new Item('panel.club', trans('panel/menu.club'), array(
 					new Item('panel.club.tournaments', '<i class="icon-chevron-right"></i> '.trans('panel/menu.club.tournaments'))
 				));
 			}
-			if ($user->hasAccess('superuser')) {
+			if ($user->is_admin) {
 				$this->left[] = new Item('panel.admin', trans('panel/menu.admin'), array(
 					new Item('panel.admin.clubs.index', '<i class="icon-chevron-right"></i> '.trans('panel/menu.admin.manage_clubs'))
 				));

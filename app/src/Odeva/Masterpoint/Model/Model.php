@@ -1,9 +1,12 @@
 <?php namespace Odeva\Masterpoint\Model;
 
+use Exception;
 use Request;
 use Session;
+use Validator;
+use Illuminate\Database\Eloquent\Model as EloquentModel;
 
-abstract class Model extends \Illuminate\Database\Eloquent\Model {
+abstract class Model extends EloquentModel {
 	
 	protected $fields = array();
 	
@@ -17,17 +20,19 @@ abstract class Model extends \Illuminate\Database\Eloquent\Model {
 	
 	protected $search;
 	
+	protected $errors;
+	
 	public function __construct()
 	{
 		parent::__construct();
 		$this->perPage = 10;
 	}
 	
-	public function setFields($fields)
-	{
-		$this->fields = $fields;
-	}
-	
+//	public function setFields($fields)
+//	{
+//		$this->fields = $fields;
+//	}
+//	
 	public function getFields()
 	{
 		$fields = $this->fields;
@@ -35,6 +40,12 @@ abstract class Model extends \Illuminate\Database\Eloquent\Model {
 			$value = trans('tables/'.$this->table.'.fields.'.$key);
 		});
 		return $fields;
+	}
+	
+	public function getErrors()
+	{
+		if (!empty($this->errors)) return $this->errors;
+		return null;
 	}
 	
 	protected function getPagination($rset)
@@ -65,11 +76,35 @@ abstract class Model extends \Illuminate\Database\Eloquent\Model {
 		if (Session::has('prefs.'.$this->table.'.perPage')) $this->perPage = Session::get('prefs.'.$this->table.'.perPage');
 		if (!is_null($search = Request::query('search')) && !empty($search)) $this->search = $search;
 	}
-
-	public function lists($prepend = array())
+	
+	protected function validate()
 	{
-		if (empty($prepend)) return $this->newQuery()->orderBy('name')->lists('name', 'id');
-		return $prepend + $this->newQuery()->orderBy('name')->lists('name', 'id');
+		$validator = Validator::make($this->attributes, $this->rules);
+		$validator->setAttributeNames(trans('tables/'.$this->getTable().'.fields'));
+		if ($validator->passes()) return true;
+		$this->errors = $validator->messages();
+		return false;
+	}
+
+	protected function getErrorInfo($e)
+	{
+		if ($e->getPrevious()) {
+			$pe = $e->getPrevious()->errorInfo;
+			if ($pe[0] === '23000' && $pe[1] === 1062) return trans('tables/common.error_duplicate_entry', array('error' => addslashes($pe[2])));
+		}
+		return $e->getMessage();
 	}
 	
+	public function validateSave(array $options = array())
+	{
+		if (!$this->validate()) return false;
+		try {
+			if (!$this->save($options)) return false;
+		} catch (Exception $e) {
+			$this->errors = $this->getErrorInfo($e);
+			return false;
+		}
+		return true;
+	}
+
 }

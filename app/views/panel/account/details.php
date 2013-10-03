@@ -16,7 +16,7 @@ echo Form::_row(
 );
 echo Form::_actions(
 	array(
-		Form::_userCancel(),
+		Form::_cancel(null, null, route('panel.account.notifications')),
 		Form::_submit(trans('form.update'))
 	)
 );

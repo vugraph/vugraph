@@ -12,7 +12,6 @@ use Cartalyst\Sentry\Users\UserNotActivatedException;
 use Cartalyst\Sentry\Throttling\UserSuspendedException;
 use Cartalyst\Sentry\Throttling\UserBannedException;
 use Odeva\Masterpoint\Mailer\User as UserMailer;
-use Odeva\Masterpoint\Page\Basic as BasicPage;
 
 class Auth extends Site {
 
@@ -133,6 +132,7 @@ class Auth extends Site {
 	public function getLogout()
 	{
 		Sentry::logout();
+		session_destroy();
 		return Redirect::home();
 	}
 	

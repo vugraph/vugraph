@@ -9,38 +9,38 @@ class SentrySeeder extends Seeder {
 		DB::table('groups')->truncate();
 		DB::table('users_groups')->truncate();
 		DB::statement('SET FOREIGN_KEY_CHECKS=1');
-		try {
-			$groupAdmin = Sentry::createGroup(array(
-				'name'        => 'superuser',
-				'permissions' => array('superuser' => 1)
-			));
-			$groupVize = Sentry::createGroup(array(
-				'name'        => 'visa',
-				'permissions' => array('visa' => 1)
-			));
-			$groupUlusal = Sentry::createGroup(array(
-				'name'        => 'national',
-				'permissions' => array('national' => 1)
-			));
-			$groupBolgesel = Sentry::createGroup(array(
-				'name'        => 'regional',
-				'permissions' => array('regional' => 1)
-			));
-			$groupKulup = Sentry::createGroup(array(
-				'name'        => 'club',
-				'permissions' => array('club' => 1)
-			));
-			Sentry::createGroup(array(
-				'name'        => 'online',
-				'permissions' => array('online' => 1)
-			));
-			Sentry::createGroup(array(
-				'name'        => 'player',
-				'permissions' => array('player' => 1)
-			));
-		} catch (Exception $e) {
-			die($e->getMessage());
-		}
+//		try {
+//			$groupAdmin = Sentry::createGroup(array(
+//				'name'        => 'superuser',
+//				'permissions' => array('superuser' => 1)
+//			));
+//			$groupVize = Sentry::createGroup(array(
+//				'name'        => 'visa',
+//				'permissions' => array('visa' => 1)
+//			));
+//			$groupUlusal = Sentry::createGroup(array(
+//				'name'        => 'national',
+//				'permissions' => array('national' => 1)
+//			));
+//			$groupBolgesel = Sentry::createGroup(array(
+//				'name'        => 'regional',
+//				'permissions' => array('regional' => 1)
+//			));
+//			$groupKulup = Sentry::createGroup(array(
+//				'name'        => 'club',
+//				'permissions' => array('club' => 1)
+//			));
+//			Sentry::createGroup(array(
+//				'name'        => 'online',
+//				'permissions' => array('online' => 1)
+//			));
+//			Sentry::createGroup(array(
+//				'name'        => 'player',
+//				'permissions' => array('player' => 1)
+//			));
+//		} catch (Exception $e) {
+//			die($e->getMessage());
+//		}
 
 		$users = DB::connection('tbricfed')->select('SELECT * FROM authorizedUsers ORDER BY disabled DESC, CHAR_LENGTH(eMail) DESC');
 		$createCount = $mergeCount = $modifyCount = $failCount = 0;
@@ -107,11 +107,11 @@ class SentrySeeder extends Seeder {
 			if (!empty($newuser)) {
 				// Assign user permissions
 				try {
-					if ($accessLevel % 2) $newuser->addGroup($groupKulup);
-					if (($accessLevel >> 1) % 2) $newuser->addGroup($groupBolgesel);
-					if (($accessLevel >> 2) % 2) $newuser->addGroup($groupUlusal);
-					if (($accessLevel >> 3) % 2) $newuser->addGroup($groupVize);
-					if (($accessLevel >> 4) % 2) $newuser->addGroup($groupAdmin);
+					if ($accessLevel % 2) null; //$newuser->addGroup($groupKulup);
+					if (($accessLevel >> 1) % 2) null; //$newuser->addGroup($groupBolgesel);
+					if (($accessLevel >> 2) % 2) { $newuser->is_admin = true; $newuser->save(); } //$newuser->addGroup($groupUlusal);
+					if (($accessLevel >> 3) % 2) { $newuser->is_licenceadmin = true; $newuser->save(); } //$newuser->addGroup($groupVize);
+					if (($accessLevel >> 4) % 2) { $newuser->is_admin = true; $newuser->save(); } //$newuser->addGroup($groupAdmin);
 				} catch (Exception $e) {
 					die($e->getMessage());
 				}

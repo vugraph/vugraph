@@ -1,6 +1,8 @@
 <?php namespace Odeva\Masterpoint\Support;
 
-class Str extends Illuminate\Support\Str {
+use Illuminate\Support\Str as BaseStr;
+
+class Str extends BaseStr {
 	// ğüşiöçı ĞÜŞİÖÇI şĞüİöÇı ŞğÜiÖÇI ıxx ixx Ixx İxx xıx xix xIx xİx
 	public static function ucfirst_tr($string)
 	{

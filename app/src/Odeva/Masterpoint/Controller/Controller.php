@@ -1,10 +1,10 @@
 <?php namespace Odeva\Masterpoint\Controller;
 
-use App;
 use Session;
 use View;
+use Illuminate\Routing\Controllers\Controller as LaravelController;
 
-abstract class Controller extends \Illuminate\Routing\Controllers\Controller {
+abstract class Controller extends LaravelController {
 
 	protected $layout = 'layouts.default';
 	
@@ -28,8 +28,6 @@ abstract class Controller extends \Illuminate\Routing\Controllers\Controller {
 	
 	protected $script = '';
 
-/* 	protected $viewdata = array(); */
-	
 	public function __construct()
 	{
 		$this->beforeFilter('csrf', array('on' => 'post'));
@@ -60,60 +58,30 @@ abstract class Controller extends \Illuminate\Routing\Controllers\Controller {
 		if (!is_null($this->heading)) $this->layout->content->heading = $this->heading;
 	}
 	
-//	protected function setTitle($title)
-//	{
-//		$this->title = $title;
-//	}
-//	
-//	protected function setTitleAndHeading($heading)
-//	{
-//		$this->title = $this->heading = $heading;
-//	}
-//
-//	protected function addStyleFile()
-//	{
-//		for ($i=0; $i<func_num_args(); $i++) $this->styles[] = func_get_arg($i);
-//	}
-//	
-//	protected function addStyle($style)
-//	{
-//		$this->style .= $style;
-//	}
-//	
-//	protected function addScriptFile()
-//	{
-//		for ($i=0; $i<func_num_args(); $i++) $this->scripts[] = func_get_arg($i);
-//	}
-//	
-//	protected function addScript($script)
-//	{
-//		$this->script .= $script;
-//	}
-
 	private function instantMessage($type, $msg)
 	{
 		Session::put('message-'.$type, $msg);
 		Session::push('flash.old', 'message-'.$type);
 	}
 	
-	public function withError($msg)
+	protected function withError($msg)
 	{
 		$this->instantMessage('error', $msg);
 	}
 	
-	public function withWarning($msg)
+	protected function withWarning($msg)
 	{
 		$this->instantMessage('warning', $msg);
 	}
 
-	public function withInfo($msg)
+	protected function withInfo($msg)
 	{
 		$this->instantMessage('info', $msg);
 	}
 	
-	public function withSuccess($msg)
+	protected function withSuccess($msg)
 	{
 		$this->instantMessage('success', $msg);
 	}
-
+	
 }

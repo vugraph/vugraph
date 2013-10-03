@@ -10,7 +10,7 @@ class DatabaseSeeder extends Seeder {
 	public function run()
 	{
 		Eloquent::unguard();
-		$this->command->info('========== Seeding Sentry ==========');
+//		$this->command->info('========== Seeding Sentry ==========');
 //		$this->call('SentrySeeder');
 		$this->command->info('');
 		$this->command->info('========== Seeding Regions ==========');

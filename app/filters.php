@@ -46,38 +46,37 @@ Route::filter('auth', function()
 Route::filter('auth.player', function()
 {
 	$user = Sentry::getUser();
-	if (!($user instanceof User) || $user->hasAccess('player')) App::abort(403, 'You\'re not authorized to use this page.');
+	if (!($user instanceof User) || !$user->player_id) App::abort(403, 'You\'re not authorized to use this page.');
 });
 
 Route::filter('auth.club', function()
 {
 	$user = Sentry::getUser();
-	if (!($user instanceof User) || $user->hasAccess('club')) App::abort(403, 'You\'re not authorized to use this page.');
+	if (!($user instanceof User) || !$user->club_id) App::abort(403, 'You\'re not authorized to use this page.');
+});
+
+Route::filter('auth.city', function()
+{
+	$user = Sentry::getUser();
+	if (!($user instanceof User) || !$user->city_id) App::abort(403, 'You\'re not authorized to use this page.');
 });
 
 Route::filter('auth.regional', function()
 {
 	$user = Sentry::getUser();
-	if (!($user instanceof User) || $user->hasAccess('regional')) App::abort(403, 'You\'re not authorized to use this page.');
+	if (!($user instanceof User) || !$user->region_id) App::abort(403, 'You\'re not authorized to use this page.');
 });
-
-Route::filter('auth.national', function()
-{
-	$user = Sentry::getUser();
-	if (!($user instanceof User) || $user->hasAccess('national')) App::abort(403, 'You\'re not authorized to use this page.');
-});
-
 
 Route::filter('auth.licence', function()
 {
 	$user = Sentry::getUser();
-	if (!($user instanceof User) || !$user->hasAccess('licence')) App::abort(403, 'You\'re not authorized to use this page.');
+	if (!($user instanceof User) || !$user->is_licenceadmin) App::abort(403, 'You\'re not authorized to use this page.');
 });
 
 Route::filter('auth.admin', function()
 {
 	$user = Sentry::getUser();
-	if (!($user instanceof User) || !$user->hasAccess('superuser')) App::abort(403, 'You\'re not authorized to use this page.');
+	if (!($user instanceof User) || !$user->is_admin) App::abort(403, 'You\'re not authorized to use this page.');
 });
 
 Route::filter('auth.basic', function()

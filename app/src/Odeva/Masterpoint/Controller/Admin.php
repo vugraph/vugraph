@@ -1,7 +1,5 @@
 <?php namespace Odeva\Masterpoint\Controller;
 
-use App;
-
 class Admin extends Panel {
 	
 	public function __construct()

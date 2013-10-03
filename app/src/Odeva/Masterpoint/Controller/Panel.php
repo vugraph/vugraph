@@ -10,6 +10,8 @@ use Odeva\Masterpoint\Model\User;
 
 class Panel extends Controller {
 
+	protected $user;
+	
 	public function __construct()
 	{
 		parent::__construct();

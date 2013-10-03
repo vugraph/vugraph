@@ -15,9 +15,10 @@ HTML::macro('_messages', function($errors = null) {
 	}
 	return '<div id="messages">'."\n".$result.'</div>'."\n";
 });
-HTML::macro('_back', function($link = null, $failDefault = 'home') {
+HTML::macro('_back', function($link = null, $failDefault = null) {
 	if (is_null($link)) $link = URL::previous();
-	if ($link == URL::current()) $link = route($failDefault);
+	if (is_null($failDefault)) $failDefault = route('home');
+	if ($link == URL::current()) $link = $failDefault;
 	return '<a href="'.$link.'" class="btn">'.trans('tables/common.back').'</a>';
 });
 Form::macro('_open', function(array $options = array()) {
@@ -72,9 +73,21 @@ Form::macro('_label', function($name, $value = null, $options = array()) {
 Form::macro('_input', function($type, $name, $value = null, $options = array()) {
 	if (Form::_hasFocus($name)) $options['autofocus'] = 'autofocus';
 	if (Form::_hasError($name)) $options['oninput'] = '$(this).parents(\'div.control-group\').removeClass(\'error\')';
-	$shared = View::getShared();
-	if (!empty($shared) && $shared === $name) $options['autofocus'] = 'autofocus';
+	if (!isset($options['class']) && isset($options['maxlength'])) {
+		if ($options['maxlength'] > 120) $options['class'] = 'input-xxlarge';
+		elseif ($options['maxlength'] > 50) $options['class'] = 'input-xlarge';
+		elseif ($options['maxlength'] < 10) $options['class'] = 'input-mini';
+		elseif ($options['maxlength'] < 20) $options['class'] = 'input-small';
+		elseif ($options['maxlength'] < 30) $options['class'] = 'input-medium';
+	}
 	return Form::input($type, $name, $value, $options);
+});
+Form::macro('_select', function($name, $list = array(), $selected = null, $options = array()) {
+	if (Form::_hasFocus($name)) $options['autofocus'] = 'autofocus';
+	if (Form::_hasError($name)) $options['onchange'] = '$(this).parents(\'div.control-group\').removeClass(\'error\')';
+	$selected = Form::getValueAttribute($name, $selected);
+	if (empty($selected)) $list = array('' => isset($options['required']) ? trans('tables/common.select') : '') + $list;
+	return Form::select($name, $list, $selected, $options);
 });
 Form::macro('_hasError', function($field) {
 	if (Session::has('errors')) {
@@ -94,14 +107,12 @@ Form::macro('_help', function($text) {
 Form::macro('_actions', function($elements = array()) {
 	return '<div class="form-actions">'.implode($elements, '&nbsp;').'</div>'."\n";
 });
-Form::macro('_cancel', function($title = null, $link = null, $failDefault = 'home') {
-	if (is_null($link)) $link = URL::previous();
-	if ($link == URL::current()) $link = route($failDefault);
+Form::macro('_cancel', function($title = null, $link = null, $failDefault = null) {
 	if (is_null($title)) $title = trans('form.cancel');
+	if (is_null($link)) $link = URL::previous();
+	if (is_null($failDefault)) $failDefault = route('home');
+	if ($link == URL::current() || $link == route('auth.login')) $link = $failDefault;
 	return '<a href="'.$link.'" class="btn">'.$title.'</a>';
-});
-Form::macro('_userCancel', function($title = null, $link = null) {
-	return Form::_cancel($title, $link, 'panel.account.notifications');
 });
 Form::macro('_submit', function($value = null, $options = array()) {
 	if (!isset($options['class'])) $options['class'] = 'btn btn-primary';
@@ -176,6 +187,8 @@ HTML::macro('_dataTable', function($fields, $data, $actions) {
 	$params = Request::query();
 	foreach ($fields as $field => $fieldTrans) {
 		$html .= '<td>';
+		if (!isset($params['orderby'])) $params['orderby'] = 'id';
+		if (!isset($params['orderdir'])) $params['orderdir'] = 'asc';
 		$html .= '<a href="'.HTML::_makeSelfLink(
 			array(
 				'orderby' => $field,
@@ -185,8 +198,6 @@ HTML::macro('_dataTable', function($fields, $data, $actions) {
 			)
 		).'">';
 		$html .= $fieldTrans;
-		if (!isset($params['orderby'])) $params['orderby'] = 'id';
-		if (!isset($params['orderdir'])) $params['orderdir'] = 'asc';
 		if ($params['orderby'] == $field) $html .= '<span class="pull-right"><i class="icon-chevron-'.($params['orderdir'] == 'desc' ? 'up' : 'down').'"></i></span>';
 		$html .= '</a>';
 		$html .= '</td>'."\n";

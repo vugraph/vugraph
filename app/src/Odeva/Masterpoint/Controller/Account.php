@@ -3,8 +3,6 @@
 use Exception;
 use Input;
 use Redirect;
-use Request;
-use Sentry;
 use Validator;
 
 class Account extends Panel {
