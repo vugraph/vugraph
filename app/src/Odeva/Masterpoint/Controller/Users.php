@@ -4,6 +4,7 @@ use Input;
 use Redirect;
 use Session;
 use URL;
+use Odeva\Masterpoint\Model\User;
 use Odeva\Masterpoint\Model\Club;
 use Odeva\Masterpoint\Model\City;
 

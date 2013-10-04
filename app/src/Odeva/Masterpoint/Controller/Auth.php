@@ -1,16 +1,10 @@
 <?php namespace Odeva\Masterpoint\Controller;
 
-use Exception;
 use Input;
 use Redirect;
 use Session;
 use Sentry;
 use Validator;
-use Cartalyst\Sentry\Users\UserNotFoundException;
-use Cartalyst\Sentry\Users\WrongPasswordException;
-use Cartalyst\Sentry\Users\UserNotActivatedException;
-use Cartalyst\Sentry\Throttling\UserSuspendedException;
-use Cartalyst\Sentry\Throttling\UserBannedException;
 use Odeva\Masterpoint\Mailer\User as UserMailer;
 
 class Auth extends Site {
@@ -40,7 +34,7 @@ class Auth extends Site {
 				'email' => trim(Input::get('email')),
 				'password' => Input::get('password')
 			));
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			return Redirect::back()->onlyInput('first_name', 'last_name', 'email')->with('message-error', $e->getMessage());
 		}
 		try {
@@ -51,7 +45,7 @@ class Auth extends Site {
 				$user->delete();
 				return Redirect::back()->onlyInput('first_name', 'last_name', 'email')->with('message-error', trans('auth/register.error_sending_email'));
 			}
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$user->delete();
 			return Redirect::back()->onlyInput('first_name', 'last_name', 'email')->with('message-error', $e->getMessage());
 		}
@@ -76,9 +70,9 @@ class Auth extends Site {
 			} else {
 				$err = 'unknown error';
 			}
-		} catch (UserNotFoundException $e) {
+		} catch (\Cartalyst\Sentry\Users\UserNotFoundException $e) {
 			$err = trans('auth/register.activate_error_content');
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$err = $e->getMessage();
 		}
 		$this->title = $this->heading = trans('auth/register.activate_error_title');
@@ -113,17 +107,17 @@ class Auth extends Site {
 			);
 			if (Session::has('loginRedirect')) return Redirect::to(Session::get('loginRedirect'));
 			return Redirect::route('panel.account.notifications');
-		} catch (WrongPasswordException $e) {
+		} catch (\Cartalyst\Sentry\Users\WrongPasswordException $e) {
 			$err = trans('auth/login.invalid_credentials');
-		} catch (UserNotFoundException $e) {
+		} catch (\Cartalyst\Sentry\Users\UserNotFoundException $e) {
 			$err = trans('auth/login.invalid_credentials');
-		} catch (UserNotActivatedException $e) {
+		} catch (\Cartalyst\Sentry\Users\UserNotActivatedException $e) {
 			$err = trans('auth/login.user_not_activated');
-		} catch (UserSuspendedException $e) {
+		} catch (\Cartalyst\Sentry\Throttling\UserSuspendedException $e) {
 			$err = trans('auth/login.user_suspended');
-		} catch (UserBannedException $e) {
+		} catch (\Cartalyst\Sentry\Throttling\UserBannedException $e) {
 			$err = trans('auth/login.user_banned');
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$err = $e->getMessage();
 		}
 		return Redirect::back()->onlyInput('email')->with('message-error', $err);
@@ -157,7 +151,7 @@ class Auth extends Site {
 			} else {
 				$err = trans('auth/reset-password.error_sending_email');
 			}
-		} catch (UserNotFoundException $e) {
+		} catch (\Cartalyst\Sentry\Users\UserNotFoundException $e) {
 			$err = trans('auth/reset-password.email_not_found');
 		}
 		return Redirect::back()->onlyInput('email')->with('message-error', $err);
@@ -175,9 +169,9 @@ class Auth extends Site {
 		$err = '';
 		try {
 			$user = Sentry::findUserByResetPasswordCode($code);
-		} catch (UserNotFoundException $e) {
+		} catch (\Cartalyst\Sentry\Users\UserNotFoundException $e) {
 			$err = trans('auth/reset-password.change_error_content');
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$err = $e->getMessage();
 		}
 		if (empty($err)) {
@@ -204,9 +198,9 @@ class Auth extends Site {
 			if (!$user->attemptResetPassword($code, Input::get('password'))) {
 				$err = trans('auth/reset-password.change_error_message');
 			}
-		} catch (UserNotFoundException $e) {
+		} catch (\Cartalyst\Sentry\Users\UserNotFoundException $e) {
 			$err = trans('auth/reset-password.change_error_content');
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$err = $e->getMessage();
 		}
 		if (empty($err)) {

@@ -56,11 +56,11 @@ Route::group(array('prefix' => 'panel'), function() {
 		});
 		
 	});
-	Route::model('club', 'Odeva\Masterpoint\Model\Club');
 	/* Admin User */
 	Route::group(array('prefix' => 'admin'), function() {
 		Route::get('/', array('as' => 'panel.admin', 'uses' => 'Odeva\Masterpoint\Controller\Admin@getIndex'));
-		/* Club */
+		/* Clubs */
+		Route::model('club', 'Odeva\Masterpoint\Model\Club');
 		Route::group(array('prefix' => 'clubs'), function() {
 			Route::get('/', array('as' => 'panel.admin.clubs.index', 'uses' => 'Odeva\Masterpoint\Controller\Clubs@index'));
 			Route::post('/', array('as' => 'panel.admin.clubs.store', 'uses' => 'Odeva\Masterpoint\Controller\Clubs@store'));
@@ -68,6 +68,16 @@ Route::group(array('prefix' => 'panel'), function() {
 			Route::get('{club}/edit', array('as' => 'panel.admin.clubs.edit', 'uses' => 'Odeva\Masterpoint\Controller\Clubs@edit'));
 			Route::put('{club}', array('as' => 'panel.admin.clubs.update', 'uses' => 'Odeva\Masterpoint\Controller\Clubs@update'));
 			Route::delete('{club}', array('as' => 'panel.admin.clubs.destroy', 'uses' => 'Odeva\Masterpoint\Controller\Clubs@destroy'));
+		});
+		/* Users */
+		Route::model('user', 'Odeva\Masterpoint\Model\User');
+		Route::group(array('prefix' => 'users'), function() {
+			Route::get('/', array('as' => 'panel.admin.users.index', 'uses' => 'Odeva\Masterpoint\Controller\Users@index'));
+			Route::post('/', array('as' => 'panel.admin.users.store', 'uses' => 'Odeva\Masterpoint\Controller\Users@store'));
+			Route::get('create', array('as' => 'panel.admin.users.create', 'uses' => 'Odeva\Masterpoint\Controller\Users@create'));
+			Route::get('{user}/edit', array('as' => 'panel.admin.users.edit', 'uses' => 'Odeva\Masterpoint\Controller\Users@edit'));
+			Route::put('{user}', array('as' => 'panel.admin.users.update', 'uses' => 'Odeva\Masterpoint\Controller\Users@update'));
+			Route::delete('{user}', array('as' => 'panel.admin.users.destroy', 'uses' => 'Odeva\Masterpoint\Controller\Users@destroy'));
 		});
 	});
 });

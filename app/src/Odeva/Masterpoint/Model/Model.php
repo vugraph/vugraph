@@ -1,12 +1,15 @@
 <?php namespace Odeva\Masterpoint\Model;
 
-use Exception;
 use Request;
 use Session;
 use Validator;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 
 abstract class Model extends EloquentModel {
+	
+	public $timestamps = false;
+	
+	protected $perPage = 10;
 	
 	protected $fields = array();
 	
@@ -21,12 +24,6 @@ abstract class Model extends EloquentModel {
 	protected $search;
 	
 	protected $errors;
-	
-	public function __construct()
-	{
-		parent::__construct();
-		$this->perPage = 10;
-	}
 	
 //	public function setFields($fields)
 //	{
@@ -100,7 +97,7 @@ abstract class Model extends EloquentModel {
 		if (!$this->validate()) return false;
 		try {
 			if (!$this->save($options)) return false;
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$this->errors = $this->getErrorInfo($e);
 			return false;
 		}

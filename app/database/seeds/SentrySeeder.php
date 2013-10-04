@@ -38,7 +38,7 @@ class SentrySeeder extends Seeder {
 //				'name'        => 'player',
 //				'permissions' => array('player' => 1)
 //			));
-//		} catch (Exception $e) {
+//		} catch (\Exception $e) {
 //			die($e->getMessage());
 //		}
 
@@ -83,7 +83,7 @@ class SentrySeeder extends Seeder {
 					    'activated'  => $user->disabled == 'N' ? 1 : 0,
 						'old_username' => "'$user->username'"
 					));
-				} catch (Exception $e) {
+				} catch (\Exception $e) {
 					die($e->getMessage());
 				}
 				$createCount++;
@@ -94,7 +94,7 @@ class SentrySeeder extends Seeder {
 						$newuser = Sentry::findUserByLogin($user->eMail);
 						$newuser->old_username .= ",'$user->username'";
 						$newuser->save();
-					} catch (Exception $e) {
+					} catch (\Exception $e) {
 						die($e->getMessage());
 					}
 					$mergeCount++;
@@ -109,14 +109,49 @@ class SentrySeeder extends Seeder {
 				try {
 					if ($accessLevel % 2) null; //$newuser->addGroup($groupKulup);
 					if (($accessLevel >> 1) % 2) null; //$newuser->addGroup($groupBolgesel);
-					if (($accessLevel >> 2) % 2) { $newuser->is_admin = true; $newuser->save(); } //$newuser->addGroup($groupUlusal);
-					if (($accessLevel >> 3) % 2) { $newuser->is_licenceadmin = true; $newuser->save(); } //$newuser->addGroup($groupVize);
-					if (($accessLevel >> 4) % 2) { $newuser->is_admin = true; $newuser->save(); } //$newuser->addGroup($groupAdmin);
-				} catch (Exception $e) {
+					if (($accessLevel >> 2) % 2) { $newuser->auth_admin = true; $newuser->save(); } //$newuser->addGroup($groupUlusal);
+					if (($accessLevel >> 3) % 2) { $newuser->auth_licence = true; $newuser->save(); } //$newuser->addGroup($groupVize);
+					if (($accessLevel >> 4) % 2) { $newuser->auth_admin = true; $newuser->save(); } //$newuser->addGroup($groupAdmin);
+				} catch (\Exception $e) {
 					die($e->getMessage());
 				}
 			}
 		} // end foreach
+
+		foreach(DB::table('cities')->get(array('id')) as $city) {
+			$region = DB::connection('tbricfed')->select('SELECT authorizedUser FROM regions WHERE id='.$city->id);
+			if (!empty($region) && !empty($region[0]->authorizedUser)) {
+				try {
+					$usr = DB::table('users')->where('old_username', 'like', '%\''.$region[0]->authorizedUser.'\'%')->first(array('id'));
+					if (!empty($usr)) {
+						$user = Sentry::findUserById($usr->id);
+						$user->auth_city = $city->id;
+						$user->save();
+					} else {
+						$this->command->info('skipped unexisting region username: '.$region[0]->authorizedUser);
+					}
+				} catch (\Exception $e) {
+					die($e->getMessage());
+				}
+			}
+		}
+
+			if (!empty($club->authorizedUser)) {
+				try {
+					$usr = DB::table('users')->where('old_username', 'like', '%\''.$club->authorizedUser.'\'%')->first(array('id'));
+					if (!empty($usr)) {
+						$user = Sentry::findUserById($usr->id);
+						$user->auth_club = $clubid;
+						$user->save();
+					} else {
+						$this->command->info('skipped unexisting club username: '.$club->authorizedUser);
+					}
+				} catch (\Exception $e) {
+					die($e->getMessage());
+				}
+			}
+		
+		
 		$this->command->info("=== $createCount users created, $mergeCount users merged, $failCount users failed. ===");
 		$this->command->info("=== $modifyCount invalid email addresses changed. ===");
 	}

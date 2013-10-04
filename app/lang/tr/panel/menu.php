@@ -7,6 +7,7 @@ return array(
 	'club.tournaments' => 'Turnuvalar',
 
 	'admin' => 'Yönetici',
+	'admin.manage_users' => 'Kullanıcıları Yönet',
 	'admin.manage_clubs' => 'Kulüpleri Yönet',
 
 	'notifications' => 'Bildirimler',

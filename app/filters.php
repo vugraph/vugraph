@@ -52,31 +52,31 @@ Route::filter('auth.player', function()
 Route::filter('auth.club', function()
 {
 	$user = Sentry::getUser();
-	if (!($user instanceof User) || !$user->club_id) App::abort(403, 'You\'re not authorized to use this page.');
+	if (!($user instanceof User) || !$user->auth_club) App::abort(403, 'You\'re not authorized to use this page.');
 });
 
 Route::filter('auth.city', function()
 {
 	$user = Sentry::getUser();
-	if (!($user instanceof User) || !$user->city_id) App::abort(403, 'You\'re not authorized to use this page.');
+	if (!($user instanceof User) || !$user->auth_city) App::abort(403, 'You\'re not authorized to use this page.');
 });
 
 Route::filter('auth.regional', function()
 {
 	$user = Sentry::getUser();
-	if (!($user instanceof User) || !$user->region_id) App::abort(403, 'You\'re not authorized to use this page.');
+	if (!($user instanceof User) || !$user->auth_region) App::abort(403, 'You\'re not authorized to use this page.');
 });
 
 Route::filter('auth.licence', function()
 {
 	$user = Sentry::getUser();
-	if (!($user instanceof User) || !$user->is_licenceadmin) App::abort(403, 'You\'re not authorized to use this page.');
+	if (!($user instanceof User) || !$user->auth_licence) App::abort(403, 'You\'re not authorized to use this page.');
 });
 
 Route::filter('auth.admin', function()
 {
 	$user = Sentry::getUser();
-	if (!($user instanceof User) || !$user->is_admin) App::abort(403, 'You\'re not authorized to use this page.');
+	if (!($user instanceof User) || !$user->auth_admin) App::abort(403, 'You\'re not authorized to use this page.');
 });
 
 Route::filter('auth.basic', function()

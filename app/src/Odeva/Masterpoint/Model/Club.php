@@ -1,46 +1,19 @@
 <?php namespace Odeva\Masterpoint\Model;
 
-/**
- * An Eloquent Model: 'Club'
- *
- * @property integer $id
- * @property integer $city_id
- * @property string $name
- * @property string $shortname
- * @property string $address
- * @property string $phone
- * @property string $fax
- * @property string $email
- * @property string $website
- * @property string $director1
- * @property string $director2
- * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at
- * @property integer $user_id
- * @property integer $old_id
- * @property-read \Region $region
- * @property-read \City $city
- */
-
 use Request;
 
 class Club extends Model {
 
 	protected $table = 'clubs';
 	
-	protected $softDelete = true;
-	
 	protected $fillable = array('city_id', 'name', 'shortname', 'address', 'phone', 'fax', 'email', 'website');
 
 	protected $rules = array(
 		'city_id'	=> 'required',
-		'name'		=> 'required|between:2,60',
+		'name'		=> 'required',
 		'shortname'	=> 'max:15',
-		'address'	=> 'max:240',
-		'phone'		=> 'max:60',
-		'fax'		=> 'max:60',
-		'email'		=> 'email|max:120',
-		'website'	=> 'url|max:120'
+		'email'		=> 'email',
+		'website'	=> 'url'
 	);
 	
 //	public function region()
@@ -48,10 +21,6 @@ class Club extends Model {
 //		return $this->belongsTo('Region');
 //	}
 //
-	public function __construct()
-	{
-		parent::__construct();
-	}
 	public function city()
 	{
 		return $this->belongsTo(__NAMESPACE__.'\City');

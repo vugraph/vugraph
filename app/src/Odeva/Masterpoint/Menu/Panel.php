@@ -1,7 +1,6 @@
 <?php namespace Odeva\Masterpoint\Menu;
 
 use App;
-use Exception;
 use Odeva\Masterpoint\Model\User;
 
 class Panel extends Menu {
@@ -11,13 +10,14 @@ class Panel extends Menu {
 		parent::__construct('navbar navbar-fixed-top navbar-inxverse');
 		try {
 			$this->left[] = new Item('home', '<i class="icon-home icon-white"></i> '.trans('panel/menu.home'));
-			if ($user->club_id) {
+			if ($user->auth_club) {
 				$this->left[] = new Item('panel.club', trans('panel/menu.club'), array(
 					new Item('panel.club.tournaments', '<i class="icon-chevron-right"></i> '.trans('panel/menu.club.tournaments'))
 				));
 			}
-			if ($user->is_admin) {
+			if ($user->auth_admin) {
 				$this->left[] = new Item('panel.admin', trans('panel/menu.admin'), array(
+					new Item('panel.admin.users.index', '<i class="icon-chevron-right"></i> '.trans('panel/menu.admin.manage_users')),
 					new Item('panel.admin.clubs.index', '<i class="icon-chevron-right"></i> '.trans('panel/menu.admin.manage_clubs'))
 				));
 			}
@@ -29,7 +29,7 @@ class Panel extends Menu {
 					new Item('auth.logout', '<i class="icon-off"></i> '.trans('panel/menu.logout'))
 				)
 			));
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			App::abort(500, $e->getMessage());
 		}
 		$this->setSelectedStatus();

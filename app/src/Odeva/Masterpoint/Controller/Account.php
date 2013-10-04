@@ -1,6 +1,5 @@
 <?php namespace Odeva\Masterpoint\Controller;
 
-use Exception;
 use Input;
 use Redirect;
 use Validator;
@@ -42,7 +41,7 @@ class Account extends Panel {
 			} else {
 				$err = trans('panel/account/details.error_message');
 			}
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$err = $e->getMessage();
 		}
 		return Redirect::back()->onlyInput('first_name', 'last_name')->with('message-error', $err);
@@ -76,7 +75,7 @@ class Account extends Panel {
 			} else {
 				$err = trans('panel/account/password.wrong_password_message');
 			}
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$err = $e->getMessage();
 		}
 		return Redirect::back()->with('message-error', $err);
