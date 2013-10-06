@@ -2,10 +2,10 @@
 
 class City extends Model {
 
-	public $incrementing = false;
-	
 	protected $table = 'cities';
 
+	public $incrementing = false;
+	
 	protected $fillable = array('region_id', 'name');
 
 	public function region()

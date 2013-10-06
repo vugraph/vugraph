@@ -1,5 +1,6 @@
-<?php namespace Odeva\Masterpoint\Controller;
+<?php namespace Odeva\Masterpoint\Controller\Site;
 
+use Odeva\Masterpoint\Controller\Controller;
 use Odeva\Masterpoint\Menu\Site as SiteMenu;
 
 class Site extends Controller {

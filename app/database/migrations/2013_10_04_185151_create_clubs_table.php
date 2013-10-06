@@ -22,7 +22,7 @@ class CreateClubsTable extends Migration {
 			$table->string('address')->default('');
 			$table->string('phone')->default('');
 			$table->string('fax')->default('');
-			$table->string('email')->default('');
+			$table->string('email')->nullable()->default(null)->unique();
 			$table->string('website')->default('');
 			$table->unsignedInteger('old_id')->nullable()->default(null)->unique();
 		});

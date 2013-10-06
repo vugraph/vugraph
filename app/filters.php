@@ -46,7 +46,7 @@ Route::filter('auth', function()
 Route::filter('auth.player', function()
 {
 	$user = Sentry::getUser();
-	if (!($user instanceof User) || !$user->player_id) App::abort(403, 'You\'re not authorized to use this page.');
+	if (!($user instanceof User) || !$user->auth_player) App::abort(403, 'You\'re not authorized to use this page.');
 });
 
 Route::filter('auth.club', function()

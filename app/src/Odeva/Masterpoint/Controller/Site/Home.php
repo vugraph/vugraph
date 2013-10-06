@@ -1,4 +1,4 @@
-<?php namespace Odeva\Masterpoint\Controller;
+<?php namespace Odeva\Masterpoint\Controller\Site;
 
 class Home extends Site {
 

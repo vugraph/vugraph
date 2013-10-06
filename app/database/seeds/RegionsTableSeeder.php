@@ -1,7 +1,5 @@
 <?php
 
-use Odeva\Masterpoint\Model\Region;
-
 class RegionsTableSeeder extends Seeder {
 
 	public function run()
@@ -9,16 +7,17 @@ class RegionsTableSeeder extends Seeder {
 		DB::statement('SET FOREIGN_KEY_CHECKS=0');
 		DB::table('regions')->truncate();
 		DB::statement('SET FOREIGN_KEY_CHECKS=1');
-		Region::create(array('name' => 'Marmara'));
-		Region::create(array('name' => 'Güney Marmara'));
-		Region::create(array('name' => 'Trakya'));
-		Region::create(array('name' => 'Ege'));
-		Region::create(array('name' => 'Batı Akdeniz'));
-		Region::create(array('name' => 'Çukurova'));
-		Region::create(array('name' => 'İç Anadolu'));
-		Region::create(array('name' => 'Batı Karadeniz'));
-		Region::create(array('name' => 'Doğu Karadeniz'));
-		Region::create(array('name' => 'Doğu ve Güneydoğu Anadolu'));
+		
+		DB::table('regions')->insert(array('id' => 1, 'name' => 'Marmara'));
+		DB::table('regions')->insert(array('id' => 2, 'name' => 'Güney Marmara'));
+		DB::table('regions')->insert(array('id' => 3, 'name' => 'Trakya'));
+		DB::table('regions')->insert(array('id' => 4, 'name' => 'Ege'));
+		DB::table('regions')->insert(array('id' => 5, 'name' => 'Batı Akdeniz'));
+		DB::table('regions')->insert(array('id' => 6, 'name' => 'Çukurova'));
+		DB::table('regions')->insert(array('id' => 7, 'name' => 'İç Anadolu'));
+		DB::table('regions')->insert(array('id' => 8, 'name' => 'Batı Karadeniz'));
+		DB::table('regions')->insert(array('id' => 9, 'name' => 'Doğu Karadeniz'));
+		DB::table('regions')->insert(array('id' => 10, 'name' => 'Doğu ve Güneydoğu Anadolu'));
 	}
 
 }

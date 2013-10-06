@@ -41,7 +41,7 @@ class Player extends Model {
 	{
 		if (is_null($ssn)) $ssn = $this->ssn;
 		$ssn = (string) $ssn;
-		if (!preg_match('/^[1-9][0-9]{10}$/', $ssn)) return false;
+		if (!preg_match('/^[1-8][0-9]{10}$/', $ssn)) return false;
 		$sum1 = $ssn[0]+$ssn[2]+$ssn[4]+$ssn[6]+$ssn[8];
 		$sum2 = $ssn[1]+$ssn[3]+$ssn[5]+$ssn[7];
 		if ((7*$sum1+9*$sum2) % 10 !== (int)$ssn[9]) return false;

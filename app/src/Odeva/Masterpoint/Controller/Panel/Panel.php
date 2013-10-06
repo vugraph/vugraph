@@ -1,9 +1,10 @@
-<?php namespace Odeva\Masterpoint\Controller;
+<?php namespace Odeva\Masterpoint\Controller\Panel;
 
 use Input;
 use Redirect;
 use Sentry;
 use Session;
+use Odeva\Masterpoint\Controller\Controller;
 use Odeva\Masterpoint\Menu\Panel as PanelMenu;
 use Odeva\Masterpoint\Menu\Site as SiteMenu;
 use Odeva\Masterpoint\Model\User;

@@ -10,4 +10,23 @@ class User extends SentryUser {
 		'email'					=> 'required|email',
 		'password'				=> 'between:6,30',
 	);
+
+//	protected function processQueryString()
+//	{
+//		parent::processQueryString();
+//		if (!is_null($city = intval(Request::query('city', '0'))) && $city > 0) $this->filters['clubs.city_id'] = $city;
+//	}
+	
+	public function autoPaginate()
+	{
+		$this->fields = array(
+			'id' => 'clubs.id',
+			'city_name' => 'cities.name',
+			'shortname' => 'clubs.shortname',
+			'name' => 'clubs.name'
+		);
+		$this->processQueryString();
+		return $this->getPagination($this->joinCities());
+	}
+
 }

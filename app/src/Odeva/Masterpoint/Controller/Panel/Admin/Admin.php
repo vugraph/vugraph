@@ -1,4 +1,6 @@
-<?php namespace Odeva\Masterpoint\Controller;
+<?php namespace Odeva\Masterpoint\Controller\Panel\Admin;
+
+use Odeva\Masterpoint\Controller\Panel\Panel;
 
 class Admin extends Panel {
 	

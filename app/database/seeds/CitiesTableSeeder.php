@@ -1,7 +1,5 @@
 <?php
 
-use Odeva\Masterpoint\Model\City;
-
 class CitiesTableSeeder extends Seeder {
 
 	public function run()
@@ -13,7 +11,7 @@ class CitiesTableSeeder extends Seeder {
 		foreach($cities_raw as $city_raw) {
 			if (trim($city_raw) == '') continue;
 			if (!preg_match("/([^\t]+)\t([^\t]+)\t([^\t]+)\t(.*)/", $city_raw, $matches)) die('match error on cities.txt');
-			City::create(array(
+			DB::table('cities')->insert(array(
 				'id' => intval($matches[1]),
 				'region_id' => intval($matches[3]),
 				'name' => trim($matches[2])

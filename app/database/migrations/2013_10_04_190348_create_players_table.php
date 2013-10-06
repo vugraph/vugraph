@@ -32,8 +32,10 @@ class CreatePlayersTable extends Migration {
 				->onDelete('SET NULL')->onUpdate('SET NULL');
 			$table->enum('gender', array('M', 'F'))->nullable()->default(null);
 			$table->unsignedInteger('approve_years')->default(0);
-			$table->string('email')->default('');
+			$table->string('email')->nullable()->default(null)->unique();
 			$table->unsignedBigInteger('ssn')->nullable()->default(null)->unique();
+			$table->boolean('ssn_verified')->nullable()->default(null);
+			$table->string('bbo')->nullable()->default(null)->unique();
 			$table->string('address')->default('');
 			$table->unsignedInteger('postal_code')->nullable()->default(null);
 			$table->string('phone')->default('');

@@ -1,4 +1,4 @@
-<?php namespace Odeva\Masterpoint\Controller;
+<?php namespace Odeva\Masterpoint\Controller\Panel\Admin;
 
 use Input;
 use Redirect;
@@ -24,9 +24,9 @@ class Users extends Admin {
 		);
 		$club = New Club;
 		$clubs =  array('' => trans('tables/common.all')) + $club->orderBy('name')->lists('name', 'id');
-		$region = New Region;
-		$regions = array('' => trans('tables/common.all')) + $region->orderBy('name')->lists('name', 'id');
-		$this->nest('panel.admin.users.index', compact('table', 'paginator', 'fields', 'actions', 'clubs', 'regions'));
+		$city = New City;
+		$cities = array('' => trans('tables/common.all')) + $city->orderBy('name')->lists('name', 'id');
+		$this->nest('panel.admin.users.index', compact('table', 'paginator', 'fields', 'actions', 'clubs', 'cities'));
 	}
 	
 	public function create()
@@ -36,14 +36,13 @@ class Users extends Admin {
 		$club = New Club;
 		$clubs = array('' => '') + $club->orderBy('name')->lists('name', 'id');
 		$region = New Region;
-		$regions = array('' => '') + $region->orderBy('name')->lists('name', 'id');
+		$regions = array('' => '') + $region->orderBy('id')->lists('name', 'id');
 		$this->nest('panel.admin.users.edit', compact('clubs', 'regions'));
 	}
 	
 	public function store()
 	{
-		$user = New User;
-		$user->fill(Input::all());
+		$user = New User(Input::all());
 		if (!$user->validateSave()) return Redirect::back()->withInput()->withErrors($user->getErrors());
 		return Redirect::to(Session::get('prefs.users.create.previous', route('panel.admin.users.index')))
 			->with('message-success', trans('panel/admin/users.create.success'));

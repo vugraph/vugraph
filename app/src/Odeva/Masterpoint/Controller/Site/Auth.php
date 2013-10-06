@@ -1,4 +1,4 @@
-<?php namespace Odeva\Masterpoint\Controller;
+<?php namespace Odeva\Masterpoint\Controller\Site;
 
 use Input;
 use Redirect;

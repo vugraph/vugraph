@@ -26,9 +26,10 @@ class ModifyUsersTable extends Migration {
 			$table->unsignedInteger('auth_region')->nullable();
 			$table->foreign('auth_region')->references('id')->on('regions')
 				->onDelete('SET NULL')->onUpdate('SET NULL');
-			$table->boolean('auth_admin')->default(false);
 			$table->boolean('auth_licence')->default(false);
-			$table->string('old_username')->default('');
+			$table->boolean('auth_admin')->default(false);
+			$table->string('old_club_username')->default('');
+			$table->string('old_city_username')->default('');
 		});
 	}
 
